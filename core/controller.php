@@ -75,7 +75,8 @@ class Controller
 		$this->data['content'] = $this->Template->load('details',$this->data,TRUE);
 		// MAIN PAGE
 		$this->Template->load('layout',$this->data);
-	}	
+	}
+	
 	function add_table()
 	{
 		try
@@ -891,6 +892,18 @@ class Controller
 	function jumbo($bool)
 	{
 		$_SESSION['jumbo']=$bool;
+	}
+	
+	function list_classes($obj)
+	{
+		$liste = array(); 
+		$class_methods = get_class_methods($obj);
+		//var_dump($class_methods);
+        foreach($class_methods as $m=>$method)
+        {
+          $liste[] = $method;
+        }
+		return $liste;
 	}
 	
 	function mobile()

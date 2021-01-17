@@ -40,6 +40,16 @@ class Main extends Controller
 		$this->data['banner']= $this->Template->load('banner', $this->data,TRUE);
 		parent::index();
 	}
+	function model_methods()
+	{
+		// BANNER
+		$this->data['title'] = '<a href="'.DEFAULTCONTROLLER.'" target="_blank">'.ucfirst(DEFAULTCONTROLLER).'</a>';
+		$this->data['banner'] = $this->Template->load('banner', $this->data,TRUE);
+		$this->data['records'] = $this->list_classes($this->Get);
+		$this->data['class'] = 'table'; 
+		$this->data['content'] = $this->Template->load('key-value', $this->data,TRUE);
+		$this->Template->load('layout',$this->data);
+	}
 	/*function add_table()
 	{
 		$this->denied('add a table');
