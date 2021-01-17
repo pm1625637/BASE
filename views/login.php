@@ -1,4 +1,4 @@
-<?php $titre='PHPBD '.VERSION;?>
+<?php $titre='DATPHP '.VERSION;?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -291,8 +291,8 @@ input[type=text]:placeholder {
     <!-- Login Form -->
    <form action="<?=$action?>" method="post">     
       <em>created by webiciel.ca</em>
-	  <input type="text" id="username" class="fadeIn second" name="username" placeholder="demo">
-      <input type="text" id="password" class="fadeIn third" name="password" placeholder="demo"> 
+	  <input type="text" id="username" class="fadeIn second" name="username" placeholder="demo" value="demo">
+      <input type="text" id="password" class="fadeIn third" name="password" placeholder="demo" value="demo"> 
       <input type="submit" class="fadeIn fourth" value="Log In">
     </form>
 
