@@ -1,0 +1,2613 @@
+<?php 
+/**
+* @class: Model
+* @version:	7.2
+* @author: pierre.martin@live.ca
+* @php: 7.4
+* @revision: 2020-01-16
+* @licence MIT
+*/
+class Model
+{
+	public static $version = '7.2';
+	public $data = array();
+	public $datapath = NULL;
+	public $filename = NULL;
+	public $ffilesize = 0;
+	public $n_tables = 0;
+	public $max_lines = 0;
+	public $max_columns = 0;
+	
+	public function connect($path,$file,$ext='php')
+	{
+		$this->datapath = $path;
+		$file = $file.'.'.$ext;		
+		if(file_exists($this->datapath.$file))
+		{
+			switch($ext)
+			{
+				case 'ser':
+					$this->set_data(unserialize(file_get_contents($this->datapath.$file)));
+				break;
+				case 'json':
+					$this->set_data(json_decode(file_get_contents($this->datapath.$file)));
+				break;
+				case 'php':
+					include($this->datapath.$file);
+					if(isset($data))
+					{
+						$this->set_data($data);
+					}
+				break;
+				default:
+				die(htmlentities('Can not import the data!',ENT_COMPAT,"UTF-8"));
+			}
+			$this->count_tables();
+			$this->count_max_lines();
+			$this->count_max_columns();
+			$this->filename = $file;
+			$this->ffilesize = filesize($this->datapath.$file);
+		}
+		else
+		{
+			$this->filename = $file;
+			$this->save();
+		}
+	}
+	public function get_version()
+	{
+		return self::$version;
+	}	
+	public function get_data()
+	{
+		return $this->data;
+	}
+	public function set_data($array)
+	{
+		$this->data = $array;
+	}
+	public function count_tables()
+	{
+		if(!empty($this->data[0][0]))
+		{
+			$this->n_tables = count($this->data[0][0]);
+		}
+		return $this->n_tables;
+	}
+	public function count_columns($table)
+	{	
+		$n_columns = 0;
+		if(isset($this->data[$table][0]))
+		{
+			$n_columns = count($this->data[$table][0]);
+		}
+		return $n_columns;
+	}
+	public function count_max_columns()
+	{
+		$i = 1;
+		while($i <= $this->n_tables)
+		{
+			$temp = $this->count_columns($i);
+			if($temp > $this->max_columns)
+			{
+				$this->max_columns = $temp;
+			}
+			$i++;
+		}
+		return $this->max_columns;
+	}
+	public function count_lines($table)
+	{
+		$lines = 0;
+		if(isset($this->data[$table]))
+		{
+			$lines = count($this->data[$table])-1;
+		}
+		return $lines;
+	}
+	public function count_max_lines()
+	{
+		$i = 1;
+		while($i <= $this->n_tables)
+		{
+			$temp = $this->count_lines($i);
+			if($temp >= $this->max_lines)
+			{
+				$this->max_lines = $temp;
+			}
+			$i++;
+		}
+		return $this->max_lines;
+	}
+	//*************************************************//
+	//******************** TABLES *********************//
+	//*************************************************//
+	public function add_from_odbc($strTable)
+	{
+		if($this->table_exists($strTable))
+		{
+		 	$msg = 'The table ['.$strTable.'] already exists.';
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);
+			exit;
+		}
+		$x=1;
+		foreach($this->data as $i=>$tab)
+		{
+			if(isset($this->data[$x]))
+			{
+				$x++;
+			}
+			else
+			{
+				$new = $x;
+				break;
+			}
+		}
+		//$new = $this->n_tables + 1;
+		$this->data[0][0][$new] = $strTable;
+		//$primary = strtolower($strTable);
+		//$this->data[$new][0][1] = 'id_'.$primary;
+		//$this->n_tables = $new;
+		$this->save();
+	}
+	public function add_table($strTable)
+	{
+		if($this->table_exists($strTable))
+		{
+		 	$msg = 'The table ['.$strTable.'] already exists.';
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);
+			exit;
+		}
+		//elseif(!$this->verif_alpha($strTable) || empty($strTable) ||  strlen($strTable) < 4 || !($this->right($strTable,1)=='s'))
+		elseif(empty($strTable) ||  strlen($strTable) < 4)
+		{
+			$msg = 'The table name must be lowercase, plural, contain only alphabetic characters and have a minimum of 4 caracters.';
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);
+			exit;
+		}
+		$x=1;
+		foreach($this->data as $i=>$tab)
+		{
+			if(isset($this->data[$x]))
+			{
+				$x++;
+			}
+			else
+			{
+				$new = $x;
+				break;
+			}
+		}
+		//$new = $this->n_tables + 1;
+		//$this->data[0][0][$new] = strtolower($strTable);
+		$this->data[0][0][$new] = $strTable;
+		$substr = substr($this->data[0][0][$new], 0, -1);
+		// Ajouter automatiquement une colonne primaire lors de l'ajout d'une table'
+		$this->data[$new][0][1] = 'id_'.$substr;
+		$this->n_tables = $new;
+		return $this->save();
+	}
+	public function add_table_only($strTable)
+	{
+		if($this->table_exists($strTable))
+		{
+		 	$msg = 'The table ['.$strTable.'] already exists.';
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);
+			exit;
+		}
+		$x=1;
+		//var_dump($this->data); exit;
+		if(!empty($this->data))
+		{
+			foreach($this->data as $i=>$tab)
+			{
+				if(isset($this->data[$x]))
+				{
+					$x++;
+				}
+				else
+				{
+					$new = $x;
+					break;
+				}
+			}
+		}
+		else
+		{
+			$new = 1;
+		}
+		$this->data[0][0][$new] = $strTable;
+		//$substr = substr($this->data[0][0][$new], 0, -1);
+		// Ajouter automatiquement une colonne primaire lors de l'ajout d'une table'
+		//$this->data[$new][0][1] = 'id_'.$substr;
+		$this->n_tables = $new;
+		return $this->save();
+	}
+	public function copy_table($strTable)
+	{		
+		$table = $this->get_id_table($strTable);
+		$x=1;
+		foreach($this->data as $i=>$tab)
+		{
+			if(isset($this->data[$x]))
+			{
+				$x++;
+			}
+			else
+			{
+				$new = $x;
+				break;
+			}
+		}
+		//$new = $this->n_tables + 1;
+		$this->data[0][0][$new] = strtolower('copy'.$strTable);
+		$this->data[$new] = $this->data[$table];
+		$this->add_primary_key($this->data[0][0][$new]);
+		//$this->data[$new][0][1] = 'id_'.$this->data[0][0][$new];
+		//$this->n_tables = $new;
+		$this->save();
+		return $this->data[0][0][$new];
+	}
+	public function add_primary_key($strTable)
+	{
+		$table = $this->get_id_table($strTable);
+		// Forcer le nom de table en minuscule
+		$strTable = strtolower($strTable);
+		if($this->right($strTable,1)=='s')
+		{
+			$strKey = substr($strTable, 0, -1);
+		}
+		else
+		{
+			$strKey = $strTable;
+		}
+		// Ajouter automatiquement une colonne primaire lors de l'ajout d'une table'
+		$this->data[0][0][$table] = $strTable;
+		$this->data[$table][0][1] = 'id_'.$strKey;
+		$this->save();
+	}
+	
+	public function edit_table($table,$strTable)
+	{
+		if($this->valid_rule($table,1))
+		{
+			$msg = 'A foreigh key constraint in the rules table does not allow the edition of this table.';
+			throw new Exception($msg);
+		}
+		/*elseif(!$this->verif_alpha($strTable) || empty($strTable) ||  strlen($strTable) < 4 || !($this->right($strTable,1)=='s'))
+		{
+			$msg = 'The table name must be plural and contain only alphabetic characters and have a minimum of 4 caracters.';
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);
+			exit;
+		}*/
+		/*elseif(!$this->verif_alpha($strTable) || empty($strTable))
+		{
+			$msg = 'The table name must be lowercase, plural, contain only alphabetic characters and have a minimum of 4 caracters.';
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);
+			exit;
+		}*/
+		elseif(!$this->verif_alpha($strTable) || empty($strTable))
+		{
+			$msg = 'The table name must be lowercase, plural, contain only alphabetic characters and have a minimum of 4 caracters.';
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);
+			exit;
+		}
+		//$this->data[0][0][$table] = strtolower($strTable);\
+		$this->data[0][0][$table] = $strTable;
+		$this->save();
+		return TRUE;
+	}
+	public function delete_table($table)
+	{
+		/*if($this->valid_rule($table,1))
+		{
+			$msg = 'A foreigh key constraint in the rules table does not allow the deletion of this table.';
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);
+		}*/
+		
+		/*$next = $table + 1;
+		while($next <= $this->count_tables())
+		{
+			$this->data[$table] = $this->data[$next];
+			$this->data[0][0][$table] = $this->data[0][0][$next];
+			$table++;
+			$next++;
+		}*/
+		unset($this->data[$table]);
+		unset($this->data[0][0][$table]);
+		ksort($this->data);
+		$this->save();
+	}	
+	
+	function empty_table($table)
+	{
+		//$this->save(TRUE);
+		$save_columns = $this->data[$table][0];
+		unset($this->data[$table]);
+		$this->data[$table][0]=$save_columns;
+		ksort($this->data);
+		$this->save();
+	}
+	//*************************************************//
+	//******************* COLUMNS *********************//
+	//*************************************************//
+	public function add_column($table,$strColumn)
+	{
+		if(!$this->verif_alpha_underscore($strColumn) || empty($table) || empty($strColumn))
+		{
+			$msg = 'The fieldname must contain only alphanumeric characters and "id_" for unique.';
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);
+			exit;
+		}
+		//elseif(strstr($strColumn, '_') && !$this->valid_foreign_key($strColumn))
+		/*if(strstr($strColumn, '_') && !$this->valid_foreign_key($strColumn))
+		{
+			$msg = 'If you try to create a foreigh key it must be terminated by "_id" ';
+			$msg .= 'and must referencing an existing master in the rules table.';
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);
+			exit;
+		}*/
+		/*if($this->column_exists($table,$strColumn))
+		//if(empty($table) || empty($strColumn))
+		{
+			$msg = 'Column exists.';
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);
+			exit;
+		}*/
+		$n_columns = $this->count_columns($table);
+		$this->data[$table][0][$n_columns+1] = $strColumn;
+		$i = 1;
+		$count = count($this->data[$table]);
+		while($i < $count)   
+		{
+			$this->data[$table][$i++][$n_columns+1]='-';	
+		}
+		$this->save();
+		return TRUE;
+	}
+	
+	public function edit_column($table,$column,$strColumn)
+	{
+		if($this->valid_rule($table,$column))
+		{
+			$msg = 'A foreigh key constraint in the rules table does not allow the edition of this key.';
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);
+			exit;
+		}
+		elseif(!$this->verif_alpha_underscore($strColumn) || empty($table) || empty($strColumn))
+		{
+			$msg = 'The fieldname must contain only alphanumeric characters and id_ for unique. Note that foreign key must be terminated by _id';
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);
+			//exit;
+		}
+		/*if( empty($table) || empty($column) || empty($strColumn) )
+		{
+			$msg = 'The fieldname must contain only alphanumeric characters';
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);
+			//exit;
+		}*/
+		$this->set_cell($table,0,$column,$strColumn);
+		return TRUE;
+		//$this->save();
+	} 
+	public function delete_column($table,$column)
+	{
+		if($this->valid_rule($table,$column))
+		{
+			$msg = 'A foreigh key constraint in the rules table does not allow the deletion of this key.';
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);
+		}
+		$nbrColumn = $this->count_columns($table);
+		$nbrLigne = $this->count_lines($table);
+		for( $line = 0; $line <= $nbrLigne; $line++ )
+		{
+			for ( $c = $column; $c <= $nbrColumn; $c++ )
+			{
+				if($c == $nbrColumn)
+				{
+					unset($this->data[$table][$line][$c]);
+				}
+				else
+				{
+					$this->data[$table][$line][$c] = $this->data[$table][$line][$c+1];
+				}
+			}
+			unset($this->data[$table][$line][$nbrColumn]);
+		}
+		if(empty($this->data[$table][0]))
+		{
+			$this->delete_table($table);
+		}
+		$this->save();
+	}
+
+	public function get_column_name($table,$column)
+	{
+		$return = FALSE;
+		if( isset($this->data[$table][0][$column]) )
+		{
+			$return = $this->data[$table][0][$column];
+		} 
+		return $return;
+	}
+	public function get_columns($table)
+	{
+		$return = FALSE;
+		if( isset($this->data[$table][0]) )
+		{
+			$return = $this->data[$table][0];
+		}
+		return $return;
+	}
+	public function column_exists($table,$strColumn)
+	{
+		$return = FALSE;
+		if($this->get_id_column($table,$strColumn) != 0)
+		{
+			$return = TRUE;
+		}
+		return $return;
+	}
+	public function filter_columns(array $columns,array $filter)
+	{
+		return array_intersect($columns,$filter);
+	}
+	public function get_id_column($table,$strColumn)
+	{
+		if(!is_numeric($table))
+		{
+			$table = $this->get_id_table($table);
+		}
+		$id = 0;
+		$columns = $this->data[$table][0];
+		foreach($columns as $index=>$value)
+		{
+			if($value == $strColumn)
+			{
+				$id = (int)$index;
+			}
+		}
+		return $id;
+	}
+	public function concat_columns($strTable,$filter,$strToColumn,$delim=null)
+	{
+		$table = $this->get_id_table($strTable);
+		if(empty($strTable) || empty($filter) || empty($strToColumn))
+		{
+			$msg ='Concat two or more columns';
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);
+			exit;
+		}
+		elseif(!$this->column_exists($table,$strToColumn))
+		{
+			$msg ='Field '.$strToColumn.' from '.$this->colorize($strTable,'red').' does not exists!';
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);
+			exit;
+		}
+		$filter = explode(',',$filter);
+		foreach($filter as $c=>$field)
+		{
+			$order[] = $this->get_id_column($table,$filter[$c]);
+		}
+		$columns = $this->get_columns_of($strTable);
+		//$columns = $this->filter_columns($columns,$filter);
+		$rows = $this->select($columns,$strTable);
+		$tocol = $this->get_id_column($table,$strToColumn);
+		foreach($rows as $i=>$rec)
+		{
+			if($i == 0) continue;
+			$string='';
+			foreach($order as $o=>$c)
+			{
+				$string .= $rec[$c].$delim.' ';
+			}
+			//$rest = substr("abcdef", 0, -1);  // returns "abcde"
+			//-2 a cause de l espace laisser apres le delim
+			$offset = ($delim != '')?2:1;
+			$this->data[$table][$i][$tocol]	= substr($string, 0, -$offset);
+		}
+		$this->save();
+	}
+	//*************************************************//
+	//******************* END COLUMNS *****************//
+	//*************************************************//
+	public function get_id_table($strTable)
+	{
+		$id = 0;
+		$tables = $this->data[0][0];
+		if(empty($tables))
+		{
+			$msg = 'Empty table !';
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);				
+		}
+		foreach($tables as $index=>$value)
+		{
+			if($value == $strTable)
+			{
+				$id = (int)$index;
+			}
+		}
+		return $id;
+	}
+	public function get_table($table,$limit=0)
+	{
+		// Cette variable servait en cas que les indices d'un fichier loader
+		// ne commence pas a 1 mais a 10000 par exemple.
+		//$x = 0;
+		if(isset($this->data[$table]))
+		{
+			if($limit==0)
+			{
+				$records =  $this->data[$table];
+			}
+			else
+			{
+				foreach($this->data[$table] as $i=>$rec)
+				{
+					$records[$i] = $this->data[$table][$i];  
+					//$x++;
+					//if($x > $limit) break;
+					if($i >= $limit) break;
+				}
+			}
+			return $records;
+		}
+		else
+		{
+			return FALSE;
+		}
+	}
+	public function table($string,$col=FALSE)
+	{
+		$return = FALSE;
+		if($this->table_exists($string))
+		{
+			$id = $this->get_id_table($string);
+			$return = $this->get_table($id);
+		}
+		if(!$col)
+		{
+			unset($return[0]);
+		}
+		return $return;
+	}
+	public function table_exists($string)
+	{
+		$return = FALSE;
+		if(!empty($this->data[0][0]))
+		{
+			foreach($this->data[0][0] as $key=>$value)
+			{
+				if($string === $value)
+				{
+					$return = TRUE;
+				}
+			}
+		}
+		return $return;
+	}
+	public function get_table_name($table)
+	{
+		$return = FALSE;
+		if( isset($this->data[0][0][$table]) )
+		{
+			$return = $this->data[0][0][$table];
+		}
+		return $return;
+	}
+	public function get_tables()
+	{
+		if(!empty($this->data))
+		{
+			return $this->data[0][0];
+		}
+	}
+	public function set_cell($x,$y,$z,$value=NULL)
+	{
+		$this->data[$x][$y][$z] = $value;
+		$this->save();
+	}
+	public function get_cell($x,$y,$z)
+	{
+		$return = FALSE;		
+		if(isset($this->data[$x][$y][$z]))
+		{
+			$return = $this->data[$x][$y][$z];
+		}		
+		return $return;
+	}
+	public function del_cell($x,$y,$z)
+	{
+		$return = FALSE;
+		if(isset($this->data[$x][$y][$z]))
+		{
+			unset($this->data[$x][$y][$z]);
+			$this->save();
+			$return = TRUE;
+		}
+		return $return;
+	}
+	
+	public function get_line($table,$line)
+	{
+		$return = FALSE;		
+		if(isset($this->data[$table][$line]))
+		{
+			 $return = $this->data[$table][$line];
+		}		
+		return $return;
+	}
+	public function set_line($post)
+	{
+		if(empty($post['table']) || empty($post['line']))
+		{
+			$msg = 'function model::set_line() Real ID of the table or Line is not set.';
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);
+			exit;
+		}
+		$table = $post['table'];
+		$line = $post['line'];
+		unset($post['table'],$post['line']);
+		$nbrCols = $this->count_columns($table);	
+		for($i=1;$i<=$nbrCols;$i++)
+		{
+			$flag=False;
+			foreach($post as $strColumn=>$strValue)
+			{
+				$column = $this->get_id_column($table,$strColumn);
+				if($column == $i)
+				{
+					$flag=True;
+					$strValue = strval(trim($strValue));
+					//$strValue = strval($strValue);
+					if($strValue || $strValue == 0 || $strValue == "0")
+					{
+						$this->data[$table][$line][$column] = $strValue;
+					}
+					else
+					{
+						$this->data[$table][$line][$column] = '';
+					}
+				}
+			}
+			if($flag==False)
+			{
+				$this->data[$table][$line][$i] = '';
+			}
+		}
+		//ksort($this->data[$table][$line]);
+		$this->save();
+		return $line;
+	}
+	public function add_line($post,$mandatory='')
+	{
+		if(empty($post['table']) || empty($mandatory))
+		{
+			$msg = 'Primary key is not defined !';
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);
+		}
+		$this->repair_table($post['table']);
+		$n_lines = $this->count_lines($post['table']);
+		$post['line'] = ++$n_lines;
+		if(empty($post[$mandatory]))
+		{
+			$strTable = $this->get_table_name($post['table']);
+			$last = $this->get_last_number($strTable,$mandatory);
+			$post[$mandatory] = $last+1;
+		}
+		$this->set_line($post);
+	}
+	public function del_line($table,$line)
+	{		
+		if(isset($this->data[$table][$line]))
+		{
+			unset($this->data[$table][$line]);
+			$this->repair_table($table);
+		}
+		else
+		{	
+			$msg = 'Real line index not found!';
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);
+		}
+	}
+	public function del_lines_where($strTable,$strColumn,$op='==',$multiple='',$strKeyCol)
+	{
+		//if(!$this->table_exists($strTable) || empty($strColumn) ||  empty($op) ||  empty($multiple) || empty($strKeyCol))
+		if(!$this->table_exists($strTable) || empty($strColumn) ||  empty($op) || empty($strKeyCol))
+		{
+			$msg = 'To delete a selection from a table. You need to identify the field (field $a) you want to work with and '; 
+			$msg.= 'then write the according value of this field (string $b) that you will use to delete unwanted records with '; 
+			$msg.= 'a conditional operator and a key column that contains a unique value. ';
+			$msg.= 'It could be any field that contains unique value and it is mandatory to reconstruct the table properly. ';
+			
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);
+			exit;
+		}
+		$table = $this->get_id_table($strTable);
+		$records =  $this->get_where_multiple($strTable,$strColumn,$op,$multiple);
+		$column = $this->get_id_column($table,$strKeyCol);
+		foreach($records as $i=>$record)
+		{
+			//Eliminate row of columns
+			if($i==0) continue;
+			$keys[] = $record[$column];
+		}
+		foreach($keys as $col)
+		{
+			$line = $this->get_real_id($table,$strKeyCol,$col);
+			unset($this->data[$table][$line]);
+			//$this->del_line($table,$line);
+		}
+		$this->repair_table($table);
+	}
+	public function get_last($strTable)
+	{
+		$return = 0;
+		if(!$this->table_exists($strTable))
+		{
+			$msg = 'The table does not exist!';
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);
+			exit;
+		}
+		$tab = $this->get_id_table($strTable);
+		$i = count($this->data[$tab])-1;
+		if(is_numeric($this->data[$tab][$i][1]))
+		{
+			$strColumn = $this->get_column_name($tab,1);
+			$return = $this->get_last_number($strTable,$strColumn);
+		}
+		else
+		{
+			$return = ($i>0)?$this->data[$tab][$i][1]:0;
+		}
+		return $return;
+	}
+	
+	public function get_last_number($strTable,$strColumn)
+	{
+		$last = 0;
+				
+		if(!$this->table_exists($strTable))
+		{
+			$msg = 'The table does not exist!';
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);
+			exit;
+		}
+		$tab = $this->get_id_table($strTable);
+		$col = $this->get_id_column($tab,$strColumn);
+
+		foreach($this->data[$tab] as $rec)
+		{
+			if($rec[$col] > $last)
+			{	
+				$last = $rec[$col];
+			}
+		}
+		return (int)$last;
+	}
+	
+	public function get_real_id($table,$strColumn,$unique)
+	{
+		$return = FALSE;
+		$column = $this->get_id_column($table,$strColumn);
+		if($column == 0)
+		{
+			$msg = 'This realId doesn\'t exists.';
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);
+			exit;
+		}
+		foreach( $this->data[$table] as $index=>$record )
+		{	
+			if($index == 0) continue;
+			if($record[$column] == $unique)
+			{
+				$return = $index;
+				break;
+			}
+		}
+		return $return;
+	}
+	public function get_last_real_id($strTable)
+	{
+		$this->repair_table($this->get_id_table($strTable));
+		return $this->count_lines($this->get_id_table($strTable));
+	}
+	public function get($strTable,$line,$strCol)
+	{
+		$result = FALSE;
+		$tab = $this->get_id_table($strTable);
+		if($tab != 0)
+		{
+			$col = $this->get_id_column($tab,$strCol);
+			if($col != 0)
+			{
+				if($this->get_cell($tab,$line,$col))
+				{
+					$result = $this->get_cell($tab,$line,$col);
+				}
+			}
+		}
+		return $result;
+	}
+	public function combine(array $column,array $line)
+	{
+		if(count($column) == count($line))
+		{
+			return array_combine($column,$line);
+		}	
+		else
+		{
+			$msg = 'Error combining columns and data!';
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);
+			exit;
+		}
+	}
+	public function get_where_unique($strTable,$strColumn,$unique)
+	{
+		$return = NULL;
+		$table = $this->get_id_table($strTable);
+		$column = $this->get_id_column($table,$strColumn);
+		if($column !== 0)
+		{
+			foreach( $this->data[$table] as $index=>$record )
+			{	
+				if($index == 0) continue;
+				if($record[$column] == $unique)
+				{
+					$return = $record;
+					break;
+				}
+			}
+		}
+		else
+		{
+			throw new Exception('Table:'.$strTable.' Column index 0');
+		}
+		return $return;
+	}
+	/* OPERATORS
+	$a == $b	Equal	TRUE if $a is equal to $b after type juggling.
+	$a === $b	Identical	TRUE if $a is equal to $b, and they are of the same type.
+	$a != $b	Not equal	TRUE if $a is not equal to $b after type juggling.
+	$a <> $b	Not equal	TRUE if $a is not equal to $b after type juggling.
+	$a !== $b	Not identical	TRUE if $a is not equal to $b, or they are not of the same type.
+	$a < $b	Less than	TRUE if $a is strictly less than $b.
+	$a > $b	Greater than	TRUE if $a is strictly greater than $b.
+	$a <= $b	Less than or equal to	TRUE if $a is less than or equal to $b.
+	$a >= $b	Greater than or equal to	TRUE if $a is greater than or equal to $b.
+	$a <=> $b	Spaceship	An integer less than, equal to, or greater than zero when $a is
+	respectively less than, equal to, or greater than $b. Available as of PHP 7.
+	*/	
+	// $this->get_where_multiple($strTable,$strColumn,$multiple,$op='==');
+	// The values passed in parameters are sensitive to the case.
+	public function get_where_multiple($strTable,$strColumn,$op='==',$multiple='')
+	{
+		$return = NULL;
+		$table = $this->get_id_table($strTable);
+		$column = $this->get_id_column($table,$strColumn);
+		if($column !== 0)
+		{
+			foreach( $this->data[$table] as $realID=>$record )
+			{
+				switch($op)
+				{
+					case '==':
+						if($record[$column] == $multiple)
+						{
+							$return[$realID] = $record;
+						}
+					break;
+					case '===':
+						if($record[$column] === $multiple)
+						{
+							$return[$realID] = $record;
+						}
+					break;
+					case '!=':
+						if($record[$column] != $multiple)
+						{
+							$return[$realID] = $record;
+						}
+					break;
+					case '<>':
+						if($record[$column] <> $multiple)
+						{
+							$return[$realID] = $record;
+						}
+					break;
+					case '!==':
+						if($record[$column] !== $multiple)
+						{
+							$return[$realID] = $record;
+						}
+					break;
+					case '<':
+						if($record[$column] < $multiple)
+						{
+							$return[$realID] = $record;
+						}
+					break;
+					case '>':
+						if($record[$column] > $multiple)
+						{
+							$return[$realID] = $record;
+						}
+					break;
+					case '<=':
+						if($record[$column] <= $multiple)
+						{
+							$return[$realID] = $record;
+						}
+					break;
+					case '>=':
+						if($record[$column] >= $multiple)
+						{
+							$return[$realID] = $record;
+						}
+					break;
+					
+					/* $a <=> $b	Spaceship	An integer less than, equal to, or greater than zero when $a is
+					respectively less than, equal to, or greater than $b.
+					case '<=>':
+						if($record[$column] <=> $multiple)
+						{
+							$return[$realID] = $record;
+						}
+					break;*/
+					case 'LIKE':
+							if(stripos($record[$column],$multiple) !== FALSE)
+							{
+								$return[$realID] = $record; 
+							}
+					break;
+					default:
+						if($record[$column] == $multiple)
+						{
+							$return[$realID] = $record;
+						}				
+				}
+			}
+		}
+		else
+		{
+			throw new Exception('Index 0');
+		}
+		return $return;
+	}
+	public function get_where($strTable,$strColumn,$op='==',$value)
+	{
+		return $this->get_where_multiple($strTable,$strColumn,$op,$value);
+	}
+	public function get_columns_of($strTable)
+	{
+		$idTable = $this->get_id_table($strTable);
+		return $this->get_columns($idTable);
+	}	
+	public function get_field_value_where_unique($strTable,$strColumn,$unique,$strField)
+	{
+		$return = NULL;
+		$idTable = $this->get_id_table($strTable);
+		$array = $this->get_where_unique($strTable,$strColumn,$unique);
+		if( ! is_null($array) )
+		{
+			$id_column = $this->get_id_column($idTable,$strField);
+			$return = $array[$id_column];
+		}
+		return $return;
+	}
+	public function save($backup = FALSE)
+	{
+		$puts = '<?php';
+		if(isset($this->data))
+		{
+			ksort($this->data[0][0],SORT_NUMERIC);
+			ksort($this->data,SORT_NUMERIC);
+			foreach($this->data as $table=>$t)
+			{
+				foreach($t as $line=>$l)
+				{
+					foreach($l as $column=>$value)
+					{
+						$puts .= PHP_EOL;
+						//$value = htmlentities($value);
+						$this->escape($value);
+						$puts .= '$data['.$table.']['.$line.']['.$column.']='."'".$value."'".';';
+					}
+				}
+			}
+		}
+		$puts .= PHP_EOL;
+		$puts .= '?>';
+		$d=($backup)? date("Y-m-d",time()):'';
+		file_put_contents($this->datapath.$this->filename.$d,$puts);
+		return TRUE;
+	}
+	
+	public function xsave($t)
+	{
+		foreach($t as $line=>$l)
+		{
+			foreach($l as $column=>$value)
+			{
+				$xdata[$line][$column] = $value;
+			}
+		}
+		return $xdata;
+	}
+	
+	public function save_script($name,$array)
+	{
+		$puts = '<?php';
+		if(isset($array))
+		{
+			foreach($array as $table=>$t)
+			{
+				foreach($t as $line=>$l)
+				{
+					foreach($l as $column=>$value)
+					{
+						$puts .= PHP_EOL;
+						$this->escape($value);
+						if($value == '-')
+						{
+							$value='';
+							//$puts .= '$data['.$table.']['.$line.']['.$column.']='."''".';';
+						}
+						$puts .= '$data['.$table.']['.$line.']['.$column.']='."'".$value."'".';';
+					}
+				}
+			}
+		}
+		$puts .= PHP_EOL;
+		$puts .= '?>';
+		
+		file_put_contents($this->datapath.$name.'.php',$puts,LOCK_EX);
+	}
+	
+	//has been noved to Model:Get
+	/*public function save_big_data($strTable,$offset=NULL)
+	{
+		$table = $this->get_id_table($strTable);
+		$t = $this->table($strTable,TRUE);
+		//var_dump($data); exit;
+		$puts = '<?php';
+		if(isset($t))
+		{
+			//foreach($data as $table=>$t)
+			//{
+				foreach($t as $line=>$l)
+				{
+					foreach($l as $column=>$value)
+					{
+						$puts .= PHP_EOL;
+						$puts .= '$data['.$table.']['.$line.']['.$column.']='."'".$value."'".';';
+					}
+				}
+			//}
+		}
+		$puts .= PHP_EOL;
+		$puts .= '?>';
+		file_put_contents(DATADIRECTORY.$strTable.$offset.'.php',$puts,LOCK_EX);
+	}*/
+	public function serialize()
+	{
+		$altfile = strstr($this->filename, '.', true); 
+		file_put_contents($this->datapath.$altfile.'.ser',serialize($this->get_data()));
+		file_put_contents($this->datapath.$altfile.'.json',json_encode($this->get_data(),JSON_NUMERIC_CHECK));
+	}
+	public function escape(&$mixed)
+	{
+		// Remplace ' par &#039;, < par &lt; , > par &gt;
+		if (is_array($mixed))
+		{
+			foreach($mixed as $key => $value)
+			{
+				//$mixed[$key] = trim(preg_replace('/\s+/', ' ', $mixed[$key]));
+				$mixed[$key] = preg_replace("/'/", "&#039;", $mixed[$key]);
+				$mixed[$key] = preg_replace("/</", "&lt;", $mixed[$key]);
+				$mixed[$key] = preg_replace("/>/", "&gt;", $mixed[$key]);
+				$mixed[$key] = str_replace("\\", "&#092;", $mixed[$key]);
+				$mixed[$key] = str_replace("/", "&#047;", $mixed[$key]);
+				//$mixed[$key] = str_replace("à", "&agrave;", $mixed[$key]);
+			}
+		}
+		else
+		{
+			//$mixed = trim(preg_replace('/\s+/', ' ', $mixed));
+			$mixed = preg_replace("/'/", "&#039;", $mixed);
+			$mixed = preg_replace("/</", "&lt;", $mixed);
+			$mixed = preg_replace("/>/", "&gt;", $mixed);
+			$mixed = str_replace("\\", "&#092;", $mixed);
+			$mixed = str_replace("/", "&#047;", $mixed);
+			//$mixed = str_replace("à", "&agrave;", $mixed);
+		}
+	}
+	/**
+	 *	Contraire de escape
+	 *
+	 *	@param 	mixed &$mixed	Une chaîne de caractère ou un tableau
+	 *							passage par référence, pas besoin de réaffecter $mixed
+	 *	@return	void			
+	 */
+	public function unescape(&$mixed)
+	{	
+		if (is_array($mixed))
+		{
+			foreach($mixed as $key => $value)
+			{
+				$mixed[$key] = preg_replace("/&#039;/", "'", trim($mixed[$key]));
+				$mixed[$key] = preg_replace("/&lt;/", "<", $mixed[$key]);
+				$mixed[$key] = preg_replace("/&gt;/", ">", $mixed[$key]);
+				$mixed[$key] = str_replace("&#092;", "\\", $mixed[$key]);
+				$mixed[$key] = str_replace("&#047;","/", $mixed[$key]);
+				//$mixed[$key] = str_replace("&agrave;", "&agrave;", $mixed[$key]);
+			}
+		}
+		else
+		{
+			$mixed = preg_replace("/&#039;/", "'",$mixed);
+			$mixed = preg_replace("/&lt;/", "<", $mixed);
+			$mixed = preg_replace("/&gt;/", ">", $mixed);
+			$mixed = str_replace("&#092;", "\\", $mixed);
+			$mixed = str_replace("&#047;","/", $mixed);
+			//$mixed = str_replace("&agrave;", "&agrave;", $mixed);
+		}
+	}
+	function verif_alpha($str)
+	{
+		preg_match("/([^A-Za-z])/",$str,$result);
+		if(!empty($result))
+		{
+			return FALSE;
+		}
+		return TRUE;
+	}
+	function verif_alpha_num($str)
+	{		
+		preg_match("/([^A-Za-z0-9])/",$str,$result);
+		if(!empty($result))
+		{
+			return FALSE;
+		}
+		return TRUE;
+	}
+	// only allow alphanumeric strings and - _ characters
+	function verif_alpha_underscore($str)
+	{
+		preg_match("/[^a-z_\-0-9]/i",$str,$result);
+		if(!empty($result))
+		{
+			return FALSE;
+		}
+		return TRUE;
+	}
+	function set_type($value)
+	{
+		if(is_numeric($value))
+		{
+			if(is_int($value))
+			{
+				$value = (int)$value;
+			}
+			elseif(is_float($value))
+			{
+				$value = (float)$value;
+			}
+		}
+		return $value;
+	}
+	function get_record($strTable,$line)
+	{
+		$idTable = $this->get_id_table($strTable);
+		$lines = $this->get_line($idTable,$line);
+		$columns = $this->get_columns($idTable);
+		return $this->combine($columns,$lines);
+	}
+	function select(array $columns,$strTable)
+	{
+		$id = $this->get_id_table($strTable);
+		$cols = $this->get_columns($id);
+		$columns = $this->filter_columns($cols,$columns);		
+		$select = array();
+		$records = $this->get_table($id);
+		foreach($records as $i=>$record)
+		{
+			foreach($columns as $c=>$col)
+			{
+				$select[$id][$i][$c] = $this->data[$id][$i][$c];		
+			}	
+		}
+		return $select[$id];
+	}
+	function select_where(array $columns,$strTable,$strColumn,$op='==',$value)
+	{
+		$id = $this->get_id_table($strTable);
+		$cols = $this->get_columns($id);
+		$columns = $this->filter_columns($cols,$columns);
+		$select = array();
+		$records = $this->get_where($strTable,$strColumn,$op,$value);
+		
+		foreach($records as $i=>$record)
+		{
+			foreach($columns as $c=>$col)
+			{
+				if(isset($record[$c]))
+				{
+					$select[$id][$i][$c] = $record[$c];	
+				}
+				else
+				{
+					$select[$id][$i][$c] ='';	
+				}
+			}	
+		}
+		return $select[$id];
+	}
+	function sum($strTable,$strColumnToSum,$strColumn,$intKey)
+	{
+		$sum = NULL;
+		$intTable = $this->get_id_table($strTable);
+		$columnToSum = $this->get_id_column($intTable,$strColumnToSum);
+		$column = $this->get_id_column($intTable,$strColumn);
+		foreach( $this->data[$intTable] as $realID=>$record )
+		{
+			if($record[$column] == $intKey)
+			{
+				$sum += $record[$columnToSum];  				
+			}
+		}
+		return $sum;
+	}
+
+	function sub($strTable,$strColumnToSub,$strColumn,$intKey)
+	{
+		$sum = NULL;
+		$intTable = $this->get_id_table($strTable);
+		$columnToSub = $this->get_id_column($intTable,$strColumnToSub);
+		$column = $this->get_id_column($intTable,$strColumn);
+		foreach( $this->data[$intTable] as $realID=>$record )
+		{
+			if($record[$column] == $intKey)
+			{
+				$sum -= $record[$columnToSub];  				
+			}
+		}
+		return $sum;
+	}
+	function import_php_data_mysql($file,$records)
+	{
+		include(ROOT.'data/'.$file.'.php');
+		$ntab = $this->count_tables()+1;
+		$this->data[0][0][$ntab]=$file;
+		foreach($$records as $i=>$rec)
+		{
+			$colonne = 1;
+			foreach($rec as $col=>$value)
+			{
+				$this->data[$ntab][0][$colonne] = $col;
+				$colonne++;
+			}
+		}
+		foreach($$records as $i=>$rec)
+		{
+			$colonne = 1;
+			foreach($rec as $col=>$value)
+			{
+				$this->data[$ntab][$i+1][$colonne] = $value;
+				$colonne++;
+			}
+		}
+		$this->save();
+	}
+	/*****************************************/
+	// Check foreign keys
+	//****************************************/
+	function valid_foreign_key($strColumn)
+	{
+		$return = FALSE;
+		$arr = explode('_',$strColumn);
+		$strTable = $arr[0].'s';
+		if(array_key_exists(1,$arr) && $arr[1]=='id' && !$this->table_exists($strTable))
+		{
+			$return = $this->valid_master_table($strTable);
+		}
+		return $return;
+	}
+	function left($str, $length) 
+	{
+		return substr($str, 0, $length);
+	}
+ 
+	function right($str, $length) 
+	{
+		return substr($str, -$length);
+	}
+	/*function load_script($name,$table=2)
+	{
+		if (file_exists($this->datapath.$name.'.php')) 
+		{
+			include($this->datapath.$name.'.php');
+			unset($this->data[$table]);
+			$this->data[$table] = $data[$table]; 
+			$this->save();
+		} 
+		else 
+		{
+			$msg = 'The file '.$this->datapath.$name.'.php does not exist';
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);
+		}
+	}*/
+	function valid_rule($table,$column)
+	{
+		$return = FALSE;		
+		//$strTable=$this->get_table_name($table);	
+		$strColumn=$this->get_column_name($table,$column);
+		
+		if(stripos($strColumn,'_') != FALSE)
+		{
+			$lenstr = strlen($strColumn);
+			$idk = $this->right($strColumn,3);
+			if($idk == '_id')
+			{
+				$strTable = $this->left($strColumn,$lenstr-3);
+			}
+			$idk = $this->left($strColumn,3);
+			if($idk == 'id_')
+			{
+				$strTable = $this->right($strColumn,$lenstr-3);
+			}
+			if($this->table_exists('rules'))
+			{
+				$id =$this->get_id_table('rules');
+				$rules = $this->get_table($id);
+				foreach($rules as $line=>$rec)
+				{
+					if($rec[2]==$strTable.'s' || $rec[3]==$strTable.'s')
+					{
+						$return = TRUE;
+						break;
+					}			
+				}
+			}
+		}
+		return $return;
+	}
+	function valid_master_table($strTable)
+	{
+		$return = FALSE;
+		$records = $this->get_where('rules','master','==',$strTable);
+		if($records)
+		{
+			$return=TRUE;
+		}
+		return $return;
+	}
+	function valid_slave_table($strTable)
+	{
+		$return = FALSE;
+		$records = $this->get_where('rules','slave','==',$strTable);
+		if($records)
+		{
+			$return=TRUE;
+		}
+		return $return;
+	}	
+	
+	public function check_rule($str,$key)
+	{
+		$master = $str;
+		try
+		{
+			$regles = $this->get_where_multiple('rules','master','==',$str);
+			$str = rtrim($str,'s');
+			$key = $this->get($master,$key,'id_'.$str);
+			//indice 3 == slave field
+			if($regles)
+			{
+				foreach($regles as $r=>$regle)
+				{
+					$strSlave =$regles[$r][3];
+					$idSlave = $this->get_id_table($strSlave);
+					try
+					{
+						$records = $this->get_where_multiple($strSlave,$str.'_id','==',$key);
+						if($records)
+						{
+							foreach($records as $line=>$record)
+							{
+								unset($this->data[$idSlave][$line]);
+							}
+							$this->repair_table($idSlave);
+						}
+					}
+					catch (Exception $e) 
+					{
+						echo 'Caught exception: ',  $e->getMessage(), "\n";
+					}
+				}
+			}
+		}
+		catch (Exception $e) 
+		{
+			echo 'Caught exception: ',  $e->getMessage(), "\n";
+		}
+		//$this->save();
+	}
+	
+	public function time_corrector($strTable,$strColumn,$format)
+	{
+		if(empty($strTable) || empty($strColumn))
+		{
+			$msg = 'To fix a column choose a time column and identify the format. It will transform as HH:MM:SS'; 
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);
+			exit;
+		}
+		$table = $this->get_id_table($strTable);
+		$column = $this->get_id_column($table,$strColumn);		
+		$rows = $this->get_table($table);
+		foreach($rows as $i=>$rec)
+		{
+			if($i == 0) continue;
+			if($this->data[$table][$i][$column] !='')
+			{
+				$this->data[$table][$i][$column] = $this->valid_time($this->data[$table][$i][$column],$format);
+			}
+		}
+		$this->save();
+	}
+	
+	public function valid_time($string,$format='H:i:s')
+	{
+		$return = '';
+		switch($format)
+		{
+			case 'H:i:s':
+				$return = date($format, strtotime($string));
+			break;
+			case 'serialtime':
+				$return = gmdate('H:i:s',$string);
+			break;
+		}
+		return $return;
+	}
+	
+	public function date_corrector($strTable,$strColumn,$format)
+	{
+		if(empty($strTable) || empty($strColumn) || empty($format))
+		{
+			$msg = 'To fix a column choose a column and identify the format. It will transform as YYYY-MM-DD'; 
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);
+			exit;
+		}
+		$table = $this->get_id_table($strTable);
+		$column = $this->get_id_column($table,$strColumn);		
+		$rows = $this->get_table($table);
+		foreach($rows as $i=>$rec)
+		{
+			if($i == 0) continue;
+			if($this->data[$table][$i][$column] !='')
+			{
+				$this->data[$table][$i][$column] = $this->valid_date($this->data[$table][$i][$column],$format);
+			}
+		}
+		$this->save();
+	}
+	function valid_date($string,$format,$time=FALSE)
+	{
+		$gyear = 39;
+		$date = new DateTime();
+		if($del = strpos($format,'-') > 0)
+		{
+			$del ='-';
+		}
+		elseif($del = strpos($format,'/') > 0)
+		{
+			$del = '/';
+		}
+		else
+		{
+			$del ='';
+		}
+		//echo empty($del); exit;
+		if($del != '')
+		{
+			switch($format)
+			{
+				case 'MM'.$del.'DD'.$del.'YY':
+					$array = explode($del,$string);
+					$prefixyear = ($array[2] > $gyear)?'19':'20';
+					$year = $prefixyear.$array[2];
+					$month = $array[0];
+					$day = $array[1];
+					//$date->setDate($year,$month,$day);
+				break;
+				case 'MM'.$del.'DD'.$del.'YYYY':
+					$array = explode($del,$string);
+					$year = $array[2];
+					$month = $array[0];
+					$day = $array[1];
+					//$date->setDate($year,$month,$day);
+				break;
+				case 'DD'.$del.'MM'.$del.'YY':
+					$array = explode($del,$string);
+					$prefixyear = ($array[2] > $gyear)?'19':'20';
+					$year = $prefixyear.$array[2];
+					$month = $array[1];
+					$day = $array[0];
+					//$date->setDate($year,$month,$day);
+				break;
+				case 'DD'.$del.'MM'.$del.'YYYY':
+					$array = explode($del,$string);
+					$year = $array[2];
+					$month = $array[1];
+					$day = $array[0];
+					//$date->setDate($year,$month,$day);
+				break;
+				case 'YY'.$del.'MM'.$del.'DD':
+					$array = explode($del,$string);
+					$prefixyear = ($array[0] > $gyear)?'19':'20';
+					$year = $prefixyear.$array[0];
+					$month = $array[1];
+					$day = $array[2];
+					//$date->setDate($year,$month,$day);
+				break;
+				case 'YYYY'.$del.'MM'.$del.'DD':
+					$array = explode($del,$string);
+					$year = $array[0];
+					$month = $array[1];
+					$day = $array[2];
+					//$date->setDate($year,$month,$day);
+				break;
+				default:
+					$array = explode($del,$string);
+					$year = $array[0];
+					$month = $array[1];
+					$day = $array[2];
+					//$date->setDate($year,$month,$day);
+			}
+		}
+		else
+		{
+			switch($format)
+			{
+				//MDY
+				case 'MMDDYY':
+					//('082619','MMDDYY');
+					$month = $this->left($string,2);
+					$day = substr($string, -4, 2);				
+					$year = $this->right($string,2);
+					$prefixyear = ($year > $gyear)?'19':'20';
+					$year = $prefixyear.$year;
+					//$date->setDate($year,$month,$day);
+				break;
+				case 'MMDDYYYY':
+					//('08262019','MMDDYYYY');
+					$month = $this->left($string,2);
+					$day = substr($string, -6, 2);				
+					$year = $this->right($string,4);
+					//$date->setDate($year,$month,$day);
+				break;
+				//DMY
+				case 'DDMMYY':
+					//('210819','DDMMYY');
+					$day = $this->left($string,2);
+					$month = substr($string, -4, 2);				
+					$year = $this->right($string,2);
+					$prefixyear = ($year > $gyear)?'19':'20';
+					$year = $prefixyear.$year;
+					//$date->setDate($year,$month,$day);
+				break;
+				case 'DDMMYYYY':
+					//('21082019','DDMMYYYY');
+					$day = $this->left($string,2);
+					$month = substr($string, -6, 2);				
+					$year = $this->right($string,4);
+					//$date->setDate($year,$month,$day);
+				break;
+				//YMD
+				case 'YYMMDD':
+					//('190826','YYMMDD');
+					$year = $this->left($string,2);
+					$month = substr($string, -4, 2);				
+					$day = $this->right($string,2);
+					$prefixyear = ($year > $gyear)?'19':'20';
+					$year = $prefixyear.$year;
+					//$date->setDate($year,$month,$day);
+				break;
+				case 'YYYYMMDD':
+					//('20190826','YYYYMMDD');
+					$year = $this->left($string,4);
+					$month = substr($string, -4, 2);				
+					$day = $this->right($string,2);
+					//$date->setDate((int)$year,(int)$month,(int)$day);
+				break;
+				//MM
+				case 'MM':
+					//('20190826','YYYYMMDD');
+					$year = date("Y");
+					$month = $string;
+					$day = 15;
+					$a_date = $year.'-'.$month.'-'.$day;
+					$darr = date("Y-m-t", strtotime($a_date));					
+					return $darr;
+					//$date->setDate((int)$year,(int)$month,(int)$day);
+				break;
+			}
+		}
+		$date->setDate((int)$year,(int)$month,(int)$day);
+		$newDate = ($time)? $date->format('Y-m-d H:i:s'):$date->format('Y-m-d');
+		return $newDate;
+	}
+	//*************************************************//
+	//********  SETTING ONE TABLE FOR USAGE   *********//
+	//*************************************************//
+	function set_table(array $a)
+	{
+		$this->table = strtolower($a['table']);
+		//Remove the "s" at the end of the primary field that receives the name of the table in the plural.
+		if(substr($this->table, -1)=='s')
+		{ 
+			$this->primary = 'id_'.substr($this->table, 0, -1);
+		}
+		else
+		{
+			$this->primary = 'id_'.$this->table;
+		}
+		$this->id_table = $this->get_id_table($this->table);
+		$this->table_nbrlines = $this->count_lines($this->id_table);
+		$this->table_nbrcolumns = $this->count_columns($this->id_table);
+	}
+	function all($col=FALSE,$limit=0)
+	{
+		$recordset = $this->get_table($this->id_table,$limit);
+		if(!$col)
+		{
+			unset($recordset[0]);
+		}
+		return $recordset;
+	}
+	
+	public function find_replace($strTable,$strColumn,$find='',$replace='')
+	{
+		//$bodytag = str_ireplace("%body%", "black", "<body text=%BODY%
+		//if(empty($strTable) || empty($strColumn) || empty($find) || empty($replace))
+		if(empty($strTable) || empty($strColumn))
+		{
+			$msg = 'Search a column, find and replace.'; 
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);
+			exit;
+		}	
+		$table = $this->get_id_table($strTable);
+		$rows = $this->get_table($table);
+		$col = $this->get_id_column($table,$strColumn);
+		foreach($rows as $i=>$rec)
+		{
+			if($i==0) continue;
+			if(empty($this->data[$table][$i][$col]))
+			{
+				$this->data[$table][$i][$col] = $replace;
+			}
+			else
+			{
+				$str = $this->data[$table][$i][$col];
+				$str = str_ireplace($find,$replace,$str);
+				$this->data[$table][$i][$col] = $str;
+			}
+		}
+		$this->save();
+	}
+	
+	/*public function fill_data($table,$data)
+	{
+		echo '<pre>';
+		var_dump($data);
+		echo '</pre>';
+		exit;
+		$this->data[$table] = $data;
+		$this->save(TRUE);
+	}*/
+	public function copy_column($strTable,$strColumnFrom,$strColumnTo)
+	{
+		if(empty($strTable) || empty($strColumnFrom) || empty($strColumnTo))
+		{
+			$msg = 'To duplicate a column you need to identify the column that you want to duplicate, named the new column. '; 
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);
+			exit;
+		}
+		$table = $this->get_id_table($strTable);
+		$from = $this->get_id_column($table,$strColumnFrom);
+		$this->add_column($table,$strColumnTo);
+		$count = count($this->data[$table]);
+		$to = $this->get_id_column($table,$strColumnTo);
+		$i = 1;
+		while($i < $count)   
+		{
+			$this->data[$table][$i][$to] = $this->data[$table][$i][$from];	
+			$i++;
+		}
+		$this->save();
+	}
+	public function split_column($strTable,$strColumnFrom,$strColumnTo,$left=null,$right=null)
+	{
+		if( empty($strTable) || empty($strColumnFrom) || empty($strColumnTo))
+		{
+			$msg = 'To split a column you need to identify the column that you want to work with, named the new column. '; 
+			$msg .= 'You will need to set how much left and right caracters you want to keep.'; 
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);
+			exit;
+		}
+		$table = $this->get_id_table($strTable);
+		$from = $this->get_id_column($table,$strColumnFrom);
+		$this->add_column($table,$strColumnTo);
+		$count = count($this->data[$table]);
+		$to = $this->get_id_column($table,$strColumnTo);
+		$i = 1;
+		while($i < $count)   
+		{
+			$strFrom =  $this->data[$table][$i][$from];
+			$strFrom = trim(preg_replace('/\s+/', ' ', $strFrom));
+			$lengthFrom = strlen($strFrom);
+		
+			if($left > 0 and $right > 0)
+			{
+				//var_dump($lengthFrom); 
+				$strLeft = $this->left($strFrom,$left);
+				$strRight = $this->right($strFrom,$right);
+				$this->data[$table][$i][$from] = $strLeft;	
+				$this->data[$table][$i][$to] = $strRight ;
+			}
+			elseif($left > 0 and $right =='')
+			{
+				//var_dump($lengthFrom); 
+				$strLeft = $this->left($strFrom,$left);
+				$right = $lengthFrom - $left;
+				$strRight = $this->right($strFrom,$right);
+				$this->data[$table][$i][$from] = $strLeft;	
+				$this->data[$table][$i][$to] = $strRight;
+			}
+			elseif($right > 0 and $left =='')
+			{
+				//var_dump($lengthFrom); 
+				$strRight = $this->right($strFrom,$right);
+				$left = $lengthFrom - $right;
+				$strLeft = $this->left($strFrom,$left);
+				$this->data[$table][$i][$from] = $strLeft;	
+				$this->data[$table][$i][$to] = $strRight;
+			}
+			elseif($left > 0 and $right == 0)
+			{
+				//var_dump($lengthFrom); 
+				$strLeft = $this->left($strFrom,$left);
+				$right = $lengthFrom - $left;
+				$strRight = $this->right($strFrom,$right);
+				$this->data[$table][$i][$from] = $strLeft;	
+				$this->data[$table][$i][$to] = '';
+			}
+			elseif($right > 0 and $left == 0 )
+			{
+				//var_dump($lengthFrom); 
+				$strRight = $this->right($strFrom,$right);
+				$left = $lengthFrom - $right;
+				$strLeft = $this->left($strFrom,$left);
+				$this->data[$table][$i][$from] = '';	
+				$this->data[$table][$i][$to] = $strRight;
+			}
+			$i++;
+		}
+		$this->save();
+	}
+	public function split_column_needle($strTable,$strColumnFrom,$strColumnTo,$needle=null)
+	{
+		if( empty($strTable) || empty($strColumnFrom) || empty($strColumnTo))
+		{
+			$msg = 'To split a column you need to identify the column that you want to work with, named the new column. '; 
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);
+			exit;
+		}
+		$table = $this->get_id_table($strTable);
+		$from = $this->get_id_column($table,$strColumnFrom);
+		$this->add_column($table,$strColumnTo);
+		$count = count($this->data[$table]);
+		$to = $this->get_id_column($table,$strColumnTo);
+		$i = 1;
+		while($i < $count)   
+		{
+			$strFrom =  $this->data[$table][$i][$from];
+			$strFrom = trim(preg_replace('/\s+/', ' ', $strFrom));
+			$lengthFrom = strlen($strFrom);
+			
+			if(empty($needle))
+			{
+				$needle = ' ';
+			}
+
+			$pos = stripos($strFrom,$needle);
+
+			if($pos === FALSE)
+			{
+				$left = $lengthFrom;
+				$right = 0;
+			}
+			else
+			{
+				$left = $pos; 
+				$right = $lengthFrom - $left;
+			}
+		
+			if($left > 0 and $right > 0)
+			{
+				//var_dump($lengthFrom); 
+				$strLeft = $this->left($strFrom,$left);
+				$strRight = $this->right($strFrom,$right);
+				$this->data[$table][$i][$from] = $strLeft;	
+				$this->data[$table][$i][$to] = $strRight ;
+			}
+			elseif($left > 0 and $right == 0)
+			{
+				//var_dump($lengthFrom); 
+				$strLeft = $this->left($strFrom,$left);
+				$right = $lengthFrom - $left;
+				$strRight = $this->right($strFrom,$right);
+				$this->data[$table][$i][$from] = $strLeft;	
+				$this->data[$table][$i][$to] = '-';
+			}
+			elseif($right > 0 and $left == 0)
+			{
+				//var_dump($lengthFrom); 
+				$strRight = $this->right($strFrom,$right);
+				$left = $lengthFrom - $right;
+				$strLeft = $this->left($strFrom,$left);
+				$this->data[$table][$i][$from] = '-';	
+				$this->data[$table][$i][$to] = $strRight;
+			}
+			$i++;
+		}
+		$this->save();
+	}
+	public function move_column($strTable,$strColumn,$strToTable)
+	{
+		if(empty($strTable) || empty($strColumn) || empty($strToTable) || !$this->table_exists($strToTable))
+		{
+			$msg = 'To move a column you need to identify the column that you want to move, and the table where you want to move it. '; 
+			$msg .='Noticed that if your column contains more records than the table receiving it. It will be truncate.';
+			if(!$this->table_exists($strToTable) && !empty($strColumn))
+			{
+				$msg = 'Table '.$strToTable.' has not been imported yet.'; 
+			}
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);
+			exit;
+		}
+		$table = $this->get_id_table($strTable);
+		$totable = $this->get_id_table($strToTable);
+		$from = $this->get_id_column($table,$strColumn);
+		$this->add_column($totable,$strColumn);
+		$count = count($this->data[$totable]);
+		$to = $this->get_id_column($totable,$strColumn);
+		$i = 1;
+		while($i < $count)   
+		{
+			if(isset($this->data[$table][$i][$from]))
+			{
+				$this->data[$totable][$i][$to] = $this->data[$table][$i][$from];	
+			}
+			else
+			{
+				$this->data[$totable][$i][$to] = '-';	
+			}
+			$i++;
+		}
+		$this->save();
+		$this->delete_column($table,$from);
+	}
+	
+	public function copy_column_keys($strTable,$strColumn,$strToTable,$strToField,$string,$op='==',$value=null)
+	{
+		if(empty($strTable) || empty($strColumn)  || empty($strToTable) || empty($strToField)  || empty($string) || empty($op))
+		{
+			$msg = 'Allow me to manually tell it what the key for the column is? example: phonetype1="H" '; 
+			$msg .='means that phone1 should move to the HomePhone column'; 
+			if(!$this->table_exists($strTable) && !empty($strColumn))
+			{
+				$msg = 'Table '.$strToTable.' has not been imported yet.'; 
+			}
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);
+			exit;
+		}
+		//FROM TABLE
+		$table = $this->get_id_table($strTable);
+		//if($this->column_exists($table,$strColumn) && $this->column_exists($table,$strToField) && $this->column_exists($table,$string))
+		if($this->column_exists($table,$strColumn) && $this->column_exists($table,$string))
+		{
+			$column = $this->get_id_column($table,$strColumn);
+			$totable = $this->get_id_table($strToTable);
+			$tofield = $this->get_id_column($totable,$strToField);
+			$fieldwhere = $this->get_id_column($table,$string);
+			$maxnbrlines = $this->count_lines($totable);
+		}
+		else
+		{
+			$msg = 'The column '.$strColumn.' or '.$strToField.' or '.$string.' does not exists or are misspell.'; 
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);
+			exit;
+		}
+		
+		$tab = $this->data[$table];
+		if(empty($value))
+		{
+			$value = '';
+		}
+		foreach($tab as $i=>$rec)
+		{
+			if($i==0) continue;
+			foreach($rec as $col=>$val)
+			{
+				if($col == $fieldwhere && $i<=$maxnbrlines)
+				//if($col == $fieldwhere)
+				{
+					switch($op)
+					{
+						case '==':
+							if($this->data[$table][$i][$fieldwhere] == $value)
+							{
+								$this->data[$totable][$i][$tofield] = $this->data[$table][$i][$column]; 
+							}
+						break;
+						case '===':
+							if($this->data[$table][$i][$fieldwhere] === $value)
+							{
+								$this->data[$totable][$i][$tofield] = $this->data[$table][$i][$column];  
+							}
+						break;
+						case '!=':
+							if($this->data[$table][$i][$fieldwhere] != $value)
+							{
+								$this->data[$totable][$i][$tofield] = $this->data[$table][$i][$column];  
+							}
+						break;
+						case '<>':
+							if($this->data[$table][$i][$fieldwhere] <> $value)
+							{
+								$this->data[$totable][$i][$tofield] = $this->data[$table][$i][$column];  
+							}
+						break;
+						case '!==':
+							if($this->data[$table][$i][$fieldwhere] !== $value)
+							{
+								$this->data[$totable][$i][$tofield] = $this->data[$table][$i][$column];  
+							}
+						break;
+						case '<':
+							if($this->data[$table][$i][$fieldwhere] < $value)
+							{
+								$this->data[$totable][$i][$tofield] = $this->data[$table][$i][$column];  
+							}
+						break;
+						case '>':
+							if($this->data[$table][$i][$fieldwhere] > $value)
+							{
+								$this->data[$totable][$i][$tofield] = $this->data[$table][$i][$column];  
+							}
+						break;
+						case '<=':
+							if($this->data[$table][$i][$fieldwhere] <= $value)
+							{
+								$this->data[$totable][$i][$tofield] = $this->data[$table][$i][$column];  
+							}
+						break;
+						case '>=':
+							if($this->data[$table][$i][$fieldwhere] >= $value)
+							{
+								$this->data[$totable][$i][$tofield] = $this->data[$table][$i][$column];  
+							}
+						break;
+						/*case '<=>':
+							if($this->data[$table][$i][$fieldwhere] <=> $value)
+							{
+								$this->data[$totable][$i][$tofield] = $this->data[$table][$i][$column];  
+							}
+						break;*/
+						case 'LIKE':
+							if(stripos($this->data[$table][$i][$fieldwhere],$value) !== FALSE)
+							{
+								$this->data[$totable][$i][$tofield] = $this->data[$table][$i][$column];  
+							}
+						break;
+						default:
+							if($this->data[$table][$i][$fieldwhere] == $value)
+							{
+								$this->data[$totable][$i][$tofield] = $this->data[$table][$i][$column];  
+							}		
+					}	
+				}
+			}
+		}
+		$this->save();
+	}
+	
+	public function copy_data_keys($strTable,$strColumn,$strToTable,$strToField,$left,$right,$string,$op='==',$value='')
+	{
+		if(empty($strTable) || empty($strColumn)  || empty($strToTable) || empty($strToField)  || empty($left) || empty($right) || empty($string) || empty($op))
+		{
+			$msg = 'PatNum 35 is the subscriber for Patients 35 and 36, so I need to make a new column in Patients for PrimarySub, lookup PatientNumber from Patients, match it to PatNum in PatIns, and then move the data in the Insured coumn [PatIns] into the PrimarySub column [Patients] based on the existence of a "P" in the InsOrd column [PatIns]'; 
+			if(!$this->table_exists($strTable) && !empty($strColumn))
+			{
+				$msg = 'Table '.$strToTable.' has not been imported yet.'; 
+			}
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);
+			exit;
+		}
+		//FROM TABLE
+		$table = $this->get_id_table($strTable);
+		//if($this->column_exists($table,$strColumn) && $this->column_exists($table,$strToField) && $this->column_exists($table,$string))
+		if($this->column_exists($table,$strColumn) && $this->column_exists($table,$string))
+		{
+			$column = $this->get_id_column($table,$strColumn);
+			$keyleft = $this->get_id_column($table,$left);	
+			
+			$totable = $this->get_id_table($strToTable);
+			$tofield = $this->get_id_column($totable,$strToField);
+			$keyright = $this->get_id_column($totable,$right);
+			
+			$fieldwhere = $this->get_id_column($table,$string);
+			$maxnbrlines = $this->count_lines($totable);
+		}
+		else
+		{
+			$msg = 'The column '.$strColumn.' or '.$strToField.' or '.$string.' does not exists or are misspell.'; 
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);
+			exit;
+		}
+		
+		$tab = $this->data[$table];
+		$totab = $this->data[$totable];
+		if(empty($value))
+		{
+			$value = '';
+		}
+		foreach($tab as $i=>$rec)
+		{
+			if($i==0) continue;
+			foreach($totab as $j=>$sec)
+			{
+				if($j==0) continue;
+					
+				if($this->data[$table][$i][$keyleft] == $this->data[$totable][$j][$keyright])
+				{
+					switch($op)
+					{
+						case '==':
+							if($this->data[$table][$i][$fieldwhere] == $value)
+							{
+								$this->data[$totable][$j][$tofield] = $this->data[$table][$i][$column]; 
+							}
+						break;
+						case '===':
+							if($this->data[$table][$i][$fieldwhere] === $value)
+							{
+								$this->data[$totable][$j][$tofield] = $this->data[$table][$i][$column];  
+							}
+						break;
+						case '!=':
+							if($this->data[$table][$i][$fieldwhere] != $value)
+							{
+								$this->data[$totable][$j][$tofield] = $this->data[$table][$i][$column];  
+							}
+						break;
+						case '<>':
+							if($this->data[$table][$i][$fieldwhere] <> $value)
+							{
+								$this->data[$totable][$j][$tofield] = $this->data[$table][$i][$column];  
+							}
+						break;
+						case '!==':
+							if($this->data[$table][$i][$fieldwhere] !== $value)
+							{
+								$this->data[$totable][$j][$tofield] = $this->data[$table][$i][$column];  
+							}
+						break;
+						case '<':
+							if($this->data[$table][$i][$fieldwhere] < $value)
+							{
+								$this->data[$totable][$j][$tofield] = $this->data[$table][$i][$column];  
+							}
+						break;
+						case '>':
+							if($this->data[$table][$i][$fieldwhere] > $value)
+							{
+								$this->data[$totable][$j][$tofield] = $this->data[$table][$i][$column];  
+							}
+						break;
+						case '<=':
+							if($this->data[$table][$i][$fieldwhere] <= $value)
+							{
+								$this->data[$totable][$j][$tofield] = $this->data[$table][$i][$column];  
+							}
+						break;
+						case '>=':
+							if($this->data[$table][$i][$fieldwhere] >= $value)
+							{
+								$this->data[$totable][$j][$tofield] = $this->data[$table][$i][$column];  
+							}
+						break;
+						case 'LIKE':
+							//$pos = stripos($this->data[$table][$i][$fieldwhere],$value);
+							if(stripos($this->data[$table][$i][$fieldwhere],$value) !== FALSE)
+							{
+								$this->data[$totable][$j][$tofield] = $this->data[$table][$i][$column];  
+							}
+						break;
+						default:
+							if($this->data[$table][$i][$fieldwhere] == $value)
+							{
+								$this->data[$totable][$j][$tofield] = $this->data[$table][$i][$column];  
+							}
+					}
+				}					
+			}				
+		}
+		//$this->preprint($this->data[$totable]);
+		$this->save();
+	}
+	
+	public function move_one_to_many($strTable,$strColumn,$strToTable,$strToTableKey,$strTableKey)
+	{
+		if(empty($strTable) || empty($strColumn) || empty($strToTable) || empty($strTableKey) || empty($strToTableKey) || !$this->table_exists($strToTable))
+		{
+			$msg = 'To move a column you need to identify the column that you want to move, and the table where you want to move it. '; 
+			$msg .='You also need to match the keys.';
+			if(!$this->table_exists($strToTable) && !empty($strColumn))
+			{
+				$msg = 'Table '.$strToTable.' has not been imported yet.'; 
+			}
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);
+			exit;
+		}
+		//FROM TABLE
+		$table = $this->get_id_table($strTable);
+		$fromkey = $this->get_id_column($table,$strTableKey);
+		$from = $this->get_id_column($table,$strColumn);
+		$countfrom = count($this->data[$table]);
+		//TO TABLE
+		$totable = $this->get_id_table($strToTable);
+		$tokey = $this->get_id_column($totable,$strToTableKey);
+		$this->add_column($totable,$strColumn);
+		$to = $this->get_id_column($totable,$strColumn);
+		$count = count($this->data[$totable]);
+		$j = 1;
+		while($j < $countfrom)   
+		{
+			$i=1;
+			while($i < $count)
+			{ 
+				if($this->data[$totable][$i][$tokey] == $this->data[$table][$j][$fromkey])
+				{
+					$this->data[$totable][$i][$to] = $this->data[$table][$j][$from];
+				}
+				$i++;
+			}
+			$j++;
+		}
+		$this->save();
+		$this->delete_column($table,$from);
+	}
+	
+	public function colorize($string,$color)
+	{
+		return '<span style="color:'.$color.';"> '.$string.' </span>';
+	}
+	public function order_by($strTable,$strColumn,$sort=SORT_ASC)
+	{
+		$records = array();
+		$tab = $this->get_id_table($strTable);
+		$col = $this->get_id_column($tab,$strColumn);				
+		$lines = $this->count_lines($tab);	
+		
+		$datas = $this->data[$tab];
+		$columns = $this->data[$tab][0];
+		
+		foreach($datas as $key=>$row)
+		{
+			if($key==0) continue;
+			$dat[$key] = $this->combine($columns,$row);
+		}
+		$strColumn = array_column($dat, $strColumn);
+		array_multisort($strColumn,$sort,$dat);
+		foreach($dat as $i=>$rec)
+		{
+			$j=1;
+			foreach($rec as $col=>$value)
+			{
+				$this->data[$tab][$i+1][$j++]=$value;
+			}
+		}
+		$this->save();
+	}
+	
+	public function merge_rows($strTable,$strColKey,$strColOrder,$strColResult)
+	{
+		if(empty($strTable) || empty($strColKey)  || empty($strColOrder) || empty($strColResult))
+		{
+			$msg = 'Merge rows from table '.$this->colorize($strTable,'red').' to a column in the first row by matching keys.'; 
+			if(!$this->table_exists($strTable))
+			{
+				$msg = 'Table '.$strToTable.' has not been imported yet.'; 
+			}
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);
+			exit;
+		}
+		$table = $this->get_id_table($strTable);
+		$colkey = $this->get_id_column($table,$strColKey);
+		$colorder = $this->get_id_column($table,$strColOrder);
+		$colresult = $this->get_id_column($table,$strColResult);
+		$hkey = array();		
+		$nbr = $this->count_lines($table);
+		for($i=1;$i<=$nbr;$i++)
+		{
+			$key = $this->data[$table][$i][$colkey]; 
+			if(!array_key_exists($key,$hkey))
+			{
+				$rows = $this->get_where($strTable,$strColKey,'==',$key);
+				$arr = array();
+				foreach($rows as $real=>$row)
+				{
+					$arr[$real] = $row[$colorder];
+				}
+				asort($arr);
+				$firstkey = array_key_first($arr);
+				$string='';
+				foreach($arr as $k=>$value)
+				{
+					$string .= $this->data[$table][$k][$colresult];
+					if($k != $firstkey)
+					{
+						$tobedelete[$k]=$k;
+					}
+				}
+				$hkey[$key] = $key;
+				$this->data[$table][$firstkey][$colresult] = $string;
+			}
+		}
+		foreach($tobedelete as $k)
+		{
+			unset($this->data[$table][$k]);
+		}
+		//$this->save();
+		$this->repair_table($table);
+	}
+	
+	public function repair_table($table)
+	{
+		$j=1;
+		$records = $this->get_table($table);
+		foreach($records as $i=>$rec)
+		{
+			if($i==0) continue;
+			if($i !== $j)
+			{
+				$this->data[$table][$j] = $this->data[$table][$i];
+				unset($this->data[$table][$i]);
+			}
+			$j++;
+		}
+		ksort($this->data,SORT_NUMERIC);
+		$this->save();
+	}
+	
+	public function del_doublon($table,$column)
+	{
+		$str=array();
+		$records = $this->get_table($table);
+		foreach($records as $i=>$rec)
+		{
+			if($i==0) continue;
+			$str[$i] = $this->data[$table][$i][$column];
+		}
+		$str = array_unique($str);
+		foreach($records as $i=>$rec)
+		{
+			if($i==0) continue;
+			if(!array_key_exists($i,$str))
+			{
+				unset($this->data[$table][$i]);
+			}
+		}
+		$this->repair_table($table);
+	}
+	
+	public function check_system()
+	{
+		$i=1;
+		foreach($this->data as $t)
+		{
+			if(!isset($this->data[0][0][$i]) && isset($this->data[$i]))
+			{
+				$msg = 'ERROR[1] Something break the system between [0][0][1] (table name) and [1][0][1] (table usage). <a href="'.WEBROOT.'main/ini">Initialize</a>'; 
+				throw new Exception($msg);
+				exit;
+			}
+			++$i;
+		}
+	}
+	
+	
+	public function renumber($strTable,$strColumn,$start=1)
+	{
+		if(empty($strTable) || empty($strColumn) || empty($start))
+		{
+			$msg = 'It is not a must but the best practice would be to duplicate a column before.'; 
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);
+			exit;
+		}
+		//$this->save(TRUE);
+		$table = $this->get_id_table($strTable);
+		$column = $this->get_id_column($table,$strColumn);
+		//select(array $columns,$strTable);
+		$arr_columns = array($column=>$strColumn);
+		//var_dump($arr_columns); exit;
+		$records = $this->select($arr_columns,$strTable);
+		foreach($records as $i=>$rec)
+		{
+			if($i==0) continue;
+			//++int parceque on veut pas la premiere ligne 0;
+			$this->data[$table][$i][$column] = $start;
+			$start++;
+		}
+		$this->save();
+	}
+	
+	public function matches($strMaster,$strMasterOldColumn,$strSlave,$strSlaveOldColumn,$strMasterNewNumbersColumn)
+	{
+		if(empty($strMaster) || empty($strMasterOldColumn) || empty($strSlave) || empty($strSlaveOldColumn) || empty($strMasterNewNumbersColumn))
+		{
+			$msg = "Reassign key values of a column in a slave table against new values in the master table. First you will need to duplicate a column in $strMaster and renumber it.";
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);
+			exit;
+		}
+		$id_master = $this->get_id_table($strMaster);
+		$mrecords = $this->get_table($id_master);
+		$id_m_old_column = $this->get_id_column($id_master,$strMasterOldColumn);
+		$id_m_newnumbers_column = $this->get_id_column($id_master,$strMasterNewNumbersColumn);
+
+		$id_slave = $this->get_id_table($strSlave);
+		$srecords = $this->get_table($id_slave);
+		$id_s_old_column = $this->get_id_column($id_slave,$strSlaveOldColumn);
+		//erase column row header
+		unset($mrecords[0]);
+		unset($srecords[0]);
+		
+		foreach($mrecords as $m=>$mrec)
+		{
+			foreach($srecords as $s=>$srec)
+			{
+				if($mrec[$id_m_old_column] == $srec[$id_s_old_column])
+				{
+					$this->data[$id_slave][$s][$id_s_old_column] = $this->data[$id_master][$m][$id_m_newnumbers_column];
+				}
+			}
+		}
+		//$this->preprint($this->data[$id_slave]); 
+		$this->save();
+	}
+	
+	public function copy_text_where($strTable,$strColumn,$text,$string,$op='==',$value=null)
+	{
+		if(empty($strTable) || empty($strColumn) || empty($text) || empty($string) || empty($op))
+		{
+			$msg = 'Copy text "Self" into this field when PatientNumber=Family; copy text "Other" into this field when PatientNumber<>Family'; 
+			if(!$this->table_exists($strTable) && !empty($strColumn))
+			{
+				$msg = 'Table '.$strToTable.' has not been imported yet.'; 
+			}
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);
+			exit;
+		}
+		//FROM TABLE
+		$table = $this->get_id_table($strTable);
+		if($this->column_exists($table,$strColumn) && $this->column_exists($table,$string))
+		{
+			$column = $this->get_id_column($table,$strColumn);
+			$fieldwhere = $this->get_id_column($table,$string);
+		}
+		else
+		{
+			$msg = 'The column '.$strColumn.' or '.$string.' does not exists or are misspell.'; 
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);
+			exit;
+		}
+		if(empty($value))
+		{
+			$value = '';
+		}
+		$tab = $this->data[$table];
+
+		foreach($tab as $i=>$rec)
+		{
+			if($i==0) continue;
+			foreach($rec as $col=>$val)
+			{
+				if($col == $fieldwhere)
+				{
+					switch($op)
+					{
+						case '==':
+							if($this->data[$table][$i][$fieldwhere] == $value)
+							{
+								$this->data[$table][$i][$column] = $text; 
+							}
+						break;
+						case '===':
+							if($this->data[$table][$i][$fieldwhere] === $value)
+							{
+								$this->data[$table][$i][$column] = $text;  
+							}
+						break;
+						case '!=':
+							if($this->data[$table][$i][$fieldwhere] != $value)
+							{
+								$this->data[$table][$i][$column] = $text;  
+							}
+						break;
+						case '<>':
+							if($this->data[$table][$i][$fieldwhere] <> $value)
+							{
+								$this->data[$table][$i][$column] = $text;  
+							}
+						break;
+						case '!==':
+							if($this->data[$table][$i][$fieldwhere] !== $value)
+							{
+								$this->data[$table][$i][$column] = $text;  
+							}
+						break;
+						case '<':
+							if($this->data[$table][$i][$fieldwhere] < $value)
+							{
+								$this->data[$table][$i][$column] = $text;  
+							}
+						break;
+						case '>':
+							if($this->data[$table][$i][$fieldwhere] > $value)
+							{
+								$this->data[$table][$i][$column] = $text;  
+							}
+						break;
+						case '<=':
+							if($this->data[$table][$i][$fieldwhere] <= $value)
+							{
+								$this->data[$table][$i][$column] = $text;  
+							}
+						break;
+						case '>=':
+							if($this->data[$table][$i][$fieldwhere] >= $value)
+							{
+								$this->data[$table][$i][$column] = $text;  
+							}
+						break;
+						/*case '<=>':
+							if($this->data[$table][$i][$fieldwhere] <=> $value)
+							{
+								$this->data[$table][$i][$column] = $text;  
+							}
+						break;*/
+						case 'LIKE':
+							if(stripos($this->data[$table][$i][$fieldwhere],$value) !== FALSE)
+							{
+								$this->data[$table][$i][$column] = $text;  
+							}
+						break;
+						default:
+							if($this->data[$table][$i][$fieldwhere] == $value)
+							{
+								$this->data[$table][$i][$column] = $text;  
+							}		
+					}	
+				}
+			}
+		}
+		$this->save();
+	}
+	
+	public function preprint($array)
+	{
+		echo '<pre>';
+		var_dump($array);
+		echo '</pre>';
+	}
+	public function __destruct()
+	{
+		$this->cleanup();
+	}
+
+	public function cleanup() 
+	{
+		foreach ($this as $key => $value) 
+		{
+            unset($this->$key);
+        }
+	}	
+	public function create_demo()
+	{
+		unset($this->data);
+		$this->data[0][0][1]='rules';
+		$this->data[0][0][2]='users';
+		$this->data[0][0][3]='comments';
+		$this->data[1][0][1]='id_rule';
+		$this->data[1][0][2]='master';
+		$this->data[1][0][3]='slave';
+		$this->data[1][0][4]='comment';
+		$this->data[1][1][1]=1;
+		$this->data[1][1][2]='users';
+		$this->data[1][1][3]='comments';
+		$this->data[1][1][4]='a deletion in the master table will automatically delete all matching records in the slave table.';
+		$this->data[2][0][1]='id_user';
+		$this->data[2][0][2]='user';
+		$this->data[2][1][1]=1;
+		$this->data[2][1][2]='user 1';
+		$this->data[2][2][1]=2;
+		$this->data[2][2][2]='user 2';
+		$this->data[2][3][1]=3;
+		$this->data[2][3][2]='user 3';
+		$this->data[3][0][1]='id_comment';
+		$this->data[3][0][2]='comment';
+		$this->data[3][0][3]='user_id';
+		$this->data[3][1][1]=1;
+		$this->data[3][1][2]='comment from user 1 for example';
+		$this->data[3][1][3]=1;
+		$this->data[3][2][1]=2;
+		$this->data[3][2][2]='comment from user 1 for example';
+		$this->data[3][2][3]=1;
+		$this->data[3][3][1]=3;
+		$this->data[3][3][2]='comment from user 2 for example';
+		$this->data[3][3][3]=2;
+		$this->data[3][4][1]=4;
+		$this->data[3][4][2]='comment from user 3 for example';
+		$this->data[3][4][3]=3;
+		$this->save();
+	}
+}
+?>
