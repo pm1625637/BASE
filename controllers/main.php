@@ -202,8 +202,6 @@ class Main extends Controller
 		} 
 		
 		//SET OWNER
-		// user name:  DentalMate  password: password1
-		//launch DM use UN: Rhonda / PW: future64
 		$sql ="set owner='M5150Dc+'";
 		$res = @odbc_exec($link,$sql);
 		unset($res);
