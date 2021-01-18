@@ -1047,6 +1047,7 @@ class Model
 		$puts .= '?>';
 		$d=($backup)? date("Y-m-d",time()):'';
 		file_put_contents($this->datapath.$this->filename.$d,$puts);
+		//$this->serialize();
 		return TRUE;
 	}
 	
@@ -1091,31 +1092,6 @@ class Model
 		file_put_contents($this->datapath.$name.'.php',$puts,LOCK_EX);
 	}
 	
-	//has been noved to Model:Get
-	/*public function save_big_data($strTable,$offset=NULL)
-	{
-		$table = $this->get_id_table($strTable);
-		$t = $this->table($strTable,TRUE);
-		//var_dump($data); exit;
-		$puts = '<?php';
-		if(isset($t))
-		{
-			//foreach($data as $table=>$t)
-			//{
-				foreach($t as $line=>$l)
-				{
-					foreach($l as $column=>$value)
-					{
-						$puts .= PHP_EOL;
-						$puts .= '$data['.$table.']['.$line.']['.$column.']='."'".$value."'".';';
-					}
-				}
-			//}
-		}
-		$puts .= PHP_EOL;
-		$puts .= '?>';
-		file_put_contents(DATADIRECTORY.$strTable.$offset.'.php',$puts,LOCK_EX);
-	}*/
 	public function serialize()
 	{
 		$altfile = strstr($this->filename, '.', true); 
