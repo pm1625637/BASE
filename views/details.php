@@ -4,7 +4,7 @@
 	  <div class="panel-body">
 		  <ul>
 			<li>File size : <?php echo $ffilesize; ?> octets</li>
-			<li>Import | Export : [.php] [.mysql] [.json] [.csv] [.ser]</li>
+			<li>Import | Export : [.php] [.mysql] [.csv]</li>
 			<li>Symmetry : <?php echo '['.$numtables.']['.$maxlines.']['.$maxcols.']'; ?></li>
 			<li>Number of tables : <?php echo $numtables; ?></li>
 			<li>Max number of lines : <?php echo $maxlines; ?></li>
