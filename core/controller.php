@@ -72,6 +72,7 @@ class Controller
 		$this->data['numtables'] = $this->Get->count_tables();
 		$this->data['maxlines'] = $this->Get->count_max_lines();
 		$this->data['maxcols'] = $this->Get->count_max_columns();
+		//$this->data['path'] = NULL;
 		$this->data['content'] = $this->Template->load('details',$this->data,TRUE);
 		// MAIN PAGE
 		$this->Template->load('layout',$this->data);

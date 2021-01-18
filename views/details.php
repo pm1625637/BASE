@@ -4,13 +4,13 @@
 	  <div class="panel-body">
 		  <ul>
 			<li>File size : <?php echo $ffilesize; ?> octets</li>
-			<li>Import | Export : [.php] [.mysql] [.csv]</li>
+			<li>Import | Export : <span class="badge">php</span><span class="badge">mysql</span><span class="badge">csv</span></li>
 			<li>Symmetry : <?php echo '['.$numtables.']['.$maxlines.']['.$maxcols.']'; ?></li>
 			<li>Number of tables : <?php echo $numtables; ?></li>
 			<li>Max number of lines : <?php echo $maxlines; ?></li>
 			<li>Max number of columns : <?php echo $maxcols; ?></li>
 			<li>Show limit : <?php echo SHOWLIMIT; ?></li>
-			<li>Load limit : <?php echo LOADLIMIT; ?></li>
+			<!--<li>Load limit : <?php echo LOADLIMIT; ?></li>-->
 		  <ul>
 	  </div>
 </div>
