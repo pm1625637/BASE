@@ -2,6 +2,7 @@
 $data[0][0][1]='messages';
 $data[1][0][1]='message';
 $data[1][0][2]='datetime';
+<<<<<<< HEAD
 $data[1][1][1]='Username not found!';
 $data[1][1][2]='2021-01-17 17:57:48';
 $data[1][2][1]='You have logged out!';
@@ -103,3 +104,6 @@ $data[1][49][2]='2021-01-17 18:53:39';
 $data[1][50][1]='Primary key is not defined !';
 $data[1][50][2]='2021-01-17 20:55:09';
 ?>
+=======
+?>
+>>>>>>> 72f3f6b70b8740b2ed8a5caa79ca1a1efa5e24eb
