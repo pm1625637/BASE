@@ -1047,7 +1047,7 @@ class Model
 		$puts .= '?>';
 		$d=($backup)? date("Y-m-d",time()):'';
 		file_put_contents($this->datapath.$this->filename.$d,$puts);
-		//$this->serialize();
+		$this->serialize();
 		return TRUE;
 	}
 	
@@ -1096,7 +1096,7 @@ class Model
 	{
 		$altfile = strstr($this->filename, '.', true); 
 		file_put_contents($this->datapath.$altfile.'.ser',serialize($this->get_data()));
-		file_put_contents($this->datapath.$altfile.'.json',json_encode($this->get_data(),JSON_NUMERIC_CHECK));
+		file_put_contents($this->datapath.$altfile.'.json',json_encode($this->get_data()));
 	}
 	public function escape(&$mixed)
 	{

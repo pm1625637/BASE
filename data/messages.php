@@ -16,4 +16,28 @@ $data[1][6][1]='You have initialized &lt;a href="main"&gt;DATPHP 1.0&lt;&#047;a&
 $data[1][6][2]='2021-01-18 01:01:32';
 $data[1][7][1]='You have initialized &lt;a href="main"&gt;DATPHP 1.0&lt;&#047;a&gt;';
 $data[1][7][2]='2021-01-18 01:02:06';
+$data[1][8][1]='Username not found!';
+$data[1][8][2]='2021-01-18 01:13:28';
+$data[1][9][1]='You are logged in!';
+$data[1][9][2]='2021-01-18 01:13:44';
+$data[1][10][1]='The file C:&#047;www&#047;BASE&#047;data&#047;users.php does not exist';
+$data[1][10][2]='2021-01-18 01:18:17';
+$data[1][11][1]='You have initialized &lt;a href="main"&gt;DATPHP 1.0&lt;&#047;a&gt;';
+$data[1][11][2]='2021-01-18 01:19:01';
+$data[1][12][1]='Cannot use object of type stdClass as array';
+$data[1][12][2]='2021-01-18 01:19:32';
+$data[1][13][1]='Cannot use object of type stdClass as array';
+$data[1][13][2]='2021-01-18 01:19:39';
+$data[1][14][1]='Cannot use object of type stdClass as array';
+$data[1][14][2]='2021-01-18 01:19:42';
+$data[1][15][1]='Cannot use object of type stdClass as array';
+$data[1][15][2]='2021-01-18 01:19:57';
+$data[1][16][1]='You have initialized &lt;a href="main"&gt;DATPHP 1.0&lt;&#047;a&gt;';
+$data[1][16][2]='2021-01-18 01:19:57';
+$data[1][17][1]='Cannot use object of type stdClass as array';
+$data[1][17][2]='2021-01-18 01:19:57';
+$data[1][18][1]='You have initialized &lt;a href="main"&gt;DATPHP 1.0&lt;&#047;a&gt;';
+$data[1][18][2]='2021-01-18 01:20:29';
+$data[1][19][1]='You have initialized';
+$data[1][19][2]='2021-01-18 01:20:38';
 ?>

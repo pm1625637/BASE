@@ -3022,33 +3022,11 @@ class Main extends Controller
 	
 	function test()
 	{
-		
-		echo ('2020-08-12' < NULL);
-		/*$strColumn='client';
-		$arr=explode('_',$strColumn);
-		var_dump($arr);
-		$strTable = $arr[0].'s';
-		echo $strTable;*/
-		//echo $this->Get->valid_foreign_key('client_id');
-		//echo $this->Get->valid_master_table('clients');
-		//$records = $this->Get->get_where('rules','master','==','clients');
-		//var_dump($records);
-		/*$server = $this->Sys->get_record('server',2); 
-		$input = mysqli_connect($server['ipmysql'],$server['usermysql'],$server['passmysql'],$server['dbmysql']);
-	   
-		if (mysqli_connect_errno($input))
-		{
-		  echo "Failed to connect to MySQL: " . mysqli_connect_error();
-		}
-		else
-		{
-			$result = mysqli_query($input,"SELECT * FROM factures");
-		   
-			while($row = mysqli_fetch_array($result,MYSQLI_ASSOC))
-			{
-				printf ("%s (%s)\n", $row["no_facture"], $row["total"]);
-			}
-		}	*/
+		$tbl = $this->Get->get_table(3);
+		var_dump($tbl);
+		$enco = json_encode($tbl);
+		echo $enco;
+		//echo json_decode($enco);
 	}
 }
 ?>
