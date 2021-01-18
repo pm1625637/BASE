@@ -995,10 +995,10 @@ class Model
 				}
 			}
 		}
-		else
+		/*else
 		{
-			throw new Exception('Index 0');
-		}
+			throw new Exception($strTable.' Index 0');
+		}*/
 		return $return;
 	}
 	public function get_where($strTable,$strColumn,$op='==',$value)
