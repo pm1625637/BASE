@@ -36,8 +36,8 @@ class Main extends Controller
 	function index()
 	{
 		// BANNER
-		$this->data['title'] = '<a href="'.DEFAULTCONTROLLER.'" target="_blank">'.ucfirst(DEFAULTCONTROLLER).'</a>';
-		$this->data['banner']= $this->Template->load('banner', $this->data,TRUE);
+		//$this->data['title'] = '<a href="'.DEFAULTCONTROLLER.'" target="_blank">'.ucfirst(DEFAULTCONTROLLER).'</a>';
+		//$this->data['banner']= $this->Template->load('banner', $this->data,TRUE);
 		parent::index();
 	}
 	/*function add_table()

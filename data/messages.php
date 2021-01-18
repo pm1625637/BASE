@@ -100,4 +100,6 @@ $data[1][48][1]='The table [users] already exists.';
 $data[1][48][2]='2021-01-17 18:53:39';
 $data[1][49][1]='You imported table: users';
 $data[1][49][2]='2021-01-17 18:53:39';
+$data[1][50][1]='Primary key is not defined !';
+$data[1][50][2]='2021-01-17 20:55:09';
 ?>

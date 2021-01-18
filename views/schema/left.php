@@ -4,8 +4,8 @@
 	</div>
 	<div class="panel-body">
 		<ul class="list-group">
-		<li class="list-group-item"><a href="<?php echo WEBROOT.$link;?>/ini" title="Import from mysql">Import from mysql <strong><?php echo $dbmysql_import; ?></strong></a></li>
-		<li class="list-group-item"><a onclick="includeHTML()" href="<?php echo WEBROOT.$link;?>/export_all" title="Export to mysql">Export to mysql <strong><?php echo $dbmysql_export; ?></strong></a></li>
+		<li class="list-group-item"><a href="<?php echo WEBROOT.$link;?>/ini" title="Import from mysql">Import from mysql <strong><?php echo substr($dbmysql_import, 8); ?></strong></a></li>
+		<li class="list-group-item"><a onclick="includeHTML()" href="<?php echo WEBROOT.$link;?>/export_all" title="Export to mysql">Export to mysql <strong><?php echo substr($dbmysql_export, 8); ?></strong></a></li>
 		</ul>
 	</div>
 	<div class="panel-footer">
