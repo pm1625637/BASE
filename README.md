@@ -1,9 +1,9 @@
-# PHPBD1
+# DATPHP
 <pre>
-PHPBD est un système de gestion de fichiers de données.
+DATPHP est un système de gestion de fichiers de données.
 
-Je présente ce projet bien humblement, et souhaite trouver des programmeurs enthousiasmes pour m'aider à faire de ce projet, 
-un open source respectable.
+Je présente ce projet bien humblement, et souhaite trouver des programmeurs enthousiasmes 
+pour m'aider à faire de ce projet, un open source respectable.
 
 Structure des données
 Toutes les données sont stockées dans un tableau tridimensionnel. 
@@ -31,31 +31,54 @@ $data[1][2][2]='barack';
 Par convention les noms des tables seront alphabétiques et aux pluriels,
 les noms des colonnes seront alphanumériques et aux singuliers.
 
-L'accès aux donneés
+ACCÈS AUX DONNÉES
 Plusieurs fonctions existent pour travailler avec les tableaux en PHP. 
 Cependant j'ai créé une classe Model qui travaille avec un tableau tridimensionnel. 
 Elle permet entre autres, d'ajouter, modifier ou supprimer une table, une colonne ou un enregistrement. 
-Deux fichiers sont optionellement créés ou modifiés soit : data.php, data.json. 
-Notez que le fichier est nommé data.php pour votre compréhension, mais n'importe quel nom de fichier 
-peut être utilisé et vous pourriez même vous connecter à des fichiers différents d'un contrôleurs à l'autre. 
+Notez que le fichier de données est nommé data.php pour votre compréhension, mais n'importe quel nom de fichier 
+peut être utilisé et vous pouvez même vous connecter à des fichiers différents dans un même contrôleur. 
 
-/* Connexion à la base de données. 
-Format de fichier (.php, .json, .ser) */
-public function connect($path,$file,$ext='php')
+Exemple de connexion à la base de données. Format de fichier (.php)
+Le contrôleur principal Controller charge entre autres le model: Get
+Le modèle Get est l'extension de Model. 
+Essayez cet exercise
+
+class Note extends Controller
 {
-  ...
+	function __construct()
+	{
+		parent::__construct('data','php');
+		// <HEAD>
+		$this->data['title'] =' Notes';
+		$this->data['head'] = $this->Template->load('head',$this->data,TRUE);
+	}
+ 	function index()
+	{
+		parent::index();
+	}
+	function line($url)
+	{
+		$i_table = $this->Get->get_id_table('notes');
+		$i_line = $url[2];
+		$i_column =  $this->Get->get_id_column($i_table,'note');
+		
+		//function get_cell($x,$y,$z)
+		echo ($this->Get->get_cell($i_table,$i_line,$i_column));
+	
+		//function get_record($strTable,$line)		
+		$record = $this->Get->get_record('notes',$i_line);
+		//$record est un tableau : array(3) { ["id_note"]=> string(1) "1" ["note"]=> string(6) "note 1" ["user_id"]=> string(1) "1" }
+		$obj = (json_decode(json_encode($record)));
+		echo $obj->note;
+	}
 }
-Accès par coordonnées
-La beauté de cette façon de faire est la facilité avec laquelle on peut retrouver une donnée spécifique si on connait sa coordonnée. 
-Par exemple, supposons que vous vouliez récupérer la valeur de la table 1 à la ligne 10, colonne 2.
-
-$result = $this->get_cell(1,10,2);
+Dans votre navigateur :
+http://localhost/datphp/note/line/1
 </pre>
 
-
 <pre>
-Fonctions appartenant à la classe Model
-
+Fonctions appartenant à la classe <strong>Model</strong>
+class Get extends Model
 connect - Charge le fichier de données.
 get_version - Retourne la version de la classe Model.
 get_data - Retourne le tableau de données.
