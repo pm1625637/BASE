@@ -17,21 +17,15 @@ class Note extends Controller
 		$i_table = $this->Get->get_id_table('notes');
 		$i_line = $url[2];
 		$i_column =  $this->Get->get_id_column($i_table,'note');
+		
 		// Only the cell : note
 		echo ($this->Get->get_cell($i_table,$i_line,$i_column));
-
-		// The whole record as an array
-		$note = $this->Get->get_line($i_table, $i_line);
-		echo $note[$i_column];		
-		$columns = $this->Get->get_columns_of('notes');
-		$record = $this->Get->combine($note,$columns);
-		
-		file_put_contents(DATADIRECTORY.'note'.$i_line.'.json',json_encode($record));
+	
+		//function get_record($strTable,$line)		
+		$record = $this->Get->get_record('notes',$i_line);	
+		// array(3) { ["id_note"]=> string(1) "1" ["note"]=> string(6) "note 1" ["user_id"]=> string(1) "1" }
 		$obj = (json_decode(json_encode($record)));
-		var_dump($obj);
-		//without combine echo $obj->{"2"};
 		echo $obj->note;
-		// And many more functions
 	}
 }
 ?>
