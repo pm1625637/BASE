@@ -1709,7 +1709,7 @@ class Main extends Controller
 							}
 							//$this->preprint($this->Struct->data[$tab]); exit;
 							$this->Struct->save();
-							$this->Msg->set_msg('The table : '.$act[3].' has been transfered to structure(php)');
+							$this->Msg->set_msg('The table : '.$act[3].' has been transfered to schema(php)');
 						}
 					}
 					catch (Throwable $t)
