@@ -1371,7 +1371,7 @@ class Main extends Controller
 		10	split a column	
 		11	move a column to another table	
 		12	delete records selection
-		13	transfert table to structure(php)	
+		13	transfert table to schema.php	
 		14	add a table	
 		15	renumber a column	
 		16	column number reassignment
