@@ -15,15 +15,12 @@ class System extends Controller
 		// <HEAD>
 		$this->data['title'] =' System';
 		$this->data['head'] = $this->Template->load('head',$this->data,TRUE);
+		
 		if(!isset($_SESSION['loggedin']) || $_SESSION['id_user']!=1)
 		{
 			header('Location:'.WEBROOT.'login');
 			exit();
 		}
-		//Delete doublon
-		$table = $this->Sys->get_id_table('bigfiles');
-		$column = $this->Sys->get_id_column($table,'bigfile');
-		$this->Sys->del_doublon($table,$column);
 	}
 	function index()
 	{
@@ -198,24 +195,7 @@ class System extends Controller
 		//LAYOUT
 		$this->Template->load('layout',$this->data);
 	}
-	function set_cell($url)
-	{
-		//var_dump($url); exit;
-		// define('CONTROLLER',0); define('ACTION',1); define('TABLE',2); define('FIELD',3); define('INDEX',3); define('VALUE',4);
-		//array(5) {  [0]=>  string(4) "main"  [1]=>  string(8) "set_cell"  [2]=>  string(1) "2"  [3]=>  string(1) "1"  [4]=>  string(1) "1"}
-		// sleep for a while so we can see the indicator in demo
-		/*if ($_POST['slow']) {
-		usleep(500000);
-		}*/
-		if (is_array($_POST['value'])) {
-		echo implode(', ', $_POST['value']);
-		} else {
-		echo $_POST['value'];
-		}
-		//$("#td1").editable("/conversion/main/set_cell/2/1/1",{ name : 'value', id  : 'id', type : 'text'});
-		//var_dump($url); exit;
-		$this->Get->set_cell($url[TABLE],$url[INDEX],$url[VALUE],$_POST['value']);
-	}
+
 	/*function add_table()
 	{
 		$this->denied('add a table ');
