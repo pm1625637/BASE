@@ -1,4 +1,12 @@
 <?php if ( ! defined('ROOT')) exit('No direct script access allowed');
+/**
+* @class: Parametre
+* @version:	7.2
+* @author: pierre.martin@live.ca
+* @php: 7.4
+* @revision: 2021-01-16
+* @licence MIT
+*/
 class Parametre extends Controller
 {
 	function __construct()
@@ -7,17 +15,12 @@ class Parametre extends Controller
 		// <HEAD>
 		$this->data['title'] =' Parameters';
 		$this->data['head'] = $this->Template->load('head',$this->data,TRUE);
+		
 		if(!isset($_SESSION['loggedin']))
 		{
 			header('Location:'.WEBROOT.'login');
 			exit();
 		}
-		$this->load_model('Param');
-		$this->Param->connect(DATADIRECTORY,'parametres','php');
-		//Delete doublon
-		$table = $this->Param->get_id_table('tables');
-		$column = $this->Param->get_id_column($table,'strtable');
-		$this->Param->del_doublon($table,$column);
 	}
 	function index()
 	{

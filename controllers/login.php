@@ -1,4 +1,12 @@
 <?php if ( ! defined('ROOT')) exit('No direct script access allowed');
+/**
+* @class: Login
+* @version:	7.2
+* @author: pierre.martin@live.ca
+* @php: 7.4
+* @revision: 2021-01-16
+* @licence MIT
+*/
 class Login extends Controller
 {
 	function __construct()

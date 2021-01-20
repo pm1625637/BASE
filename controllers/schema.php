@@ -1,4 +1,12 @@
 <?php if ( ! defined('ROOT')) exit('No direct script access allowed');
+/**
+* @class: Schema
+* @version:	7.2
+* @author: pierre.martin@live.ca
+* @php: 7.4
+* @revision: 2021-01-16
+* @licence MIT
+*/
 class Schema extends Controller
 {
 	function __construct()
@@ -7,13 +15,13 @@ class Schema extends Controller
 		// <HEAD>
 		$this->data['title'] =' Schemas';
 		$this->data['head'] = $this->Template->load('head',$this->data,TRUE);
+		
 		if(!isset($_SESSION['loggedin']))
 		{
 			header('Location:'.WEBROOT.'login');
 			exit();
 		}
-		//get_field_value_where_unique($strTable,$strColumn,$unique,$strField)
-		//$dbmysql = $this->Sys->get_field_value_where_unique('server','id_server',1,'dbmysql');
+
 		$this->data['dbmysql_import']=$this->Sys->get_field_value_where_unique('server','id_server',1,'dbmysql');
 		$this->data['dbmysql_export']=$this->Sys->get_field_value_where_unique('server','id_server',2,'dbmysql');
 		// LEFT

@@ -1,4 +1,12 @@
 <?php if ( ! defined('ROOT')) exit('No direct script access allowed');
+/**
+* @class: Message
+* @version:	7.2
+* @author: pierre.martin@live.ca
+* @php: 7.4
+* @revision: 2021-01-16
+* @licence MIT
+*/
 class Message extends Controller
 {
 	function __construct()
@@ -7,6 +15,12 @@ class Message extends Controller
 		// <HEAD>
 		$this->data['title'] =' Messages';
 		$this->data['head'] = $this->Template->load('head',$this->data,TRUE);
+		
+		if(!isset($_SESSION['loggedin']))
+		{
+			header('Location:'.WEBROOT.'login');
+			exit();
+		}
 	}
 	function index()
 	{
