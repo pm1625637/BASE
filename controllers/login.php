@@ -33,8 +33,8 @@ class Login extends Controller
 					$_SESSION = $post;
 					$this->Get->save(TRUE);
 					$this->Msg->set_msg('You are logged in!');
-					//header('Location:'.WEBROOT.DEFAULTCONTROLLER);
-					header('Location:'.WEBROOT.'main');
+					header('Location:'.WEBROOT.DEFAULTCONTROLLER);
+					//header('Location:'.WEBROOT.'main');
 					exit;
 				}
 				else

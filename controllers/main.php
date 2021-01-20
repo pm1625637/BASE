@@ -12,11 +12,13 @@ class Main extends Controller
 	function __construct()
 	{
 		parent::__construct(DEFAULTDATABASE,'php');
+		
 		if(!isset($_SESSION['loggedin']))
 		{
 			header('Location:'.WEBROOT.'login');
 			exit();
 		}
+
 		$this->load_model('Struct');
 		$this->Struct->connect(DATADIRECTORY,'schemas','php');
 		
@@ -2766,7 +2768,7 @@ class Main extends Controller
 		{
 			$this->Get->load_big_data($strTable);	
 			$_SESSION['sbigfile'] = $strTable;
-			$this->Msg->set_msg('You have loaded '.$strTable);
+			$this->Msg->set_msg('You have loaded '.$strTable. '.php');
 		}
 		catch (Throwable $t)
 		{
@@ -2782,7 +2784,7 @@ class Main extends Controller
 		{
 			$this->Get->load_big_data($_POST['file']);	
 			$_SESSION['sbigfile'] = $_POST['file'];
-			$this->Msg->set_msg('You have loaded '.$_POST['file']);
+			$this->Msg->set_msg('You have loaded '.$_POST['file'].'.php');
 		}
 		catch (Throwable $t)
 		{
@@ -2877,7 +2879,7 @@ class Main extends Controller
 		$post['table'] = $this->Sys->get_id_table('files');
 		$post['file'] = $url[TABLE];
 		$this->Sys->add_line($post,'id_file');
-		
+		$this->Msg->set_msg('You have saved '.$post['file'].'.php as a independant datafile.');
 		file_put_contents(DATADIRECTORY.$post['file'].'.php',$puts,LOCK_EX);
 		header('Location:'.WEBROOT.strtolower(get_class($this)).'/show_table/'.$url[TABLE]);
 	}

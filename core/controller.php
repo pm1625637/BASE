@@ -471,7 +471,7 @@ class Controller
 				$post['password'] = trim(md5($post['password'])); 
 			}
 			$this->Get->add_line($post,$this->Get->primary);
-			$this->Msg->set_msg("You have added table: $strTable");
+			$this->Msg->set_msg("You have added a record to table: $strTable");
 			header('Location:'.WEBROOT.strtolower(get_class($this)).'/show_table/'.$url[TABLE]);
 			exit();
 		}

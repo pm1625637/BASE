@@ -19,13 +19,17 @@ class Note extends Controller
 		$i_column =  $this->Get->get_id_column($i_table,'note');
 		
 		// Only the cell : note
-		echo ($this->Get->get_cell($i_table,$i_line,$i_column));
-	
+		$this->data['coord'] = '['.$i_table.']['.$i_line.']['.$i_column.']';
+		$this->data['cell'] =  $this->Get->get_cell($i_table,$i_line,$i_column); 
 		//function get_record($strTable,$line)		
 		$record = $this->Get->get_record('notes',$i_line);	
 		// array(3) { ["id_note"]=> string(1) "1" ["note"]=> string(6) "note 1" ["user_id"]=> string(1) "1" }
-		$obj = (json_decode(json_encode($record)));
-		echo $obj->note;
+		$this->data['obj'] = (json_decode(json_encode($record)));
+		//in the view echo $obj->note;
+		
+		$this->data['content'] = $this->Template->load('note',$this->data,TRUE);
+		// MAIN PAGE
+		$this->Template->load('layout',$this->data);
 	}
 }
 ?>
