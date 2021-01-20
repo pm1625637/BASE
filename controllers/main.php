@@ -1650,7 +1650,7 @@ class Main extends Controller
 						$count = $this->Struct->count_lines($tab);
 						if($tab == 0)
 						{
-							$this->Msg->set_msg('['.$act[3].'] Table name does not match any table in structure. Tables and fields are case-sensitive.');
+							$this->Msg->set_msg('['.$act[3].'] Table name does not match any table in schema. Tables and fields are case-sensitive.');
 						}
 						else
 						{
