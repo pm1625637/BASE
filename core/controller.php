@@ -59,6 +59,8 @@ class Controller
 		//<HEAD>
 		$this->data['head'] = $this->Template->load('head',$this->data,TRUE);
 		// BANNER
+		// CHANGE THE DEFAULT TITLE BANNER
+		/*$this->data['title'] = '<a href="'.DEFAULTCONTROLLER.'" target="_blank">'.ucfirst(DEFAULTCONTROLLER).'</a>';*/
 		$this->data['banner']= $this->Template->load('banner', $this->data,TRUE);
 		// NAVIGATION
 		$this->data['nav'] = $this->Template->load('nav',$this->data,TRUE);

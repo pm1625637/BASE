@@ -12,7 +12,7 @@ class Main extends Controller
 	function __construct()
 	{
 		parent::__construct(DEFAULTDATABASE,'php');
-		// <HEAD>
+
 		$this->data['title'] .=' Main';
 		$this->data['head'] = $this->Template->load('head',$this->data,TRUE);
 		
@@ -24,9 +24,6 @@ class Main extends Controller
 	}
 	function index()
 	{
-		// CHANGE THE DEFAULT TITLE BANNER
-		/*$this->data['title'] = '<a href="'.DEFAULTCONTROLLER.'" target="_blank">'.ucfirst(DEFAULTCONTROLLER).'</a>';
-		$this->data['banner']= $this->Template->load('banner', $this->data,TRUE);*/
 		parent::index();
 	}
 
