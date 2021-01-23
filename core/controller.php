@@ -59,7 +59,6 @@ class Controller
 		//<HEAD>
 		$this->data['head'] = $this->Template->load('head',$this->data,TRUE);
 		// BANNER
-		$this->data['title'] = '<a href="'.strtolower(get_class($this)).'">'.$this->data['title'].' '.VERSION.'</a>';
 		$this->data['banner']= $this->Template->load('banner', $this->data,TRUE);
 		// NAVIGATION
 		$this->data['nav'] = $this->Template->load('nav',$this->data,TRUE);

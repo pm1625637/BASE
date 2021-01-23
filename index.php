@@ -22,7 +22,7 @@ define('INDEX',3);
 define('VALUE',4);
 define('SHOWLIMIT',100);
 define('LOADLIMIT',1);
-define('VERSION','1.1.1');
+define('VERSION','1.1');
 
 require(ROOT.'core/model.php');
 require(ROOT.'core/controller.php');
