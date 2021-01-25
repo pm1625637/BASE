@@ -26,6 +26,5 @@ class Main extends Controller
 	{
 		parent::index();
 	}
-
 }
 ?>
