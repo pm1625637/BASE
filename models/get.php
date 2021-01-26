@@ -390,6 +390,7 @@ class Get extends Model
 		}
 		if($append)
 		{
+			//$puts .= "\n";
 			file_put_contents(DATADIRECTORY.$strTable.'.csv',$puts,FILE_APPEND);
 		}
 		else
