@@ -70,4 +70,8 @@ $data[1][33][1]='You are logged in!';
 $data[1][33][2]='2021-02-02 13:53:30';
 $data[1][34][1]='The table name must be lowercase, plural, contain only alphabetic characters and have a minimum of 4 caracters.';
 $data[1][34][2]='2021-02-02 13:54:45';
+$data[1][35][1]='Username not found!';
+$data[1][35][2]='2021-02-02 14:10:05';
+$data[1][36][1]='You are logged in!';
+$data[1][36][2]='2021-02-02 14:10:35';
 ?>
