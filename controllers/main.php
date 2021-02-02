@@ -13,7 +13,7 @@ class Main extends Controller
 	{
 		parent::__construct(DEFAULTDATABASE,'php');
 
-		$this->data['title'] .=' Main';
+		$this->data['title'] =' Main';
 		$this->data['head'] = $this->Template->load('head',$this->data,TRUE);
 		
 		if(!isset($_SESSION['loggedin']))
