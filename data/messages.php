@@ -62,4 +62,12 @@ $data[1][29][1]='function model::set_line() Real ID of the table or Line is not 
 $data[1][29][2]='2021-02-02 13:40:20';
 $data[1][30][1]='You have changed a record at the table: configs';
 $data[1][30][2]='2021-02-02 13:40:25';
+$data[1][31][1]='You have logged out!';
+$data[1][31][2]='2021-02-02 13:53:27';
+$data[1][32][1]='Username not found!';
+$data[1][32][2]='2021-02-02 13:53:27';
+$data[1][33][1]='You are logged in!';
+$data[1][33][2]='2021-02-02 13:53:30';
+$data[1][34][1]='The table name must be lowercase, plural, contain only alphabetic characters and have a minimum of 4 caracters.';
+$data[1][34][2]='2021-02-02 13:54:45';
 ?>
