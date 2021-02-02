@@ -3,8 +3,9 @@
   <div class="panel-heading"><h3>Coordinate <?php echo $coord; ?></h3></div>
 	  <div class="panel-body">
 		  <ul>
-			<li>Value of cell: <?php echo $cell; ?></li>
-			<li>$obj : <?php var_dump($obj); ?></li>
+			<li>Coordinate <?php echo $coord; ?> = "<?php echo $cell; ?>"</li>
+			<li>Coordinate [4][3] as php object : <?php print_r($obj); ?></li>
+			<li>Coordinate [4][3] as .json format: <?php echo($json); ?></li>
 		  <ul>
 	  </div>
 </div>

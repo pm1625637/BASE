@@ -27,8 +27,8 @@ function HideBanner() {
     <span aria-hidden="true">&times;</span>
   </button>
   <div class="container">
-    <h1 class="display-4"><?php echo (isset($title))? $title:"$title"; ?></h1>
-    <p class="lead"><?php echo (isset($desc))? $desc:"$desc"; ?></p>
+    <h1 class="display-4" style="color: #337ab7;"><?php echo (isset($title))? $title:"$title"; ?></h1>
+	<p class="lead"><?php echo (isset($desc))? $desc:"$desc"; echo '&nbsp;version '. VERSION; ?></p>
   </div>
 </div>
-<div id='div_session_write'> </div>
+<div id='div_session_write'></div>
