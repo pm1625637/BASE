@@ -18,6 +18,9 @@ class Note extends Controller
 		$i_line = $url[2];
 		$i_column =  $this->Get->get_id_column($i_table,'note');
 		
+		$this->data['i_table'] = $i_table;
+		$this->data['i_line'] = $i_line;
+		$this->data['i_column'] = $i_column;
 		// Only the cell : note
 		$this->data['coord'] = '['.$i_table.']['.$i_line.']['.$i_column.']';
 		$this->data['cell'] =  $this->Get->get_cell($i_table,$i_line,$i_column); 
