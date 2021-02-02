@@ -4,8 +4,8 @@
 	  <div class="panel-body">
 		  <ul>
 			<li>Coordinate <?php echo $coord; ?> = "<?php echo $cell; ?>"</li>
-			<li>Coordinate [4][3] as php object : <?php print_r($obj); ?></li>
-			<li>Coordinate [4][3] as .json format: <?php echo($json); ?></li>
+			<li>Coordinate [<?=$i_table?>][<?=$i_line?>] as php object : <?php print_r($obj); ?></li>
+			<li>Coordinate [<?=$i_table?>][<?=$i_line?>] as .json format: <?php echo($json); ?></li>
 		  <ul>
 	  </div>
 </div>

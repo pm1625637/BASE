@@ -39,6 +39,9 @@ class Note extends Controller
 		$i_column =  $this->Get->get_id_column($i_table,'note');
 		
 		// Only the cell : note
+		$this->data['i_table'] = $i_table;
+		$this->data['i_line'] = $i_line;
+		$this->data['i_column'] = $i_column;
 		$this->data['coord'] = '['.$i_table.']['.$i_line.']['.$i_column.']';
 		$this->data['cell'] =  $this->Get->get_cell($i_table,$i_line,$i_column); 
 		//function get_record($strTable,$line)		
