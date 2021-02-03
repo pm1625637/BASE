@@ -921,6 +921,7 @@ class Controller
 		try
 		{
 			$this->Get->set_table(array('table'=>$strTable,'primary'=>'id_'.$strTable));
+			$this->data['id'] = $this->Get->id_table;
 			$this->data['thead'] = $this->Get->table;
 			$this->data['nbrligne'] = $this->Get->table_nbrlines;
 			$this->data['nbrcolonne'] = $this->Get->table_nbrcolumns;

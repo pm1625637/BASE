@@ -7,12 +7,12 @@
 		<?php 
 		if(isset($tables))
 		{
-		echo '<ul class="list-group">';
-		foreach($tables as $i=>$table)
-		{
-		echo '<li class="list-group-item"><a href="'.WEBROOT.$link.'/show_table/'.$table.'" onclick="includeHTML()">'.$i.'. '.$table.'</a></li>';
-		}
-		echo '</ul>';
+			echo '<ul class="list-group">';
+			foreach($tables as $i=>$table)
+			{
+				echo '<li class="list-group-item"><a href="'.WEBROOT.$link.'/show_table/'.$table.'" onclick="includeHTML()">'.$i.'. '.$table.'</a></li>';
+			}
+			echo '</ul>';
 		}
 		?>
 	</div>

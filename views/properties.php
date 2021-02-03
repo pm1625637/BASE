@@ -1,10 +1,10 @@
 <div class="panel panel-default">
 	<div class="panel-body">
-	Table   : <strong><a href="<?php echo WEBROOT.$controller.'/show_table/'.$thead?>" onclick="includeHTML()"><?=$thead?></a></strong><br> 
-	Fields  : <span class="badge"><?=$nbrcolonne?></span><br>    
-	Records : <span class="badge"><?=$nbrligne?></span><br>
+	Id.table : <strong><?=$id?></strong><br>
+	Table    : <strong><a href="<?php echo WEBROOT.$controller.'/show_table/'.$thead?>" onclick="includeHTML()"><?=$thead?></a></strong><br> 
+	Fields   : <span class="badge"><?=$nbrcolonne?></span><br>    
+	Records  : <span class="badge"><?=$nbrligne?></span><br>
 	Show Limit : <span class="badge"><?=SHOWLIMIT?></span><br>
-	Load Limit : <span class="badge"><?=LOADLIMIT?></span><br>
 	<?php if(isset($_SESSION['sbigfile'])): ?>
 	PHP data file : <span class="badge"><?=$_SESSION['sbigfile']?></span>
 	<?php endif; ?>
