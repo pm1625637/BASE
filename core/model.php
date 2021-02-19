@@ -1047,7 +1047,7 @@ class Model
 		$puts .= '?>';
 		$d=($backup)? date("Y-m-d",time()):'';
 		file_put_contents($this->datapath.$this->filename.$d,$puts);
-		//$this->serialize();
+		$this->serialize();
 		return TRUE;
 	}
 	

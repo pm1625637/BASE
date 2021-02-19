@@ -26,5 +26,11 @@ class Main extends Controller
 	{
 		parent::index();
 	}
+	
+	function get_json()
+	{
+		header("Content-Type: text/plain");
+		echo $this->Get->get_cell(5,1,2);
+	}
 }
 ?>
