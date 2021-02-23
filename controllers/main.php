@@ -32,5 +32,17 @@ class Main extends Controller
 		header("Content-Type: text/plain");
 		echo $this->Get->get_cell(5,1,2);
 	}
+	/*function langa()
+	{
+		include(DATADIRECTORY.'f_lang.php');
+		$post['table'] = $this->Get->get_id_table('langues');
+		$this->Get->get_id_table('langues');
+		foreach($lang as $k=>$value)
+		{
+			$post['key'] = $k;
+			$post['value'] = $value;
+			$this->Get->add_line($post,'id_langue');		
+		}
+	}*/
 }
 ?>

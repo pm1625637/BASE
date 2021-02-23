@@ -20,7 +20,7 @@ define('TABLE',2);
 define('FIELD',3);
 define('INDEX',3);
 define('VALUE',4);
-define('SHOWLIMIT',100);
+define('SHOWLIMIT',1500);
 define('LOADLIMIT',1);
 define('VERSION','1.1.1');
 
