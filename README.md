@@ -1,6 +1,6 @@
-# DATPHP
+# BASE
 <pre>
-DATPHP est un système de gestion de fichiers de données.
+BASE est un système de gestion de fichiers de données.
 
 Je présente ce projet bien humblement, et souhaite trouver des programmeurs enthousiasmes 
 pour m'aider à faire de ce projet, un open source respectable.
