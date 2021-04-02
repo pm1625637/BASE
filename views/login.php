@@ -1,4 +1,4 @@
-<?php $titre='DATPHP '.VERSION;?>
+<?php $titre='BASE '.VERSION;?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

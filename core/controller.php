@@ -1,15 +1,16 @@
 <?php if ( ! defined('ROOT')) exit('No direct script access allowed');
 /**
 * @class: Controller
-* @version:	8.0
+* @version:	8.2
 * @author: pierre.martin@live.ca
 * @php: 7.4
-* @revision: 2021-01-16
+* @revision: 2021-03-18 16:25
+* @note : controle des labels
 * @licence MIT
 */
 class Controller
 {
-	public static $version = '8.0';
+	public static $version = '8.2';
 	protected $data = array();
 	
 	function __construct($file,$ext,$path=NULL)
@@ -102,6 +103,7 @@ class Controller
 			$strTable = @$_POST['table'];
 			if($this->Get->add_table($strTable))
 			{
+				$strTable = $this->Get->remove_accents($strTable);
 				//For tables list
 				$last = $this->Param->get_last('tables');
 				$idtab = $this->Param->get_id_table('tables');
@@ -818,14 +820,15 @@ class Controller
 		print_r($res);
 		echo '</pre>';
 	}
-	function dropdown($cols,$strTable,$selectName,$value=null)
+	function dropdown($cols,$strTable,$selectName,$value=null,$label=null)
 	{
 		$rec = $this->Get->select($cols,$strTable);
 		//Désactive la ligne des noms de colonnes
 		//unset($array[$i][0]);
 		$colkeys = array_keys($cols);
 		$html  = '<div class="form-group">';
-		$html .= '<label for="'.$selectName.'">'.$selectName.'</label>';
+		$label = (isset($label))?$label:$selectName;
+		$html .= '<label for="'.$selectName.'">'.$label.'</label>';
 		$html .= '<select class="form-control input-sm" name="'.$selectName.'">';
 		$str='';
 		$selected='';
