@@ -417,6 +417,7 @@ class Get extends Model
 				//$field = str_replace(',','.', $field);
 				//$field = preg_replace('/[^A-Za-z0-9\-]/', '', $field);	
 				$field = strval($field);
+				//$field= htmlspecialchars ($field);
 				if($i==0)
 				{
 					if($field || $field == 0 || $field == "0")

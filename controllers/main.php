@@ -13,8 +13,8 @@ class Main extends Controller
 	{
 		parent::__construct(DEFAULTDATABASE,'php');
 
-		$this->data['title'] =' Main';
-		$this->data['head'] = $this->Template->load('head',$this->data,TRUE);
+		/*$this->data['title'] =' Main';
+		$this->data['head'] = $this->Template->load('head',$this->data,TRUE);*/
 		
 		if(!isset($_SESSION['loggedin']))
 		{
@@ -26,23 +26,5 @@ class Main extends Controller
 	{
 		parent::index();
 	}
-	
-	function get_json()
-	{
-		header("Content-Type: text/plain");
-		echo $this->Get->get_cell(5,1,2);
-	}
-	/*function langa()
-	{
-		include(DATADIRECTORY.'f_lang.php');
-		$post['table'] = $this->Get->get_id_table('langues');
-		$this->Get->get_id_table('langues');
-		foreach($lang as $k=>$value)
-		{
-			$post['key'] = $k;
-			$post['value'] = $value;
-			$this->Get->add_line($post,'id_langue');		
-		}
-	}*/
 }
 ?>

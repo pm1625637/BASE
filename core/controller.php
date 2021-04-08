@@ -1,7 +1,7 @@
 <?php if ( ! defined('ROOT')) exit('No direct script access allowed');
 /**
 * @class: Controller
-* @version:	8.2
+* @version:	8.3
 * @author: pierre.martin@live.ca
 * @php: 7.4
 * @revision: 2021-03-18 16:25
@@ -10,7 +10,7 @@
 */
 class Controller
 {
-	public static $version = '8.2';
+	public static $version = '8.3';
 	protected $data = array();
 	
 	function __construct($file,$ext,$path=NULL)
@@ -60,8 +60,11 @@ class Controller
 		//<HEAD>
 		$this->data['head'] = $this->Template->load('head',$this->data,TRUE);
 		// BANNER
-		// CHANGE THE DEFAULT TITLE BANNER
-		/*$this->data['title'] = '<a href="'.DEFAULTCONTROLLER.'" target="_blank">'.ucfirst(DEFAULTCONTROLLER).'</a>';*/
+		// title from configs
+		if(!$this->data['title'])
+		{
+			$this->data['title'] = '<a href="'.DEFAULTCONTROLLER.'" target="_blank">'.ucfirst(DEFAULTCONTROLLER).'</a>';	
+		}
 		$this->data['banner']= $this->Template->load('banner', $this->data,TRUE);
 		// NAVIGATION
 		$this->data['nav'] = $this->Template->load('nav',$this->data,TRUE);
@@ -3719,5 +3722,25 @@ class Controller
 		echo $enco;
 		//echo json_decode($enco);
 	}
+	
+	function get_json()
+	{
+		header("Content-Type: text/plain");
+		echo $this->Get->get_cell(4,1,2);
+	}
+	
+	/*function langa()
+	{
+		include(DATADIRECTORY.'f_lang.php');
+		$post['table'] = $this->Get->get_id_table('langues');
+		$this->Get->get_id_table('langues');
+		foreach($lang as $k=>$value)
+		{
+			$post['key'] = $k;
+			$post['value'] = $value;
+			$this->Get->add_line($post,'id_langue');		
+		}
+	}*/
+	
 }
 ?>
