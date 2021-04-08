@@ -1,47 +1,49 @@
-# DATPHP
+#BASE
 <pre>
-DATPHP est un système de gestion de fichiers de données.
+BASE is a data file management system.
 
-Je présente ce projet bien humblement, et souhaite trouver des programmeurs enthousiasmes 
-pour m'aider à faire de ce projet, un open source respectable.
+I present this project very humbly, and wish to find enthusiastic programmers
+to help me make this project a respectable open source.
 
-Structure des données
-Toutes les données sont stockées dans un tableau tridimensionnel. 
-Donc, pour chaque donnée, une coordonnée [table][ligne][colonne].
+Data structure
+All data is stored in a three-dimensional array.
+So, for each data, a coordinate [table] [row] [column].
 
-Mais où stocker les noms de table dans ce cas ? 
-Les noms de table sont stockés aux indices [0][0][n] par exemple :
-$data[0][0][1]='tableUn';
-$data[0][0][2]='tableDeux';
+But where to store the table names in this case?
+Table names are stored at indices [0] [0] [n] for example:
 
-Les noms de colonnes sont stockés à la ligne [n][0][n] par exemple:
-$data[1][0][1]='colonne1';
-$data[1][0][2]='colonne2';
-$data[2][0][1]='colonne1';
-$data[2][0][2]='colonne2';
+$ data [0] [0] [1] = 'tableOne';
+$ data [0] [0] [2] = 'tableTwo';
 
-Exemple concret d'un fichier de données en php...
-$data[0][0][1]='personnes';
-$data[1][0][1]='nom';
-$data[1][0][2]='prenom';
-$data[1][1][1]='trump';
-$data[1][1][2]='donald';
-$data[1][2][1]='obama';
-$data[1][2][2]='barack';
-Par convention les noms des tables seront alphabétiques et aux pluriels,
-les noms des colonnes seront alphanumériques et aux singuliers.
+Column names are stored in line [n] [0] [n] for example:
+$ data [1] [0] [1] = 'column1';
+$ data [1] [0] [2] = 'column2';
+$ data [2] [0] [1] = 'column1';
+$ data [2] [0] [2] = 'column2';
 
-ACCÈS AUX DONNÉES
-Plusieurs fonctions existent pour travailler avec les tableaux en PHP. 
-Cependant j'ai créé une classe Model qui travaille avec un tableau tridimensionnel. 
-Elle permet entre autres, d'ajouter, modifier ou supprimer une table, une colonne ou un enregistrement. 
-Notez que le fichier de données est nommé data.php pour votre compréhension, mais n'importe quel nom de fichier 
-peut être utilisé et vous pouvez même vous connecter à des fichiers différents dans un même contrôleur. 
+Concrete example of a data file in php ...
+$ data [0] [0] [1] = 'people';
+$ data [1] [0] [1] = 'name';
+$ data [1] [0] [2] = 'firstname';
+$ data [1] [1] [1] = 'trump';
+$ data [1] [1] [2] = 'donald';
+$ data [1] [2] [1] = 'obama';
+$ data [1] [2] [2] = 'barack';
+By convention, the names of the tables will be alphabetical and plural,
+the names of the columns will be alphanumeric and singular.
 
-Exemple de connexion à la base de données. Format de fichier (.php)
-Le contrôleur principal Controller charge entre autres le model: Get
-Le modèle Get est l'extension de Model. 
-Essayez cet exercise
+ACCESS TO DATA
+Several functions exist for working with arrays in PHP.
+However I have created a Model class which works with a three dimensional array.
+It allows, among other things, to add, modify or delete a table, a column or a record.
+Note that the data file is named data.php for your understanding, but any filename
+can be used and you can even connect to different files in one controller.
+
+Example of connection to the database. File format (.php)
+The main controller Controller loads, among other things, the model: Get
+The Get model is the extension of Model.
+
+Try this exercise, create this class...
 
 class Note extends Controller
 {
@@ -72,72 +74,73 @@ class Note extends Controller
 		echo $obj->note;
 	}
 }
-Dans votre navigateur :
+
+In your browser :
 http://localhost/datphp/note/line/1
 </pre>
 
 <pre>
-Fonctions appartenant à la classe <strong>Model</strong>
+Functions belonging to the <strong> Model </strong> class
 class Get extends Model
-connect - Charge le fichier de données.
-get_version - Retourne la version de la classe Model.
-get_data - Retourne le tableau de données.
-set_data - Charge le tableau de données.
-count_tables - Retourne le nombre de tables dans le fichier de données.
-count_columns - Retourne le nombre de colonnes d'une table.
-count_max_columns - Retourne le nombre de colonnes de la table qui en compte le plus.
-count_lines - Retourne le nombre d'enregistrements d'une table.
-count_max_lines - Retourne le nombre d'enregistrements de la table qui en compte le plus.
-export - Créer ou écrase un fichier de données avec les données courantes du tableau.
-import - Importe le fichier de données dans l'objet instancié de la classe Model.
-serialize - Créer 3 fichiers de format (.php, .json, .ser) avant l'exportation.
-escape - Remplace les simple quote et les < et > dans le fichier de données.
-unescape - Effectue le contraire de escape.
-verif_alpha - Vérifie si une valeur est alphabétique.
-verif_alpha_num - Vérifie si une valeur est alphanumérique.
+connect - Loads the data file.
+get_version - Returns the version of the Model class.
+get_data - Returns the data array.
+set_data - Loads the data array.
+count_tables - Returns the number of tables in the data file.
+count_columns - Returns the number of columns in a table.
+count_max_columns - Returns the number of columns in the table with the most.
+count_lines - Returns the number of records in a table.
+count_max_lines - Returns the number of records in the table with the most.
+export - Create or overwrite a data file with the current data from the table.
+import - Imports the data file into the instantiated object of the Model class.
+serialize - Create 3 format files (.php, .json, .ser) before exporting.
+escape - Replaces single quotes and <and> in the data file.
+unescape - Performs the opposite of escape.
+verif_alpha - Checks if a value is alphabetic.
+verif_alpha_num - Checks if a value is alphanumeric.
 
-Les tables
+The tables
 
-add_table - Ajoute une table au fichier de données.
-edit_table - Permet de renommer une table.
-delete_table - Supprime une table.
-get_id_table - Retourne la position d'une table dans le fichier de données.
-get_table - Retourne un tableau contenant tous les enregistrements d'une table.
-table_exists - Retourne vrai si le nom de la table existe.
-get_table_name - Retourne le nom d'une table en fonction de l'indice.
-get_tables - Retourne un tableau contenant tous les noms de table.
-Les colonnes
-add_column - Ajoute une colonne à une table.
-delete_column - Supprime une colonne à une table.
-set_column - Nommer une colonne d'une table.
-get_column_name - Retourne le nom d'une colonne en fonction de son indice.
-get_columns - Retourne un tableau de noms de colonnes d'une table.
-column_exists - Retourne vrai si un nom de colonne existe pour une table.
-filter_columns - Retourne un tableau contenant toutes les valeurs de array1 qui sont présentes dans array2. Notez que les clés sont préservées.
-get_id_column - Retourne la position d'une colonne dans une table.
+add_table - Add a table to the data file.
+edit_table - Allows you to rename a table.
+delete_table - Delete a table.
+get_id_table - Returns the position of a table in the data file.
+get_table - Returns an array containing all the records in a table.
+table_exists - Returns true if the table name exists.
+get_table_name - Returns the name of a table based on the index.
+get_tables - Returns an array containing all table names.
+The columns
+add_column - Adds a column to a table.
+delete_column - Deletes a column from a table.
+set_column - Name a column in a table.
+get_column_name - Returns the name of a column based on its index.
+get_columns - Returns an array of column names from a table.
+column_exists - Returns true if a column name exists for a table.
+filter_columns - Returns an array containing all the values ​​of array1 that are present in array2. Note that the keys are preserved.
+get_id_column - Returns the position of a column in a table.
 
-Les coordonnées
+Coordinates
 
-set_cell - Affecte une valeur à une coordonnée ($int,$int,$int).
-get_cell - Retourne une valeur à une coordonnée ($int,$int,$int).
-del_cell - Supprime une valeur à une coordonnée ($int,$int,$int).
-set_line - Sauvegarde un enregistrement.
-get_line - Retourne un enregistrement.
-add_line - Ajoute un enregistrement.
-del_line - Supprime un enregistrement.
-get_real_id - Retourne la ligne d'un enregistrement.
-get - Retourne une valeur à une coordonnée ($string,$int,$string).
-combine - Joint un tableau de colonnes à un tableau de valeur.
+set_cell - Assigns a value to a coordinate ($ int, $ int, $ int).
+get_cell - Returns a value at one coordinate ($ int, $ int, $ int).
+del_cell - Deletes a one-coordinate value ($ int, $ int, $ int).
+set_line - Save a record.
+get_line - Return a record.
+add_line - Add a record.
+del_line - Delete a record.
+get_real_id - Returns the row of a record.
+get - Returns a value at a coordinate ($ string, $ int, $ string).
+combine - Joins an array of columns to an array of values.
 
-Requête sur les données
+Data query
 
-get_where_unique - Retourne un enregistrement dont la valeur d'une colonne est unique.
-get_where_multiple - Retourne des enregistrements dont la valeur d'une colonne est multiple.
-get_columns_of - Retourne un tableau contenant les noms de colonnes d'une table.
-get_field_value_where_unique - Retourne une valeur d'une cellule en passant en paramètre un nom de colonne dont la valeur est unique.
-get_record - Retourne un enregistrement sous forme de tableau associatif colonne=>valeur.
-select - Retourne un enregistrement en fonction d'un choix de colonnes.
-select_where - Retourne un enregistrement en fonction d'un choix de colonnes et de la valeur d'une des colonnes.
+get_where_unique - Returns a record with a unique column value.
+get_where_multiple - Returns records with multiple column values.
+get_columns_of - Returns an array containing the column names of a table.
+get_field_value_where_unique - Returns a value of a cell, passing a column name whose value is unique as a parameter.
+get_record - Returns a record as an associative array column => value.
+select - Returns a record based on a choice of columns.
+select_where - Returns a record based on a choice of columns and the value of one of the columns.
 
-Et bien d'autres...
+And many others...
 </pre>
