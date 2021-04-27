@@ -92,6 +92,5 @@ class Parametre extends Controller
 	{
 		$this->Param->repair();
 	}
-	
 }
 ?>
