@@ -12,8 +12,8 @@ So, for each data, a coordinate [table] [row] [column].
 But where to store the table names in this case?
 Table names are stored at indices [0] [0] [n] for example:
 
-$ data [0] [0] [1] = 'tableOne';
-$ data [0] [0] [2] = 'tableTwo';
+$ data [0] [0] [1] = 'tableOnes';
+$ data [0] [0] [2] = 'tableTwos';
 
 Column names are stored in line [n] [0] [n] for example:
 $ data [1] [0] [1] = 'column1';
@@ -29,6 +29,7 @@ $ data [1] [1] [1] = 'trump';
 $ data [1] [1] [2] = 'donald';
 $ data [1] [2] [1] = 'obama';
 $ data [1] [2] [2] = 'barack';
+
 By convention, the names of the tables will be alphabetical and plural,
 the names of the columns will be alphanumeric and singular.
 
