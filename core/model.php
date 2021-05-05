@@ -1,16 +1,16 @@
 <?php 
 /**
 * @class: Model
-* @version: 7.3
+* @version: 7.4
 * @author: pierre.martin@live.ca
 * @php: 7.4
-* @revision: 2021-03-18
-* @note : ajout de la fonction remove_accents lors de l'ajout d'une table
+* @revision: 2021-05-05
+* @note : ajout de la fonction is_unique 
 * @licence MIT
 */
 class Model
 {
-	public static $version = '7.3';
+	public static $version = '7.4';
 	public $data = array();
 	public $datapath = NULL;
 	public $filename = NULL;
@@ -894,6 +894,35 @@ class Model
 		}
 		return $return;
 	}
+	
+	public function is_unique($strTable,$strColumn,$unique)
+	{
+		$return = TRUE;
+		$counter = 0;
+		$table = $this->get_id_table($strTable);
+		$column = $this->get_id_column($table,$strColumn);
+		if($column !== 0)
+		{
+			foreach( $this->data[$table] as $index=>$record )
+			{	
+				if($index == 0) continue;
+				if($record[$column] == $unique)
+				{
+					$counter++;
+					if($counter > 1)
+					{
+						$return = FALSE;
+						break;
+					}
+				}
+			}
+		}
+		else
+		{
+			throw new Exception('Table:'.$strTable.' Column index 0');
+		}
+		return $return;
+	}
 	/* OPERATORS
 	$a == $b	Equal	TRUE if $a is equal to $b after type juggling.
 	$a === $b	Identical	TRUE if $a is equal to $b, and they are of the same type.
@@ -1675,7 +1704,7 @@ class Model
 		return $recordset;
 	}
 	
-	public function find_replace($strTable,$strColumn,$find='',$replace='')
+	public function find_replace($strTable,$strColumn,$find=' ',$replace=' ')
 	{
 		//$bodytag = str_ireplace("%body%", "black", "<body text=%BODY%
 		//if(empty($strTable) || empty($strColumn) || empty($find) || empty($replace))

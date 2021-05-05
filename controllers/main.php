@@ -26,5 +26,12 @@ class Main extends Controller
 	{
 		parent::index();
 	}
+	
+	//TEST de la fonction is_unique
+	function test()
+	{
+		$result = $this->Get->is_unique('users','user','user 1');
+		var_dump($result);
+	}
 }
 ?>
