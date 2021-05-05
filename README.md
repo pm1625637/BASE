@@ -41,47 +41,14 @@ can be used and you can even connect to different files in one controller.
 
 Example of connection to the database. File format (.php)
 The main controller Controller loads, among other things, the model: Get
+
+Functions belonging to the <strong> Model </strong> class
+
 The Get model is the extension of Model.
 
-Try this exercise, create this class...
-
-class Note extends Controller
-{
-	function __construct()
-	{
-		parent::__construct('data','php');
-		// <HEAD>
-		$this->data['title'] =' Notes';
-		$this->data['head'] = $this->Template->load('head',$this->data,TRUE);
-	}
- 	function index()
-	{
-		parent::index();
-	}
-	function line($url)
-	{
-		$i_table = $this->Get->get_id_table('notes');
-		$i_line = $url[2];
-		$i_column =  $this->Get->get_id_column($i_table,'note');
-		
-		//function get_cell($x,$y,$z)
-		echo ($this->Get->get_cell($i_table,$i_line,$i_column));
-	
-		//function get_record($strTable,$line)		
-		$record = $this->Get->get_record('notes',$i_line);
-		//$record est un tableau : array(3) { ["id_note"]=> string(1) "1" ["note"]=> string(6) "note 1" ["user_id"]=> string(1) "1" }
-		$obj = (json_decode(json_encode($record)));
-		echo $obj->note;
-	}
-}
-
-In your browser :
-http://localhost/datphp/note/line/1
-</pre>
-
 <pre>
-Functions belonging to the <strong> Model </strong> class
 class Get extends Model
+
 connect - Loads the data file.
 get_version - Returns the version of the Model class.
 get_data - Returns the data array.
