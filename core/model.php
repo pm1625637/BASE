@@ -1,16 +1,16 @@
 <?php 
 /**
 * @class: Model
-* @version: 7.4
+* @version: 7.4.1
 * @author: pierre.martin@live.ca
 * @php: 7.4
 * @revision: 2021-05-05
-* @note : ajout de la fonction is_unique 
+* @note : add_line retourne maintenant l'indice réel de la ligne
 * @licence MIT
 */
 class Model
 {
-	public static $version = '7.4';
+	public static $version = '7.4.1';
 	public $data = array();
 	public $datapath = NULL;
 	public $filename = NULL;
@@ -718,7 +718,7 @@ class Model
 			$last = $this->get_last_number($strTable,$mandatory);
 			$post[$mandatory] = $last+1;
 		}
-		$this->set_line($post);
+		return $this->set_line($post);
 	}
 	public function del_line($table,$line)
 	{		

@@ -17,15 +17,4 @@
 		echo'</li>';
 	}
 	echo '</ol>';
-	//echo '</div>';
-	
-		//var_dump($this->data['columns']);
-		/*$html = '<span>Fields of table: <strong>'.$url[TABLE].'</strong></span>';
-		$html .= '<ol>';
-		foreach($fields as $i=>$field)
-		{
-			$html.='<li>'.$field.'</li>';
-		}
-		$html .= '</ol>';
-		$this->data['content']=$html;*/
 ?>
