@@ -379,12 +379,14 @@ class Get extends Model
 				foreach($l as $column=>$value)
 				{
 					$this->unescape($value);
-					//$value = str_replace('"','',$value);
-					//$value = str_replace(',','.',$value);
-					//$value = utf8_encode($value); 
-					$puts .= $value.'|';
+					$res = strstr($value, ','); 
+					if($res)
+					{
+						$value = '"'.$value.'"'; 
+					}
+					$puts .= $value.',';
 				}
-				$puts = rtrim($puts,'|');
+				$puts = rtrim($puts,',');
 				$puts .= "\n";
 			}
 		}
