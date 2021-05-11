@@ -1,16 +1,16 @@
 <?php 
 /**
 * @class: Model
-* @version: 7.4.1
+* @version: 7.4.2
 * @author: pierre.martin@live.ca
 * @php: 7.4
 * @revision: 2021-05-05
-* @note : add_line retourne maintenant l'indice réel de la ligne
+* @note : get_record retourne maintenant FALSE si laligne n'est pas trouvée
 * @licence MIT
 */
 class Model
 {
-	public static $version = '7.4.1';
+	public static $version = '7.4.2';
 	public $data = array();
 	public $datapath = NULL;
 	public $filename = NULL;
@@ -1235,7 +1235,14 @@ class Model
 		$idTable = $this->get_id_table($strTable);
 		$lines = $this->get_line($idTable,$line);
 		$columns = $this->get_columns($idTable);
-		return $this->combine($columns,$lines);
+		if($lines)
+		{
+			return $this->combine($columns,$lines);
+		}
+		else
+		{
+			return FALSE;
+		}
 	}
 	function select(array $columns,$strTable)
 	{
