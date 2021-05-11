@@ -27,17 +27,25 @@ class Api extends Controller
 		if( $_SERVER['REQUEST_METHOD'] == 'GET' && $key)
 		{
 				$record = $this->Get->get_record($url[TABLE],$url[INDEX]);
-
-				// On envoie le code réponse 200 OK
-				http_response_code(200);
-
-				foreach($record as $k=>$text)
+				if($record)
 				{
-					 $this->Get->unescape($text); 
-					 $record[$k] = $text;
+						// On envoie le code réponse 200 OK
+						http_response_code(200);
+
+						foreach($record as $k=>$text)
+						{
+							 $this->Get->unescape($text); 
+							 $record[$k] = $text;
+						}
+						// On encode en json et on envoie
+						echo json_encode($record,JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 				}
-				// On encode en json et on envoie
-				echo json_encode($record,JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+				else
+				{
+						// On gère l'erreur
+						http_response_code(405);
+						echo json_encode(["message" => "Enregistrement introuvable!"],JSON_UNESCAPED_UNICODE);	
+				}
 		}
 		else
 		{
