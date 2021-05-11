@@ -57,11 +57,59 @@ class Note extends Controller
 		
 		//$this->data['content'] = $this->Template->load('note',$this->data,TRUE);
 		// MAIN PAGE
-		header('Content-Type:text/plain');
-		header('Content-Disposition: attachment; filename="note'.$obj->id_note.'.json"');
+		//header('Content-Type:text/plain');
+		//header('Content-Disposition: attachment; filename="note'.$obj->id_note.'.json"');
 		echo (isset($json))? $json:'$json'; 
 
 		//$this->Template->load('json',$this->data);
+	}
+	function api_get($url)
+	{
+		// Headers requis
+		header("Access-Control-Allow-Origin: *");
+		header("Content-Type: application/json; charset=UTF-8");
+		header("Access-Control-Allow-Methods: GET");
+		header("Access-Control-Max-Age: 3600");
+		header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+
+		// On vérifie que la méthode utilisée est correcte
+		// On vérifie que la clé du user existe : get_field_value_where_unique($strTable,$strColumn,$unique,$strField)
+		$key = $this->Sys->get_field_value_where_unique('users','password',$url[INDEX],'password'); 
+		if( $_SERVER['REQUEST_METHOD'] == 'GET' && $key)
+		{
+				$record = $this->Get->get_record('notes',$url[LINE]);
+
+				// On envoie le code réponse 200 OK
+				http_response_code(200);
+
+				// On encode en json et on envoie
+				echo json_encode($record,JSON_UNESCAPED_UNICODE);
+		}
+		else
+		{
+			// On gère l'erreur
+			http_response_code(405);
+			echo json_encode(["message" => "La méthode n'est pas autorisée"],JSON_UNESCAPED_UNICODE);
+		}
+	}
+	function classes()
+	{
+		$class_methods = get_class_methods('Model');
+		foreach ($class_methods as $method_name)
+		{
+			$post['table'] = $this->Get->get_id_table('functions');
+			$post['function'] = $method_name;
+			$m= new ReflectionMethod('Model',$method_name);
+			$params = $m->getParameters();
+			$post['parameters']='';
+			foreach($params as $name=>$value)
+			{
+				$post['parameters'] .= $value;
+			}
+			unset($m);
+			$this->Get->add_line($post,'id_function');
+		}
+		$this->index();
 	}
 }
 ?>

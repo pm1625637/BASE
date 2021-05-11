@@ -17,6 +17,7 @@ define('BLOCKDIRECTORY',DATADIRECTORY.'blocks/');
 define('CONTROLLER',0);
 define('ACTION',1);
 define('TABLE',2);
+define('LINE',2);
 define('FIELD',3);
 define('INDEX',3);
 define('VALUE',4);
