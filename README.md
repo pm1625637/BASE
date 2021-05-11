@@ -113,10 +113,23 @@ select_where - Returns a record based on a choice of columns and the value of on
 And many others...
 </pre>
 
-API Example : 
+<strong>API Controller</strong> 
 
 <pre>
-	function api_get($url)
+class Api extends Controller
+{
+	function __construct()
+	{
+		parent::__construct('data','php');
+		// <HEAD>
+		$this->data['title'] =' API';
+		$this->data['head'] = $this->Template->load('head',$this->data,TRUE);
+	}
+	function index()
+	{
+		parent::index();
+	}
+	function get($url)
 	{
 		// Headers requis
 		header("Access-Control-Allow-Origin: *");
@@ -127,16 +140,21 @@ API Example :
 
 		// On vérifie que la méthode utilisée est correcte
 		// On vérifie que la clé du user existe : get_field_value_where_unique($strTable,$strColumn,$unique,$strField)
-		$key = $this->Sys->get_field_value_where_unique('users','password',$url[INDEX],'password'); 
+		$key = $this->Sys->get_field_value_where_unique('users','password',$url[VALUE],'password'); 
 		if( $_SERVER['REQUEST_METHOD'] == 'GET' && $key)
 		{
-				$record = $this->Get->get_record('notes',$url[LINE]);
+				$record = $this->Get->get_record($url[TABLE],$url[INDEX]);
 
 				// On envoie le code réponse 200 OK
 				http_response_code(200);
 
+				foreach($record as $k=>$text)
+				{
+					 $this->Get->unescape($text); 
+					 $record[$k] = $text;
+				}
 				// On encode en json et on envoie
-				echo json_encode($record,JSON_UNESCAPED_UNICODE);
+				echo json_encode($record,JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 		}
 		else
 		{
@@ -145,4 +163,5 @@ API Example :
 			echo json_encode(["message" => "La méthode n'est pas autorisée"],JSON_UNESCAPED_UNICODE);
 		}
 	}
+}
 </pre>
