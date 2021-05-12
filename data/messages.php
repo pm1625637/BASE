@@ -52,4 +52,16 @@ $data[1][24][1]='You have loaded cards.php';
 $data[1][24][2]='2021-05-11 20:21:53';
 $data[1][25][1]='You have loaded cards.csv';
 $data[1][25][2]='2021-05-11 20:21:58';
+$data[1][26][1]='The fieldname must contain only alphanumeric characters and &quot;id_&quot; for unique.';
+$data[1][26][2]='2021-05-11 20:31:24';
+$data[1][27][1]='You have added the field: apikey to the table: users';
+$data[1][27][2]='2021-05-11 20:31:36';
+$data[1][28][1]='function model::set_line() Real ID of the table or Line is not set.';
+$data[1][28][2]='2021-05-11 20:31:41';
+$data[1][29][1]='You have changed a record at the table: users';
+$data[1][29][2]='2021-05-11 20:31:44';
+$data[1][30][1]='function model::set_line() Real ID of the table or Line is not set.';
+$data[1][30][2]='2021-05-11 20:31:52';
+$data[1][31][1]='You have changed a record at the table: users';
+$data[1][31][2]='2021-05-11 20:31:55';
 ?>

@@ -22,9 +22,9 @@ class Api extends Controller
 		header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 		// On vérifie que la méthode utilisée est correcte
-		// On vérifie que la clé du user existe : get_field_value_where_unique($strTable,$strColumn,$unique,$strField)
-		$key = $this->Sys->get_field_value_where_unique('users','password',$url[VALUE],'password'); 
-		if( $_SERVER['REQUEST_METHOD'] == 'GET' && $key)
+		// On vérifie que la clé du user existe 
+		$apikey = $this->Sys->get_field_value_where_unique('users','apikey',$url[VALUE],'apikey'); 
+		if( $_SERVER['REQUEST_METHOD'] == 'GET' && $apikey)
 		{
 				$record = $this->Get->get_record($url[TABLE],$url[INDEX]);
 				if($record)
