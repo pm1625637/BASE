@@ -138,9 +138,9 @@ class Api extends Controller
 		header("Access-Control-Max-Age: 3600");
 		header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-		// On vérifie que la méthode utilisée est correcte
 		// On vérifie que la clé du user existe 
 		$apikey = $this->Sys->get_field_value_where_unique('users','apikey',$url[VALUE],'apikey'); 
+		// On vérifie que la méthode utilisée est correcte
 		if( $_SERVER['REQUEST_METHOD'] == 'GET' && $apikey)
 		{
 				$record = $this->Get->get_record($url[TABLE],$url[INDEX]);
