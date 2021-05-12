@@ -115,7 +115,7 @@ And many others...
 
 <strong>API Controller</strong> 
 
-`
+<pre>
 class Api extends Controller
 {
 	function __construct()
@@ -172,4 +172,4 @@ class Api extends Controller
 		}
 	}
 }
-`
+</pre>
