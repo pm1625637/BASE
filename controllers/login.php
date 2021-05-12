@@ -27,6 +27,7 @@ class Login extends Controller
 				$colPass = $this->Sys->get_id_column($idTable,'password');
 				$colUser = $this->Sys->get_id_column($idTable,'username');
 				$colJumbo = $this->Sys->get_id_column($idTable,'jumbo');
+				$colApi = $this->Sys->get_id_column($idTable,'apikey');
 				
 				if($user[$colPass] == trim(md5($post['password'])) && $user[$colUser] == trim($post['username']))
 				{
@@ -36,13 +37,13 @@ class Login extends Controller
 					$post['password'] = $user[$colPass];
 					$post['id_user'] = $user[$colId];
 					$post['jumbo'] = $user[$colJumbo];
+					$post['apikey'] = $user[$colApi];
 
 					$this->Sys->set_line($post);
 					$_SESSION = $post;
 					$this->Get->save(TRUE);
 					$this->Msg->set_msg('You are logged in!');
 					header('Location:'.WEBROOT.DEFAULTCONTROLLER);
-					//header('Location:'.WEBROOT.'main');
 					exit;
 				}
 				else
@@ -71,9 +72,10 @@ class Login extends Controller
 	{
 		if(isset($_SESSION['loggedin']))
 		{
-			$_SESSION['loggedin']='';
-			$this->Sys->set_cell(2,1,4,"0");
-			//$this->Sys->set_line($_SESSION);	
+			$idTable = $this->Sys->get_id_table('users');
+			$colLoggedin = $this->Sys->get_id_column($idTable,'loggedin');
+			$realID = $this->Sys->get_real_id($idTable,'id_user',$_SESSION['id_user']);
+			$this->Sys->set_cell($idTable,$realID,$colLoggedin,"0");
 		}		
 		// remove all session variables
 		session_unset(); 

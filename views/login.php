@@ -276,6 +276,11 @@ input[type=text]:placeholder {
   width:60%;
 }
 
+.note
+{
+	font-size: x-small;
+}
+
 </style>
 <body>
 <div class="wrapper fadeInDown">
@@ -290,12 +295,12 @@ input[type=text]:placeholder {
 
     <!-- Login Form -->
    <form action="<?=$action?>" method="post">     
-      <em>created by webiciel.ca</em>
+      <caption>created by webiciel.ca</caption>
 	  <input type="text" id="username" class="fadeIn second" name="username" placeholder="demo" value="demo">
       <input type="text" id="password" class="fadeIn third" name="password" placeholder="demo" value="demo"> 
       <input type="submit" class="fadeIn fourth" value="Log In">
     </form>
-
+	<?php echo (isset($msg))?$msg:''; ?>
     <!-- Remind Passowrd -->
     <div id="formFooter">
       <a class="underlineHover" href="./"><?php echo $_SERVER['HTTP_HOST']; ?></a>

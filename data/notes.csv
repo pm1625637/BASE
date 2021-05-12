@@ -1,0 +1,31 @@
+"Scénario 1",,"Scénario 2",
+"On paie tout à deux",,"Julie paie 2000$ / mois",
+"Cout a l’achat",200000,"Cout a l’achat",200000
+"Mise de fond",10000,"Mise de fond",10000
+"Hypotheque",190000,"Hypotheque",190000
+,,,
+"Vente apres 10 ans",250000,"Vente apres 10 ans",250000
+"Balance Hypotheque",150000,"Balance Hypotheque",150000
+,,,
+"Balance",100000,"Balance",100000
+"Pierre mise de fond",10000,"Pierre mise de fond",10000
+"Balance",90000,"Balance",90000
+,,,
+"Julie",45000,"Julie",65000
+"Pierre",45000,"Pierre",25000
+,,,
+"Scénario 3",,,
+"Julie paie 1100$ / mois",,,
+"Cout a l’achat",200000,,
+"Mise de fond",10000,,
+"Hypotheque",190000,,
+,,,
+"Vente à Julie apres 10 ans",200000,,
+"Balance Hypotheque",150000,,
+,,,
+"Balance",50000,,
+"Pierre mise de fond",10000,,
+"Balance",40000,,
+,,,
+"Julie",15000,,
+"Pierre",25000,,
