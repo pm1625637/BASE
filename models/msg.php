@@ -1,12 +1,7 @@
 <?php  
 class Msg extends Model
 {
-	/*function __construct()
-	{
-		parent::__construct();
-	}
-	*/
-	function get_msg($unescape=FALSE)
+	public function get_msg($unescape=FALSE)
 	{
 		$int = $this->count_lines(1);
 		$msg = $this->get_cell(1,$int,1);
@@ -16,8 +11,7 @@ class Msg extends Model
 		}
 		return $msg;
 	}
-	
-	function set_msg($string)
+	public function set_msg($string)
 	{
 		$int = $this->count_lines(1)+1;
 		$post['table'] = 1;

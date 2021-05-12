@@ -1,9 +1,7 @@
 <?php
 declare(strict_types=1);
 session_start();
-//set_time_limit(900); //seconds
-//ini_set('memory_limit','128M')
-//ini_set('memory_limit', '-1');
+set_time_limit(180); //seconds
 date_default_timezone_set('America/New_York'); 
 define('WEBROOT',str_replace('index.php','',$_SERVER['SCRIPT_NAME']));
 define('ROOT',str_replace('index.php','',$_SERVER['SCRIPT_FILENAME']));
@@ -23,7 +21,7 @@ define('INDEX',3);
 define('VALUE',4);
 define('SHOWLIMIT',1500);
 define('LOADLIMIT',1);
-define('VERSION','1.1.1');
+define('VERSION','1.2');
 
 require(ROOT.'core/model.php');
 require(ROOT.'core/controller.php');

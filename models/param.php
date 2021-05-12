@@ -1,10 +1,6 @@
 <?php  
 class Param extends Model
 {
-	function __construct()
-	{
-		
-	}
 	public function create_demo()
 	{
 		unset($this->data);
