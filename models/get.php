@@ -401,7 +401,7 @@ class Get extends Model
 		}
 	}
 	
-	public function load_csv($strTable)
+	public function load_csv_old($strTable)
 	{
 		include_once(CLASSDIRECTORY."bigfile.php");
 		$largefile = new BigFile(DATADIRECTORY.$strTable.'.csv');
@@ -412,7 +412,7 @@ class Get extends Model
 		foreach ($iterator as $i=>$line)
 		{		
 		   $line = trim($line);
-		   $rec = explode('|', $line);
+		   $rec = explode(',',$line);
 		   $c = 1;
 		   foreach($rec as $field)
 		   {
@@ -449,5 +449,35 @@ class Get extends Model
 	  unset($this->data[$t][$i]);
 	  $this->save();
 	}
+	public function load_csv($strTable)
+	{
+		$t = $this->get_id_table($strTable);
+		$row = 0;
+		if (($handle = fopen(DATADIRECTORY.$strTable.'.csv', "r")) !== FALSE) 
+		{
+			while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) 
+			{
+				$num = count($data);
+				//echo "<p> $num fields in line $row: <br /></p>\n";
+				
+				for ($c=0; $c < $num; $c++)
+				{
+						if($data[$c] || $data[$c]== 0 || $data[$c]== "0")
+						{
+							$this->data[$t][$row][$c+1] = $data[$c];
+						}
+						else
+						{
+							$this->data[$t][$row][$c+1] = '';
+						}
+					//echo $data[$c] . "<br />\n";
+				}
+				$row++;
+		  }
+		  fclose($handle);
+		  $this->save();
+		}
+	}
 }
+
 ?>

@@ -528,3 +528,533 @@ id_card,card,service,image,region_id,tel,web,nom
 527,iA Groupe financier [anc. Industrielle Alliance],Assurances et services financiers,specimen.png,1,-,-,Denis Ricard
 528,Électricité Grimard,Entrepreneur en électricité,specimen.png,1,-,-,Jacques Grimard
 529,Énergir,Distribution de gaz naturel et d'électricité,specimen.png,1,-,-,Sophie Brochu
+id_card,card,service,image,region_id,tel,web,nom
+1,AAR Aircraft Services - Trois Rivières,Maintenance et révision d'avions,specimen.png,10,(819) 377-4500,https://www.aarcorp.com/,Brian Loomer
+2,ABB,Produits d'énergie et d'automation,abb.png,1,1 800 435 7365,https://new.abb.com/ca/,Nathalie Pilon
+3,ABS (Groupe),"Surveillance et contrôle de travaux, science du bâtiment, géotechnique",abs.png,2,418-210-0243,http://www.groupeabs.com/,Daniel Mercier
+4,ADF (Groupe),"Ingénierie, conception de charpentes métalliques",adf.png,9,(450) 965-1911,https://adfgroup.com,Pierre Paschini
+5,ADP Canada,Société d'impartion en ressources humaines et avantages sociaux,specimen.png,1,866 622-8153,https://www.adp.ca,Holger Kormann
+6,AECOM,Services techniques en ingénierie,specimen.png,1,-,-,Michael S. Burke
+7,AGF (Groupe),Fabrication d'acier d'armature et échafaudages,agf.png,4,450 442-9494,https://www.groupeagf.com/fr/groupe/succursales/acier-agf-inc-siege-social-longueuil,Serge Gendron
+8,AIM - Fer & Métaux Américains,Recyclage de métaux et transformation de matières industrielles,aim.png,1,(514) 494-2000,https://aim-global.com/fr,Herbert Black
+9,ALDO (Le Groupe),Détaillant de chaussures et d'accessoires,specimen.png,1,1-800-326-2536,https://www.aldoshoes.com/,David Bensadoun
+10,Acier Picard (Groupe),Distributeur d'acier,specimen.png,1,-,-,Gaétan Picard
+11,Adèle Plus,Services d'entretien ménager,adele.png,1,450-934-6255,https://www.adeleplus.com/,Gaétan Migneault
+12,Agri-Marché,"Alimentation animale, secteurs porcin, avicole et laitier",specimen.png,1,-,-,Patrice Brochu
+13,Agritex (Groupe),Distributeur d'équipements agricoles,agritex.png,4,819 474-0002,https://agritex.ca/succursales/drummondville,Patrick Allard
+14,Agropur coopérative,Transformation et distribution de produits laitiers,agropur.png,4,(418) 641-0857,https://www.agropur.com,Robert Coallier
+15,Air Canada,Transport de passagers et de marchandises,air_canada.png,1,1-514-395-0300,https://www.aircanada.com/,Calin Rovinescu
+16,Air Liquide Canada,"Gaz industriels, médicaux et spéciaux",specimen.png,1,-,-,Bertrand Masselot
+17,Albi le Géant (Groupe),Détaillant d'automobiles neuves et d'occasion,specimen.png,1,-,-,Denis Leclerc
+18,Alfid Services Immobiliers,"Immobilier, courtage, construction et sécurité",specimen.png,1,-,-,Jean-Jacques Laurans
+19,Alimentation Couche-Tard,Réseau de dépanneurs,specimen.png,1,-,-,Brian Hannasch
+20,Aliments Asta,Transformation porcine,specimen.png,1,-,-,Jacques Poitras
+21,Aliments BCI,Fabrication de produits alimentaires,specimen.png,1,-,-,Gille Barbeau
+22,Aliments I-D,Grossiste-distributeur de produits alimentaires,specimen.png,1,-,-,Philip Issenman
+23,Aliments Krispy Kernels,"Transformation et distribution d'arachides, noix et croustilles",krispy_kernel.png,1,1-877-791-9986,https://krispykernels.com/fr/,Valérie Jalbert
+24,Aliments Lesters,"Transformation de la viande, charcuterie et viandes fumées",specimen.png,1,-,-,Henry Mizrahi
+25,Aliments McCain (Les),Production d'aliments congelés et transport,specimen.png,1,-,-,Max Koeune
+26,Aliments naturels Tau,Épiceries d'aliments naturels et biologiques,specimen.png,1,-,-,Robbie Brown
+27,Alithya,Services-conseils en gestion des organisations et TI,specimen.png,1,-,-,Paul Raymond
+28,Allen Entrepreneur Général,Entrepreneur général en construction,specimen.png,1,-,-,Annie Allen
+29,Altasciences,Recherche contractuelle et analyses biopharmaceutiques,specimen.png,1,-,-,Chris Perkin
+30,Aluminerie Alouette,Aluminium de première fusion,specimen.png,1,-,-,Patrice L'Huillier
+31,Ameublement Elran,"Fabrication de canapés, causeuses et chaises inclinables",specimen.png,1,-,-,Sheldon Lubin
+32,Anixter,"Distributeur de produits de communication et de sécurité, câblages",specimen.png,1,-,-,Gary Mistak
+33,Annexair,Fabrication et conception d'équipements de traitement de l'air,specimen.png,1,-,-,François Lemieux
+34,Aon,Experts-conseils en capital humain,specimen.png,1,-,-,Allan Shapira
+35,ArcelorMittal Exploitation minière Canada,"Minerai de fer, acier long et plat",specimen.png,1,-,-,Jean Ouellet
+36,ArcelorMittal Produits longs Canada,Fabrication de produits semi-finis en acier,specimen.png,1,-,-,François Perras
+37,Armatures Bois-Francs,Fabrication d'acier d'armature et de treillis métalliques,specimen.png,1,-,-,Éric Bernier
+38,Armoires Cuisines Action,Fabrication d'armoires de cuisine et comptoirs de salle de bain,specimen.png,1,-,-,Christian Van Gennip
+39,Arno (Groupe),Entrepreneur en électricité industrielle,specimen.png,1,-,-,Louis St-Arnaud
+40,Artitalia (Groupe),"Fabrication de présentoirs en métal, en bois et en plastique",specimen.png,1,-,-,Antonio Vardaro
+41,Artopex,Fabrication de mobilier de bureau,specimen.png,1,-,-,Daniel Pelletier
+42,Atwill-Morin (Groupe),Maçonnerie et réfection de bâtiments patrimoniaux,specimen.png,1,-,-,Matthew Atwill-Morin
+43,AutoQuébec (Groupe),Vente et entretien de véhicules,specimen.png,1,-,-,Jean Gosselin
+44,Automobile En Direct.com,Concessionnaire de voitures d’occasion,specimen.png,1,-,-,Sébastien Bisaillon
+45,Avantis Coopérative,"Fusion de coopératives agricoles (agriculture, quincaillerie alimentation et énergie)",specimen.png,1,-,-,Gaétan Roger
+46,Aviva Canada,Gestion de compagnies d'assurance de dommages,specimen.png,1,-,-,Colm Holmes
+47,Avjet Holding,Commercialisation et distribution de carburants pour le transport aérien,specimen.png,1,-,-,Denis Jacob
+48,Avril Supermarché Santé,Détaillant de produits naturels,specimen.png,1,-,-,Rolland Tanguay
+49,Aéroports de Montréal (ADM),Gestion aéroportuaire,specimen.png,1,-,-,Philippe Rainville
+50,BBA,"Services de génie-conseil (énergie, mines et métaux)",specimen.png,1,-,-,André Allaire
+51,BCE,Produits et services en télécommunications,specimen.png,1,-,-,George A. Cope
+52,BCF Avocats d'affaires,Services juridiques,specimen.png,1,-,-,Mario Charpentier
+53,BDO Canada,Services de comptabilité,specimen.png,1,-,-,Pat Kramer
+54,BID Group Technologies Ltd. Division Comact,Fabrication d'équipements industriels (scieries),specimen.png,1,-,-,Alistair Cook
+55,BMO Groupe financier,"Services bancaires, fiduciaires et financiers",specimen.png,1,-,-,Darryl White
+56,BRP (Bombardier Produits Récréatifs),"Motoneiges, motomarines, bateaux de sport et VTT",specimen.png,1,-,-,José Boisjoli
+57,Bain Magique,Rénovation de salles de bains,specimen.png,1,-,-,Brian Cotton
+58,Banque CIBC,"Services bancaires, fiduciaires et financiers",specimen.png,1,-,-,Victor G. Dodig
+59,Banque HSBC Canada,Services financiers,specimen.png,1,-,-,Sandra Stuart
+60,Banque Laurentienne Groupe Financier,"Services bancaires, financiers et de courtage",specimen.png,1,-,-,François Desjardins
+61,Banque Nationale,"Services bancaires, financiers et de courtage en valeurs mobilières",specimen.png,1,-,-,Louis Vachon
+62,Banque Royale du Canada,"Services bancaires, d’assurances et financiers",specimen.png,1,-,-,David McKay
+63,Banque Scotia,"Services bancaires, fiduciaires, de placement et d'assurance",specimen.png,1,-,-,Brian J. Porter
+64,Banque TD (Groupe),"Services bancaires, financiers et de courtage",specimen.png,1,-,-,Bharat B. Masrani
+65,Banque de développement du Canada (BDC),"Financement, consultation et capital de risque",bdc.png,1,1-888-463-6232,https://www.bdc.ca/fr/centres-affaires/quebec,Michael Denham
+66,Barry Callebaut Canada,Produits de cacao et de chocolat,specimen.png,1,-,-,Antoine De Saint-Affrique
+67,Bateaux Princecraft,Conception et fabrication d'embarcations en aluminium,specimen.png,1,-,-,Rodier Grondin
+68,Bausch Santé Canada,Produits pharmaceutiques et médicaments,specimen.png,1,-,-,Richard Lajoie
+69,Behaviour Interactif,Développement de jeux interactifs,specimen.png,1,-,-,Rémi Racine
+70,Belden,Fabrication de produits de solutions câbles,specimen.png,1,-,-,John Stroup
+71,Bell Helicopter Textron Canada,Constructeur d'hélicoptères commerciaux,specimen.png,1,-,-,Cynthia Garneau
+72,Bell-Horizon (Groupe),Transport nolisé et scolaire,specimen.png,1,-,-,Nathalie Laforme
+73,Bellemare (Groupe),Transport de marchandises,specimen.png,1,-,-,Sylvain Cossette
+74,Belron Canada,Vitres et accessoires pour automobiles,specimen.png,1,-,-,Ralph Hosker
+75,Benny & Co,Réseau de rôtisseries,benny.png,8,(450) 621-1990,https://www.benny-co.com/,Jean Benny
+76,Berger,Production de mélanges horticoles,specimen.png,1,-,-,Mélissa Berger 
+77,Bermex (Groupe),"Fabrication de mobilier, ameublement institutionnel",specimen.png,1,-,-,Richard Darveau
+78,Best Buy Canada,Détaillant d'appareils électroniques et d'ordinateurs,specimen.png,1,-,-,Ron Wilson
+79,Bibby-Ste-Croix,"Pièces de fonte, tuyaux et systèmes de renvoi",specimen.png,1,-,-,Tom Leonard
+80,Biron (Groupe Santé),Laboratoires d'analyses médicales et de troubles du sommeil,specimen.png,1,-,-,Geneviève Biron
+81,Biscuits Leclerc (Groupe),Fabrication de biscuits et de craquelins,specimen.png,1,-,-,Denis Leclerc
+82,Bizou International,Boutiques de bijoux et accessoires,specimen.png,1,-,-,Marcel Labrecque
+83,Bombardier,"Aéronautique, matériel de transport sur rail",specimen.png,1,-,-,Alain Bellemare
+84,Bonduelle,Mise en conserve de légumes et surgelés,specimen.png,1,-,-,Daniel Vielfaure
+85,Bonlook,Produits et services d'optométrie,specimen.png,1,-,-,Sophie Boulanger
+86,Borden Ladner Gervais,Services juridiques,specimen.png,1,-,-,John G. Murphy
+87,Boston Pizza International,Restauration (franchises),specimen.png,1,-,-,Jordan Holm
+88,Boucher Sports (Groupe),Détaillants de vêtements et d'équipement de plein air,specimen.png,1,-,-,Martin Boucher
+89,Bouclair,Détaillant en décoration intérieure,specimen.png,1,-,-,Peter Goldberg
+90,Boulangerie St-Méthode,Boulangerie de pains santé,specimen.png,1,-,-,Benoit Faucher
+91,Bouthillette Parizeau,Génie-conseil spécialisé en bâtiments,specimen.png,1,-,-,Claude Décary
+92,Boutin (Groupe),Transport de marchandises et entreposage,specimen.png,1,-,-,Bernard Boutin
+93,Bradken Canada,Cônes de broyage et plaques de blindage,specimen.png,1,-,-,Michael Côté
+94,Breton Tradition 1944,Exploitation et transformation porcine,specimen.png,1,-,-,Lucien Breton
+95,Bridgestone Canada,Fabrication et commercialisation de pneus,specimen.png,1,-,-,Gordon Knapp
+96,Bridor,Fabrication de produits de boulangerie,specimen.png,1,-,-,Ronan Minahan
+97,Brookfield Asset Management,"Immobilier, énergie, infrastructures",specimen.png,1,-,-,Bruce Flatt
+98,Buanderie Blanchelle,Location de lingerie et literie pour le secteur hospitalier,specimen.png,1,-,-,Pierre Ferron
+99,Bureau en gros,Magasins d'articles de bureau,specimen.png,1,-,-,David Boone
+100,Buropro Citation,Détaillant de fournitures de bureau,specimen.png,1,-,-,Guy Bergeron
+101,Béton Provincial,Fabrication de produits en béton,specimen.png,1,-,-,André Bélanger
+102,Bétons préfabriqués du Lac (BPDL),Fabrication de pièces de béton préfabriqué,specimen.png,1,-,-,Robert Bouchard
+103,CAA-Québec,"Services et produits automobiles, voyage, habitation et services financiers",specimen.png,1,-,-,Richard Lachance
+104,CAD Industries Ferroviaires,"Entretien de locomotives, wagons de marchandises et voitures de transport",specimen.png,1,-,-,Fausto Levy
+105,CAE,"Simulateurs de vol, modélisation et formation",specimen.png,1,-,-,Marc Parent
+106,CBC/Radio-Canada,"Radio, télévision et nouveaux médias",specimen.png,1,-,-,Catherine Tait
+107,CGI,"Services-conseils, intégration de systèmes",specimen.png,1,-,-,George D. Schindler
+108,CIMA +,Firme d'ingénierie,specimen.png,1,-,-,François Plourde
+109,CMP Solutions Mécaniques Avancées [anc. CMP Pièces machinées Châteauguay],Fabrication de métal en feuille,specimen.png,1,-,-,Steve Zimmermann
+110,CN [Canadien National],Transport ferroviaire et intermodal,specimen.png,1,-,-,Jean-Jacques Ruest
+111,COGECO,"Câblodistribution, radio, Internet, téléphonie",specimen.png,1,-,-,Louis Audet
+112,CPU,Services en technologie de l'information,specimen.png,1,-,-,Lotfi Ghattas
+113,CRH Canada,Fournisseurs de matériaux et de services de construction,specimen.png,1,-,-,Wayne Lazzarato
+114,Cabico (Groupe),Armoires de cuisine et cabinets de salle de bains,specimen.png,1,-,-,Alain Ouzilleau
+115,Cain Lamarre,Services juridiques,specimen.png,1,-,-,Gina Doucet
+116,Caisse de dépôt et placement du Québec,Gestionnaire de fonds institutionnels,specimen.png,1,-,-,Michael Sabia
+117,Cambli (Groupe),Fabrication de camions blindés,specimen.png,1,-,-,Véronique Tougas
+118,Canac,Réseau de quincailleries,specimen.png,1,-,-,Jean Laberge
+119,Canadel,Fabrication de mobiliers et de panneaux de bois laminés,specimen.png,1,-,-,Michel Deveault
+120,Canam (Groupe),"Poutrelles, tabliers métalliques, construction métallique",specimen.png,1,-,-,Marc Dutil
+121,Canatal (Industries),Fabrication d'éléments de charpentes métalliques,specimen.png,1,-,-,Ralph Poulin
+122,Canimex,Distribution de composants mécaniques et hydrauliques,specimen.png,1,-,-,Roger Dubois
+123,Canmec (Groupe),Fabrication de produits métalliques et équipements industriels,specimen.png,1,-,-,Rémi Roy
+124,Caron et Guay,Fabrication de portes et fenêtres,specimen.png,1,-,-,Jean-François Duclos
+125,Carrières de St-Dominique (Les),"Pierre concassée, béton préparé et chaux agricole",specimen.png,1,-,-,Claude Dupuis
+126,Cascades,Transformation de pâtes et papiers,cascades.jpg,6,819-363-5100,https://cascades.com,Mario Plourde
+127,Centres dentaires Lapointe,"Dentistes, denturologistes et hygiénistes",specimen.png,1,-,-,Larry Lapointe 
+128,Centres vétérinaires DMV,Cliniques vétérinaires d'urgence et spécialisées,specimen.png,1,-,-,Caroline de Jaham
+129,Chantier Davie Canada,Construction et réparation de navire,specimen.png,1,-,-,James Davies
+130,Chantiers Chibougamau,Conception de structures de bois,specimen.png,1,-,-,Lucien Filion
+131,Charbonneau (Groupe),"Entrepreneur en plomberie, chauffage central et gaz",specimen.png,1,-,-,Jean Charbonneau
+132,Chez Ashton,Restauration rapide,ashton.png,2,418 872-4044,https://chezashton.ca/,Ashton Leblond
+133,Chocolats Favoris,Chocolaterie artisanale,specimen.png,1,-,-,Dominique Brown
+134,Cinémas Guzzo,Salles de cinéma,specimen.png,1,-,-,Vincenzo Guzzo
+135,Ciot,"Détaillant de céramique, marbre, granit, et ardoise",specimen.png,1,-,-,Giuseppe Panzera
+136,Cirque du Soleil,"Création, production et diffusion de spectacles",specimen.png,1,-,-,Daniel Lamarre
+137,Citadelle,Production de produits de l'érable,specimen.png,1,-,-,Martin Plante
+138,CitoxLab,Recherche contractuelle préclinique et non clinique,specimen.png,1,-,-,Jean-François Le Bigot
+139,Claudel Lingerie,Fabrication de vêtements pour femmes,specimen.png,1,-,-,François Lapierre
+140,Co-operators,Assurances générales,specimen.png,1,-,-,Rob Wesseling
+141,CoFoMo,"Services conseils, services spécialisés, externalisation",specimen.png,1,-,-,Régis Desjardins
+142,Coffrage LD,Construction de coffrage et mise en place de béton,specimen.png,1,-,-,Léandre Drouin
+143,Coffrages Atlantique,Structure de béton et coffrages,specimen.png,1,-,-,Robert Viau
+144,Coffrages Synergy,Construction et coffrage,specimen.png,1,-,-,Isabelle Côté
+145,Cogir Immobilier,Services-conseils et gestion immobilière,specimen.png,1,-,-,Mathieu Duguay
+146,Colabor (Groupe),Grossiste de produits alimentaires et connexes,specimen.png,1,-,-,Lionel Ettedgui
+147,Comax (La Coop),Coopérative d'approvisionnement agricole,specimen.png,1,-,-,Patrice Gagnon
+148,Commonwealth Plywood,Distributeurs de produits en ebénisterie,specimen.png,1,-,-,William T. Caine
+149,Compass (Groupe),"Services alimentaires, cafétérias et distributeurs automatiques",specimen.png,1,-,-,Saajid Khan
+150,Constructions Beauce-Atlas,Fabrication de charpentes métalliques,specimen.png,1,-,-,Germain Blais
+151,Constructions Proco,Construction et fabrication de structures métalliques,specimen.png,1,-,-,Jean-Denis Toupin
+152,Coop techn. ambulanciers de la Montérégie [CETAM],Transport ambulancier et soins préhospitaliers,specimen.png,1,-,-,Jean-Charles Boily
+153,Coopérative des Consommateurs de Lorette,Marchés d'alimentation,specimen.png,1,-,-,Yanic Drouin
+154,Coopérative des consommateurs de Ste-Foy,Produits alimentaires et non alimentaires,specimen.png,1,-,-,Jocelyne Simard
+155,Cora,Chaîne de restaurants (déjeuners et dîners),specimen.png,1,-,-,Nicholas Tsouflidis
+156,Corbec,Galvanisation à chaud de l'acier,specimen.png,1,-,-,Godfroy St-Pierre
+157,Costco (Les entrepôts),Magasins à grande surface,specimen.png,1,-,-,Joseph Portera
+158,Coveo,Solutions de plateforme de recherche d'entreprise et d'accès à l'information-client,specimen.png,1,-,-,Laurent Simoneau
+159,Creaform,Technologies de mesure 3D et services d’ingénierie 3D,specimen.png,1,-,-,Fanny Truchon
+160,Croix Bleue Canassurance,"Assurances de personnes, assistance santé",specimen.png,1,-,-,Sylvain Charbonneau
+161,DAWCO,Services de construction et d'installations électriques,specimen.png,1,-,-,Neil Macrae
+162,DFS-Systèmes Danfreight,Transport général et alimentaire frigorifique,specimen.png,1,-,-,Daniel Bérard
+163,Deloitte,"Certification, fiscalité, consultation et conseils financiers",specimen.png,1,-,-,Marc Perron
+164,Demers Braun,Conception et fabrication d'ambulances,specimen.png,1,-,-,Alain Brunelle
+165,Derko,Entretien ménager et peinture,derko.png,1,418 656-6731,https://www.derko.ca/,Sylvain Brochu
+166,Deschênes (Groupe),Distribution de fournitures industrielles et plomberie-chauffage,specimen.png,1,-,-,François Deschênes
+167,Desgagnés (Groupe),Transport maritime de marchandises et de passagers,specimen.png,1,-,-,Louis-Marie Beaulieu
+168,Desjardins (Mouvement),Services bancaires et financiers,specimen.png,1,-,-,Guy Cormier
+169,Dessercom,Services ambulanciers et paramédicaux,specimen.png,1,-,-,Maxime Laviolette
+170,Dimensions Portes et Fenêtres,Fabrication de portes et fenêtres,specimen.png,1,-,-,François Audette
+171,Discount,Location d'auto et camion,discount.jpg,8,450-565-4370,https://www.discountquebec.com/,-
+172,Dollarama,Réseau de magasins à un dollar et plus,specimen.png,1,-,-,Larry Rossy
+173,Domtar,"Papiers, pâtes, produits de soin personnels",specimen.png,1,-,-,John D. Williams
+174,Drakkar,Services-conseils et solutions adaptées à la gestion des ressources humaines,specimen.png,1,-,-,Denis Deschamps
+175,DuProprio,Service d’assistance en vente immobilière sans intermédiaire,specimen.png,1,-,-,Marco Dodier
+176,Duvaltex,"Fabrication de tissus vestimentaires, d'ameublement",specimen.png,1,-,-,Alain Duval
+177,Déménagement La Capitale,Services de déménagement,specimen.png,1,-,-,Michel Girard
+178,Déneigment CS,Déneigement de toiture résidentiel et commercial,deneigement_cs.jpg,2,581-994-5994,,-
+179,EACOM Timber Corporation,"Fabrication, commercialisation et distribution de produits du bois",specimen.png,1,-,-,Kevin Edgson
+180,EBC,Entrepreneur général et génie civil,specimen.png,1,-,-,Marie-Claude Houle
+181,EBI,Gestion intégrée des matières résiduelles et génie civil,specimen.png,1,-,-,Pierre Sylvestre
+182,EBOX,Services internet résidentiel et commercial,specimen.png,1,-,-,Jean-Philippe Beique
+183,ENERGI Solutions de Fenestration,Fabrication de produits de fenestration,specimen.png,1,-,-,Christopher Koscho
+184,ENGIE Services,Gestion intégrée d’infrastructures techniques,specimen.png,1,-,-,Pierre Lapointe
+185,EXFO,Tests et mesures de télécommunications,specimen.png,1,-,-,Philippe Morin
+186,EY,"Vérification, comptabilité, fiscalité, traduction",specimen.png,1,-,-,Jad Shimaly
+187,Emballage St-Jean,Fabrication d'emballages flexibles,specimen.png,1,-,-,Marc Leclair
+188,Emballages Carrousel,Fabrication et distrution de produits d'emballage,specimen.png,1,-,-,Brigitte Jalbert
+189,Emballages Mitchel-Lincoln,"Boîtes en carton ondulé, emballages et fournitures",specimen.png,1,-,-,James Garfinkle
+190,Emy Boutique et Confection,Confection et Réparation en tous genres. Vêtements et prêt à porter homme/femme.,emy_boutique.jpg,2,418-987-5546,,-
+191,Englobe,"Services environnementaux (gestion et traitement), science du bâtiment",specimen.png,1,-,-,Mike Cormier 
+192,Entrepôts Saint-Raymond,Petits et Gros entrepôts,entrepots.jpg,2,418-873-5476,https://www.entreposagestraymond.com,-
+193,Essor Assurances,"Assurance, services financiers, cautionnement",specimen.png,1,-,-,Michel Duval
+194,Esterline CMC Électronique,Intégration de systèmes de pilotage et d'équipements avioniques,specimen.png,1,-,-,Robin St-Arnaud
+195,Eurofins Environex,Services d'analyses en environnement et agroalimentaire,specimen.png,1,-,-,Marc Hamilton
+196,Eurovia Québec,"Agrégats, asphalte, béton, routes et génie civil",specimen.png,1,-,-,Christophe Verweirde
+197,Excavations Lafontaine,Construction et réfection d'infrastructures routières,specimen.png,1,-,-,Frankie Lafontaine
+198,Exceldor coopérative,Transformation et commercialisation de la volaille,specimen.png,1,-,-,René Proulx
+199,F. Dufresne (Groupe),"Postes d'essence, mazout et dépanneurs",specimen.png,1,-,-,Pierre Dufresne
+200,FBL,"Certification, fiscalité et évaluation d'entreprise",specimen.png,1,-,-,Marcel Bergeron
+201,FNX Innov,Firme d'ingénierie,specimen.png,1,-,-,Richard Helie
+202,FX Innovation,Solutions d’affaires en optimisation des services TI,specimen.png,1,-,-,David Marotte
+203,Fabritec,Fabrication d'armoires de cuisine et de salle de bain,specimen.png,1,-,-,Jonathan Bourgeois
+204,Familiprix,Réseau de pharmacies,specimen.png,1,-,-,Albert Falardeau
+205,Fasken,Services juridiques,specimen.png,1,-,-,Peter Feldberg
+206,Fenplast,Fabrication de portes et de fenêtres,specimen.png,1,-,-,Jean Marchand
+207,Ferron (Groupe),"Transformation de poissons, fruits de mer et viandes",specimen.png,1,-,-,Gilles Ferron
+208,Financière Sun Life,Assurance et gestion de patrimoine,specimen.png,1,-,-,Jacques Goulet
+209,Fonds de Placement Immobilier Cominar,Propriétaires et gestionnaires immobiliers,specimen.png,1,-,-,Sylvain Cossette
+210,Fonds de solidarité FTQ,Gestionnaire de fonds d'investissement et REER,specimen.png,1,-,-,Gaétan Morin
+211,Forage Orbit Garant,Forage de diamant,specimen.png,1,-,-,Éric Alexandre
+212,Forges de Sorel (Les),Fabrication d'acier forgé,specimen.png,1,-,-,Richard Lahaye
+213,Forget (Groupe),Gestion de cliniques de santé auditive,specimen.png,1,-,-,Steve Forget
+214,Formulogic inc.,Impression carte d'affaire,formulogic.png,2,418-877-0414,https://www.formulogicinc.com/,-
+215,Fortin (Groupe) - For-Net,Services d'entretien ménager et de sécurité,specimen.png,1,-,-,Annie Fortin
+216,Fourgons Transit (Les),Fabrication de boîtes de camions pour le transport,specimen.png,1,-,-,Louis Leclair
+217,Fromagerie Boivin,Fromages et produits laitiers,specimen.png,1,-,-,Luc Boivin
+218,Fruit d'Or,Transformation de canneberges et de bleuets,specimen.png,1,-,-,Martin Le Moine
+219,Future Électronique,Distributeur de composantes électroniques,specimen.png,1,-,-,Robert Miller
+220,Fédération des coopératives du Nouveau-Québec,Regroupement de 14 coopératives membres des communautés inuites,specimen.png,1,-,-,François Day
+221,G.D.G. Informatique et Gestion,Conception de systèmes informatiques,specimen.png,1,-,-,Gaétan Duchesne
+222,GBI Experts-conseils,"Génie civil, mécanique, électricité de structure",specimen.png,1,-,-,Serge Beaudoin
+223,GCM Consultants,"Services d'ingénieurs-conseils, secteur industriel",specimen.png,1,-,-,Yves Malouin
+224,GDI Services aux Immeubles,Service d'entretien d'immeubles commerciaux et industriels,specimen.png,1,-,-,Claude Bigras
+225,GEA Farm Technologies Canada,Fabrication de charpentes de bâtiments,specimen.png,1,-,-,Alain Courtemanche
+226,GHD,"Géotechnique, ingénierie des matériaux et environnement",specimen.png,1,-,-,Steve Lécuyer
+227,GIRO [Groupe en Informatique et Recherche Opérationelle],Solutions logicielles pour transports public et distribution postale.,specimen.png,1,-,-,Jean Aubin
+228,GRICS,Logiciels administratifs et pédagogiques,specimen.png,1,-,-,Lorraine Mayer
+229,GSF Canada,Entretien d'édifices à bureaux,specimen.png,1,-,-,Marcel Langelier
+230,Galderma,Fabrication de produits de dermatologie,specimen.png,1,-,-,Wendy Adams
+231,Gameloft,Développement de jeux vidéo,specimen.png,1,-,-,Stéphane Roussel
+232,Garage Assouna,"Mécanique générale, changement d'huile, entretien et réparation",assouna.jpg,1,514-389-2883,https://cartes.webiciel.ca/affaire/adresse/7,-
+233,Garant GP,Fabrication d'outils non motorisés pour déneigement et jardinage,specimen.png,1,-,-,Jean Gaudreault
+234,GardaWorld (Corporation de sécurité Garda World),"Transport de valeurs, sécurité, et vérification de préemploi",specimen.png,1,-,-,Stéphan Crétier
+235,Gardium Sécurité,Services de sécurité,specimen.png,1,-,-,Dany Laflamme
+236,Gastier M.P.,Entrepreneur en mécanique et électricité,specimen.png,1,-,-,Sylvain Gadoury
+237,Gaudreau Environnement,Spécialiste en gestion intégrée de matières résiduelles,specimen.png,1,-,-,Stéphanie Gaudreau
+238,Gaudreault (Groupe),"Transport interurbain, nolisé, scolaire et adapté",specimen.png,1,-,-,Martin Gaudreault
+239,Genetec,Conception de logiciels pour la sécurité physique,specimen.png,1,-,-,Pierre Racz
+240,George Weston,"Détaillant en alimentation (Loblaws), boulangerie et produits laitiers",specimen.png,1,-,-,Galen G. Weston
+241,Germain Hôtels (Groupe),"Restauration, hôtellerie et immobilier",specimen.png,1,-,-,Christiane Germain 
+242,Gesco-Star (Groupe),Solutions forestières globales,specimen.png,1,-,-,Maurice Grondin
+243,Gestion Distinct'O (anciennement Groupe Amerispa),Centres de santé-beauté dans les hôtels,specimen.png,1,-,-,Dany Gauthier
+244,Gexel Télécom International,Recrutement de personnel pour centres d'appels,specimen.png,1,-,-,Roberto Depani
+245,Glatfelter,"Papier spécialisé, d'ingénierie et d'absorption",specimen.png,1,-,-,Dante C. Parrini
+246,GlaxoSmithKline,Recherche pharmaceutique,specimen.png,1,-,-,Yoo-Seok Hong
+247,Global Excel,Assurances voyages,specimen.png,1,-,-,Reginald Allatt
+248,Globocam,Concessionnaire de camions,specimen.png,1,-,-,Serge Boyer
+249,Goodfellow,Fabrication et distribution de produits de bois,specimen.png,1,-,-,Patrick Goodfellow
+250,Gouttières Excel,"Gouttière sans joint, Couvre gouttière, Nettoyage",gouttiere_excel.jpg,10,819-415-0458,https://gouttieresexcel.com,-
+251,Gouverneur,"Chaîne d'hôtels, résidences pour personnes âgées",specimen.png,1,-,-,Jacques Goupil
+252,Guay,"Service de grues, transport et manutention",specimen.png,1,-,-,Jean-Marc Baronet
+253,Guilbault (Groupe),Transport de marchandises,specimen.png,1,-,-,Éric Gignac
+254,Guitabec,Fabrication de guitares acoustiques et électriques,specimen.png,1,-,-,Simon Godin
+255,Gypsepro,Pose de gypse et tirage de joints,gypsepro.jpg,2,514-528-5185,https://gypsepro.com,-
+256,HGrégoire,Concessionnaire de véhicules d'occasion,specimen.png,1,-,-,John Hairabedian
+257,"Hamelin (Groupe) [Entreprises Hamelin, Industries Plastipak Inc.]","Contenants moulés par injection, articles ménagers et composantes",specimen.png,1,-,-,Robert Hamelin
+258,Harnois Énergies,Fournisseur de produits pétroliers,specimen.png,1,-,-,Serge Harnois
+259,Harris Québec,Intégration de solutions d'affaires et logiciels,specimen.png,1,-,-,Jeff Bender
+260,Hatch,Ingénierie multidisciplinaire et gestion de projets,specimen.png,1,-,-,John Bianchini
+261,Hexo Corp,Production de cannabis,specimen.png,1,-,-,Sébastien St-Louis
+262,Holt Renfrew,Détaillant de vêtements haut de gamme,specimen.png,1,-,-,Mario Grauso
+263,Home Depot,Centres de rénovation à grande surface,specimen.png,1,-,-,Jeff Kinnaird
+264,Honco (Groupe),Conception et fabrication de bâtiments d'acier autoportants,specimen.png,1,-,-,Francis Lacasse
+265,Hydro-Québec,"Production, transport et distribution d'électricité",specimen.png,1,-,-,Éric Martel
+266,Héroux-Devtek,Fabricant de produits aérospatiaux et industriels,specimen.png,1,-,-,Gilles Labbé
+267,IKEA Canada,Détaillant de mobiliers pour la maison et le bureau,specimen.png,1,-,-,Michael Ward
+268,Immeubles Roussin (Les),Propriétaire et gestionnaire immobilier commercial,specimen.png,1,-,-,Nathalie Roussin
+269,Industries Blais (Les),Construction et entretien d'infrastructures industrielles,specimen.png,1,-,-,Jacques Blais
+270,Industries Fournier (Groupe),Conception et fabrication de produits métalliques et d'équipements industriels,specimen.png,1,-,-,Harold Roy
+271,Industries Machinex,Conception de technologies de tri et de recyclage,specimen.png,1,-,-,Pierre Paré
+272,Infasco / Ifastgroupe,Fabrication et distribution d'éléments de fixation,specimen.png,1,-,-,Jim Baske
+273,Informatique ProContact,Solutions informatiques aux entreprises,specimen.png,1,-,-,Jonathan Legault
+274,Intact Corporation financière,Assurances et services financiers,specimen.png,1,-,-,Charles Brindamour
+275,Intelerad,Solutions et services commerciaux d'imagerie médicale,specimen.png,1,-,-,Paul Lepage
+276,Intercar (Groupe),"Transport interurbain, nolisé, scolaire et touristique",specimen.png,1,-,-,Hugo Gilbert
+277,J.A Roby,Manufacturier de poêles et foyers,poele_foyer.jpg,2,418-849-8095,https://jaroby.com,-
+278,J.M. Clément,Réseau de magasins de vêtements et de mobilier pour enfants,specimen.png,1,-,-,Charles Clément
+279,JC Perreault (Meubles),Détaillant de meubles et électroménagers,specimen.png,1,-,-,Jean-Claude Perreault
+280,JPMA Global,Conception et fabrication de mobilier de magasins,specimen.png,1,-,-,Joseph Paventi
+281,Jam Industries (Les),Distributeur d'instruments de musique,specimen.png,1,-,-,Martin Szpiro
+282,Jefo,Fabrication d'additifs pour l'alimentation animale,specimen.png,1,-,-,Jean Fontaine
+283,Julien,Fabrication et distribution de produits en acier inoxydable,specimen.png,1,-,-,Gilles St-Pierre
+284,KPMG,"Vérification, fiscalité et services-conseils",specimen.png,1,-,-,Benoit Lacoste Bienvenue
+285,Keolis Canada,Transport interurbain et centres d'entretien,specimen.png,1,-,-,Patrick Gilloux
+286,Keywords Studios,Production de jeux vidéos,specimen.png,1,-,-,Andrew Day
+287,Kongsberg,"Services spécialisés de design, réingénierie et électronique",specimen.png,1,-,-,Robert Pigg
+288,Kruger,Fabrication de papier et de produits d'emballage,specimen.png,1,-,-,Joseph Kruger II
+289,L'Oréal Canada,Fabrication de produits d'hygiène et cosmétiques,specimen.png,1,-,-,Frank Kollmar
+290,L3 MAS,Services de soutien d'aéronefs,specimen.png,1,-,-,Jacques Comtois
+291,LG2,Agence de publicité,specimen.png,1,-,-,Claude Auchu
+292,LM Wind Power Canada,Fournisseur de produits éoliens,specimen.png,1,-,-,Duncan Berry
+293,La Capitale Assurance et services financiers,Assurances et services financiers,specimen.png,1,-,-,Jean St-Gelais
+294,La Coop fédérée,Coopérative de production agricole,specimen.png,1,-,-,Gaétan Desroches
+295,La Piazzetta (Restaurants),Restauration et transformation alimentaire,specimen.png,1,-,-,Éric Duguay
+296,La Québécoise (Groupe),Services d'autobus et aériens,specimen.png,1,-,-,Mathieu Gingras
+297,Lacasse (Groupe),Fabrication de mobilier de bureau en mélamine thermofusionnée,specimen.png,1,-,-,Sylvain Garneau
+298,Lallemand,Producteur de levures pour boulangerie,specimen.png,1,-,-,Antoine Chagnon
+299,Lambert Somec,"Électricité, mécanique, tuyauterie, ventilation",specimen.png,1,-,-,Michel Boutin
+300,Langlois Avocats,Services juridiques,specimen.png,1,-,-,Jean-François Gagnon
+301,Lassonde (Industries),Produits alimentaires et jus de fruits,specimen.png,1,-,-,Jean Gattuso
+302,Lauzon Planchers de bois exclusifs,"Planchers de bois massif, contrecollés et parquets",specimen.png,1,-,-,David Lauzon
+303,Lavery Avocats,Services juridiques,specimen.png,1,-,-,Anik Trudel
+304,Le Château,Détaillant de vêtements et de chaussures,specimen.png,1,-,-,Jane Silverstone Segal
+305,Lebel (Groupe),Fabrication de bois d’œuvre et de bois traité,specimen.png,1,-,-,Frédéric Lebel
+306,Lefebvre et Benoît,Détaillant de matériaux de construction,specimen.png,1,-,-,Marc-André Lefebvre
+307,Lemay,Services d'architecture,specimen.png,1,-,-,Louis T. Lemay
+308,Lepage Millwork,"Fabrication de portes et fenêtres (bois, aluminium et PVC)",specimen.png,1,-,-,Guy Bonneville
+309,Lightspeed,Logiciels de point de vente,specimen.png,1,-,-,Dax Dasilva
+310,Logiflex,Fabrication de mobilier de bureau en mélamine et en stratifié,specimen.png,1,-,-,Yannick Sinclair
+311,Logistec,"Arrimage, navigation et agence maritime",specimen.png,1,-,-,Madeleine Paquin
+312,Loto-Québec,"Loteries, casinos, bingo en réseau et jeux multimédias",specimen.png,1,-,-,Lynne Roiter
+313,Lou-Tec (Groupe),"Location, vente d'outils et d'équipements lourds",specimen.png,1,-,-,Daniel Lampron
+314,Louis Garneau Sports,Fabrication de vêtements et accessoires de sports,specimen.png,1,-,-,Louis Garneau
+315,Lowe's Canada,"Quincaillerie, rénovation et jardinage",specimen.png,1,-,-,Sylvain Prud'homme
+316,Ludia,Contenu multi-platforme de divertissement interactif grand public,specimen.png,1,-,-,Alexandre Thabet
+317,Lumenpulse,Fabrication de solutions d’éclairage DEL,specimen.png,1,-,-,François-Xavier Souvay
+318,Lussier (Groupe),"Vente de camions neufs et usagés, pièces et services",specimen.png,1,-,-,Josée Lussier
+319,Lussier Dale Parizeau,Assurance de dommages et de personnes,specimen.png,1,-,-,André Lussier
+320,Léger,"Sondages, recherches et études de marché",specimen.png,1,-,-,Jean-Marc Léger
+321,MAAX,Fabricant de bains et douches,specimen.png,1,-,-,Mark Gold
+322,MDA,Produits et systèmes pour satellites de communication,specimen.png,1,-,-,Mike Greenley
+323,MEP & Artmetco (Groupe),"Ingénierie, fabrication de produits métalliques de précision",specimen.png,1,-,-,Armand Afilalo
+324,METRO,Détaillant de produits alimentaires et pharmaceutiques,specimen.png,1,-,-,Eric R. La Flèche
+325,MNP,Services d'experts comptables,specimen.png,1,-,-,Dan Trotter
+326,MTY (Groupe d'Alimentation),Franchiseur en restauration rapide,specimen.png,1,-,-,Eric Lefebvre
+327,Maibec,Système intégrés de revêtements de bâtiments,specimen.png,1,-,-,Patrick Labonté
+328,Maisons Laprise,Fabrication de maisons préusinées,specimen.png,1,-,-,Daniel Laprise
+329,Mallette,"Certification, fiscalité, services-conseils et actuariat",specimen.png,1,-,-,Mario Bédard
+330,Manuvie,Gestion de placements et services bancaires,specimen.png,1,-,-,Roy Gori
+331,Marcelle (Groupe),Fabrication de produits de maquillage et cosmétiques,specimen.png,1,-,-,David Cape
+332,Marie-Claire (Groupe),Détaillant de mode féminine,specimen.png,1,-,-,Sylvain Lafrance
+333,Marmen,"Usinage, assemblage mécanique de grandes pièces",specimen.png,1,-,-,Patrick Pellerin
+334,Marquis Imprimeur,"Impression de livres, prépresse et production graphique",specimen.png,1,-,-,Serge Loubier
+335,Martin Kennedy,Tirage de joints et peinture,martink.jpg,8,450-712-0851,,-
+336,Master (Groupe),Produits de climatisation et chauffage,specimen.png,1,-,-,Louis St-Laurent
+337,Mathers (Groupe),"Asphalte, pierre concassée et ciné-parc",specimen.png,1,-,-,Brigitte Mathers
+338,Maurice (Groupe),Propriétaires et gestionnaires immobiliers,specimen.png,1,-,-,Luc Maurice
+339,Maxi Canada,Transformation de la volaille,specimen.png,1,-,-,Hugo Boisvert
+340,McCarthy Tétrault,Services juridiques,specimen.png,1,-,-,David E. Leonard
+341,McDonald du Canada (Les Restaurants),Restauration rapide,specimen.png,1,-,-,John Betts
+342,Mercer (Canada),"Régimes de retraite, gestion des risques et finances",specimen.png,1,-,-,Jaqui Parchment
+343,Merck,Recherche clinique et produits pharmaceutiques,specimen.png,1,-,-,Anna Van Acker
+344,Messer Canada,"Fournisseur de gaz industriels et de procédés, société d’ingénierie",specimen.png,1,-,-,Christian Lafleur
+345,Meubles Foliot,Fabrication et vente de meubles institutionnels,specimen.png,1,-,-,Daniel Foliot
+346,Michael Rossy,Réseau de magasins de marchandise générale,specimen.png,1,-,-,Michael DiTullio
+347,Miralis,Fabrication d'armoires de cuisine,specimen.png,1,-,-,Daniel Drapeau
+348,Molson Coors Canada,Brasseur,specimen.png,1,-,-,Mark Hunter
+349,Moreau (J.Y. Moreau),Construction multidisciplinaire,specimen.png,1,-,-,Jean-François Moreau
+350,Morneau (Groupe),"Transport général et frigorifique, équipements spécialisés",specimen.png,1,-,-,André Morneau
+351,Morneau Shepell,Services-conseils en avantages sociaux,specimen.png,1,-,-,Stephen Liptrap
+352,Mountain Equipment Coop (MEC),Coopérative de produits de sport de plein air,specimen.png,1,-,-,David Labistour
+353,Multiver,"Fabrication de vitrages scellés, trempés et laminés",specimen.png,1,-,-,Edgar Cormier
+354,NAV Canada,Fournisseur de services de navigation aérienne,specimen.png,1,-,-,Neil Wison
+355,Nationex,Livraison de colis,specimen.png,1,-,-,Catryn Pinard
+356,Navada,"Climatisation, ventilation, chauffage et réfrigération",specimen.png,1,-,-,Luc Bergeron
+357,Norda Stelo,Services d'ingénierie-construction,specimen.png,1,-,-,Alex Brisson
+358,Nordia,Centres d'appels téléphoniques,specimen.png,1,-,-,John DiNardo
+359,Norton Rose Fulbright,Services juridiques,specimen.png,1,-,-,Walied Soliman
+360,Nova Bus,"Constructeur d'autobus urbains, hybrides et articulés",specimen.png,1,-,-,Ralph Acs
+361,Novago Coopérative,"Alimentation animale, production végétale et quincaillerie",specimen.png,1,-,-,Dany Côté
+362,Novatech (Groupe),Fabrication de portes et fenêtres,specimen.png,1,-,-,Harold Savard
+363,Novexco,Détaillants de produits de bureau,specimen.png,1,-,-,Denis Mathieu
+364,Nutrinor,"Produits laitiers, eau de source et transformation alimentaire",specimen.png,1,-,-,Dominic Perron
+365,OPTEL,Fournisseur de systèmes de traçabilité,specimen.png,1,-,-,Louis Roy
+366,Océan (Groupe),Remorquage portuaire et services connexes,specimen.png,1,-,-,Jacques Tanguay
+367,Omega II,"Fabrication d'échafaudages, de clôtures et d'échelles",specimen.png,1,-,-,Bruno Tassé
+368,Optimum (Groupe),"Assurance, réassurance-vie, consultation et gestion d'actifs",specimen.png,1,-,-,Anabelle Blondeau
+369,Ouellet Canada (Groupe),Fabrication d'appareils de chauffage électrique,specimen.png,1,-,-,Martin Beaulieu
+370,PME-INTER Notaires,Regroupement de notaires,specimen.png,1,-,-,Linda Gravel
+371,PMT ROY,Assurances et services financiers,specimen.png,1,-,-,André Roy
+372,Papiers White Birch,Fabrication et production de papier,specimen.png,1,-,-,Christopher Brant
+373,Park Avenue (Groupe),Concessionnaires automobiles,specimen.png,1,-,-,Norman Hébert
+374,Parmalat Canada,Commercialisation du produits laitiers,specimen.png,1,-,-,Mark Taylor
+375,Patrick Morin (Groupe),Réseau de quincailleries (matériaux de construction),specimen.png,1,-,-,Michel St Jean
+376,Peinture Denis Fortier,Résidentiel et Commercial,peinture_denis_fortier.jpg,2,418-564-0317,,-
+377,Pfizer Canada,Produits pharmaceutiques,specimen.png,1,-,-,John Helou
+378,Pharmascience,"Fabrication, R&D de produits pharmaceutiques",specimen.png,1,-,-,Morris Goodman
+379,Plaisirs gastronomiques,Fabrication de produits alimentaires,specimen.png,1,-,-,Christophe Beauvais
+380,Planchers Mercier,Fabrication de lamelles de planchers de bois franc,specimen.png,1,-,-,Marielle Mercier
+381,Plomberie Durivage,"Résidentiel, Commercial et Industriel",plomberie_durivage.jpg,2,418-284-2408,,-
+382,Plomberie Levasseur,"Clapet anti-retour, Dispositif anti-refoulement, Chauffe-eau, Débouchage et nettoyage de drain, Dégel de tuyauterie, Inspection par caméra, Pompe (égoût, jet submersible, puisard), Entretien fournaise, Connexion d'appareils au gaz",plomberie_levasseur.jpg,2,418-987-5177,https://plomberielevasseuretfils.com,-
+383,Plomberie Savard,"Réparation, Débouchage, Dispositif anti-refoulement, Remplacement d'entrée d'eau et dégout",plomberie_savard.jpg,10,819-269-4177,https://sites.google.com/site/plomberiesavard/,-
+384,Plomberie Simon Paré,"Résidentiel, Commercial, Rénovation et Service",plomberie_simon.jpg,2,418-284-4606,https://www.plomberiesimonpare.com,-
+385,Pneus Robert Bernard,Vente et distribution de pneus et ateliers de rechapage,specimen.png,1,-,-,Gérard Bernard
+386,Pomerleau,Entrepreneur général et gérance de construction,specimen.png,1,-,-,Pierre Pomerleau
+387,Power Corporation du Canada,"Services financiers, assurances et communications",specimen.png,1,-,-,André Desmarais 
+388,Pratt & Whitney Canada,Conception et fabrication de moteurs d'avions,specimen.png,1,-,-,John Saabas
+389,Premier Tech,"Horticulture, agriculture, environnement et équipements industriels",specimen.png,1,-,-,Jean Bélanger
+390,Preverco,Fabrication de planchers de bois franc,specimen.png,1,-,-,Jean-François Dufresne
+391,Prevost,"Autocars grand tourisme, carrosserie d'autocars",specimen.png,1,-,-,Ralph Acs
+392,Produits Scientific Games (Canada) (Les),Impression de billets de loterie et jeux promotionnels,specimen.png,1,-,-,Sonia Verdy
+393,Produits alimentaires Viau,Fabrication de charcuterie,specimen.png,1,-,-,Pat De Marco
+394,Produits forestiers Résolu,"Papier journal et d'impression commerciale, pâte et produits du bois",specimen.png,1,-,-,Yves Laflamme
+395,Promutuel (Groupe),Assurances et services financiers,specimen.png,1,-,-,Sylvain Fauchon
+396,Prémoulé,Fabrication de portes d'armoires en thermoplastique,specimen.png,1,-,-,Hugues Rouleau
+397,PwC Canada,"Services d'audit, certification, services-conseils, fiscalité",specimen.png,1,-,-,Nicolas Marcoux
+398,Qualinet (Groupe),Nettoyage de systèmes de ventilation et après sinistres,specimen.png,1,-,-,Éric Pichette
+399,Qualtech,Fabrication d’équipements en acier inoxydable,specimen.png,1,-,-,André Giguère
+400,Quincaillerie Richelieu,Importation et distribution de quincaillerie spécialisée,specimen.png,1,-,-,Richard Lord
+401,Québec Son Énergie,"Sonorisation, Éclairage, Location et Vente",quebec_son.jpg,9,450-753-4511,https://cartes.webiciel.ca/affaire/adresse/9,-
+402,Québecor,"Télécommunications, édition et télédiffusion",specimen.png,1,-,-,Pierre Karl Péladeau
+403,Raymond (Groupe),Toitures commerciales et résidentielles,specimen.png,1,-,-,Alain Raymond
+404,Raymond Chabot Grant Thornton,"Certification, fiscalité, services-conseils et redressement",specimen.png,1,-,-,Emilio B. Imbriglio
+405,Reitmans (Canada),Détaillant de vêtements,specimen.png,1,-,-,Jeremy H. Reitman
+406,Renaud-Bray (Groupe),Réseau de librairies,specimen.png,1,-,-,Blaise Renaud
+407,Ressorts Liberté,Fabrication de ressorts de précision,specimen.png,1,-,-,Richard Guimont
+408,Restaurants Pacini (Les),Restauration,specimen.png,1,-,-,Nathalie Lehoux
+409,Restos Plaisirs (Groupe),Restauration,specimen.png,1,-,-,Pierre Moreau
+410,Rheinmetall Canada,Ingénierie et intégration de systèmes,specimen.png,1,-,-,Stéphane Oehrli
+411,Richter,Services et conseils stratégiques en comptabilité et finances,specimen.png,1,-,-,Tasso Lagios
+412,Rio Tinto,"Bauxite, alumine et aluminium",specimen.png,1,-,-,Jean-Sébastien Jacques
+413,Robert (Groupe),"Transport routier, entreposage et logistique",specimen.png,1,-,-,Michel Robert
+414,Rodeo FX,Services d'effets visuels numériques,specimen.png,1,-,-,Sébastien Moreau
+415,Rogers Communications,"Câblodistribution, communications sans fil et édition",specimen.png,1,-,-,Joe Natale
+416,Ropack,Fabrication d'emballages pour l'industrie pharmaceutique,specimen.png,1,-,-,Yves Massicotte
+417,Rotobec,Fabrication d'accessoires de manutention,specimen.png,1,-,-,Robert Bouchard
+418,Rousseau Métal,Fabrication de systèmes de rangements en métal,specimen.png,1,-,-,Charles-Alexandre Paré
+419,Roxboro Excavation,Entrepreneur en construction et gestion de projets,specimen.png,1,-,-,Raynald Théorêt
+420,Régulvar,"Entrepreneur en régulation numérique, gestion d'énergie",specimen.png,1,-,-,Marc Dugré
+421,Rénovations Projet Plus,"Rénovation domiciliaire, Construction de maisons et Condominium",reno_projet_plus.jpg,1,514-809-2210,http://reno-projet-plus.com,-
+422,Réseau de transport de Longueuil (RTL),Transports en commun,specimen.png,1,-,-,Michel Veilleux
+423,Réseau de transport de la Capitale (RTC),Transport en commun,specimen.png,1,-,-,Alain Mercier
+424,SAP Canada,Solutions logicielles de gestion d'entreprise,specimen.png,1,-,-,Bill McDermott
+425,SGT 2000,Transport par camion de marchandises générales,specimen.png,1,-,-,Denis Coderre
+426,SNC-Lavalin (Groupe),"Ingénierie, construction et exploitation d’infrastructures",specimen.png,1,-,-,Neil Bruce
+427,SSQ Assurance,Assurances de personnes et de dommages,specimen.png,1,-,-,Jean-François Chalifoux
+428,Sandoz Canada,Fabrication de produits pharmaceutiques génériques,specimen.png,1,-,-,Michel Robidoux
+429,Sani-Marc (Groupe),Produits chimiques de nettoyage,specimen.png,1,-,-,Pierre Goudreault
+430,Santco,Coffrages,specimen.png,1,-,-,Michele Santoriello
+431,Saputo,"Production de fromages, produits laitiers et dérivés",specimen.png,1,-,-,"Lino A. Saputo, Jr"
+432,Savoie (Groupe),Propriétaires et gestionnaires immobiliers,specimen.png,1,-,-,Eddy Savoie
+433,Securitas,"Agents de sécurité, patrouille, télésurveillance",specimen.png,1,-,-,John Campbell
+434,Service Mobile Sylvain Génois,"Réparation et pose de pointe filtrante, pompe à eau, entretien puit de surface",pointe_filtrante.jpg,2,418-337-9357,,-
+435,Services Ménagers Roy (Les),Entretien d'immeubles,specimen.png,1,-,-,Julie Roy
+436,Services préhospitaliers Laurentides-Lanaudière,Services ambulanciers,specimen.png,1,-,-,Lise Goyer
+437,Servirplus Soins & Soutien à domicile,Réseau de soins à domicile et médecine du travail,specimen.png,1,-,-,Normand Laurin
+438,Sherweb,Fournisseur de services d'hébergement,specimen.png,1,-,-,Matthew Cassar
+439,Sid Lee,Agence de publicité,specimen.png,1,-,-,Bertrand Cesvet
+440,Signaleur.com,Signalisation routière,16166778007315863208562529920073.jpg,1,438-502-9760,https://signaleur.com,-
+441,Signalisation (Groupe),Fabrication et location de produits de signalisation,specimen.png,1,-,-,Matthieu Collin
+442,Sobeys,Détaillant en alimentation,specimen.png,1,-,-,Pierre St-Laurent
+443,Société de l'assurance automobile du Québec,Assurance automobile et risques corporels,specimen.png,1,-,-,Nathalie Tremblay
+444,Société de transport de Laval,Transport en commun,specimen.png,1,-,-,Guy Picard
+445,Société de transport de Montréal (STM),Transport en commun,specimen.png,1,-,-,Luc Tremblay
+446,Société de transport de l'Outaouais,Transport en commun et transport adapté,specimen.png,1,-,-,Marc Rousseau
+447,Société des Alcools du Québec (SAQ),"Distribution et vente de vins, spiritueux et bières",specimen.png,1,-,-,Alain Brunet
+448,Société des traversiers du Québec (STQ),Société gouvernementale de transport par traversiers,specimen.png,1,-,-,Stéphane Lafaut
+449,Sodexo Canada,Gestion de services alimentaires et d'installations,specimen.png,1,-,-,Barry Telford
+450,Solaris Québec Portes et Fenêtres,Fabrication de portes et fenêtres,specimen.png,1,-,-,Pascal Chalifour
+451,Solisco (Imprimerie),Imprimerie commerciale,specimen.png,1,-,-,Alain Jacques
+452,Solutions de reconnaissance Rideau,Systèmes et conseils en gestion de la reconnaissance,specimen.png,1,-,-,Peter Hart
+453,Soprema,Fabrication de produits et de revêtements d’étanchéité,specimen.png,1,-,-,Pierre-Étienne Bindschedler
+454,Soucy (Groupe),Fabrication de composantes et de pièces de véhicules,specimen.png,1,-,-,Éric Côté
+455,Sourcevolution,Services conseils en technologies de l'information,specimen.png,1,-,-,Yves Perron
+456,Souris Mini (Groupe),Fabrication et vente au détail de vêtements pour enfants.,specimen.png,1,-,-,Steeve Beaudet
+457,Spectra Premium (Les industries),Fabrication de réservoirs d'essence et radiateurs automobiles,specimen.png,1,-,-,Jacques Mombleau
+458,Sportscene (Groupe),Restauration,specimen.png,1,-,-,Jean Bédard
+459,St-Hubert (Groupe),Restauration et fabrication de produits alimentaires,specimen.png,1,-,-,Pierre Rivard
+460,Stageline Mobile Stage,Concepteur et fabricant d'équipements scéniques mobiles,specimen.png,1,-,-,Yvan Miron
+461,Stantec,"Ingénierie (transports, bâtiments, énergie et télécommunications)",specimen.png,1,-,-,Gordon Johnston
+462,Stelpro,Fabrication de produits de chauffage électrique,specimen.png,1,-,-,Yves Chabot
+463,Steris,Conception et fabrication d'équipements médicaux,specimen.png,1,-,-,Walt Rosebrough Jr.
+464,Stikeman Elliott,Cabinet d'avocats en droit des affaires,specimen.png,1,-,-,Jocelyn Poirier
+465,Stingray,Services de musique numérique,specimen.png,1,-,-,Eric Boyko
+466,Stéphane Dion,technicien en hydrogéologie,technique_eau.jpg,2,418-873-3737,,-
+467,Suncor,"Extraction, transformation et distribution de pétrole",specimen.png,1,-,-,Steve Wiliams
+468,Supremex,Fabricant d'enveloppes et de produits d'emballages,specimen.png,1,-,-,Stewart Emerson
+469,Syneos Health,Recherche clinique en pharmaceutique,specimen.png,1,-,-,Riaz Bandali
+470,Sécurité Polygon,Conception et services de systèmes de protection incendie,specimen.png,1,-,-,Line Ménard
+471,Sélection (Groupe) [anc. Réseau Sélection],Complexes multigénérationnels,specimen.png,1,-,-,Réal Bouclin
+472,TBC Constructions,Entrepreneur en construction,specimen.png,1,-,-,Sébastien Pelletier
+473,TC Transcontinental,"Impression, emballage, édition, médias numériques et distribution",specimen.png,1,-,-,François Olivier
+474,TCI (Groupe) [Transelec / Common],"Construction, gestion et entretien d'infrastructures réseau",specimen.png,1,-,-,Stéphane Gauthier
+475,TELUS,Produits et services en télécommunications,specimen.png,1,-,-,Darren Entwistle
+476,Tafisa Canada,Fabrication de panneaux de particules bruts et de mélamine,specimen.png,1,-,-,Louis Brassard
+477,Technologies Interactives Mediagrif,Solutions de commerce électronique,specimen.png,1,-,-,Paul Bourque
+478,Teknion Roy & Breton,Fabrication de mobiliers de bureau,specimen.png,1,-,-,Jacques Alain
+479,Telecon,Bâtisseurs de réseaux de communication câblés,specimen.png,1,-,-,André Héroux
+480,Tenaquip,Distribution d'équipements et d'approvisionnements industriels,specimen.png,1,-,-,Braden Green
+481,Terrapure Environnement,Gestion des déchets industriels et environnementaux,specimen.png,1,-,-,Todd Moser
+482,Tetra Tech,"Services de sciences et de génie, gestion de projets",specimen.png,1,-,-,Dan L. Batrack
+483,Texel Matériaux Techniques,Fabrication de textiles techniques,specimen.png,1,-,-,Guy Bérubé
+484,Thales Canada,Intégrateur de systèmes de commandes et d'instruments de vol,specimen.png,1,-,-,Mark Halinaty
+485,Trans-West (Groupe),Transport par camion,specimen.png,1,-,-,Réal Gagnon
+486,Transat A.T.,Compagnie aérienne et voyagiste,specimen.png,1,-,-,Jean-Marc Eustache
+487,Transbus (Groupe),Transport de personnes,specimen.png,1,-,-,Stéphane Tremblay
+488,Transdev Canada,"Transport en commun (autobus, limocar)",specimen.png,1,-,-,Arthur Nicolet
+489,Transport Bourassa,"Transport par camion, entreposage et transbordement",specimen.png,1,-,-,Jean Bourassa
+490,Transport Bourret,Transport de marchandises et entreposage,specimen.png,1,-,-,François Bourret
+491,Transport Gilmyr,Transport de marchandises,specimen.png,1,-,-,Gilbert Thibault
+492,Transport Hervé Lemieux,Transport de marchandises,specimen.png,1,-,-,Guy Lemieux
+493,Tremcar,Fabrication de remorques-citerne,specimen.png,1,-,-,Daniel Tremblay
+494,Trévi,Fabrication et distribution de piscines hors terre et creusées,specimen.png,1,-,-,Clément Hudon
+495,UAP,"Distribution, mise en marché et réusinage de pièces",specimen.png,1,-,-,Alain Masse
+496,UPS Canada,Messagerie et transport de marchandises,specimen.png,1,-,-,Dominic Porporino
+497,Ubisoft Divertissements,"Développeur, éditeur et distributeur de jeux vidéo",specimen.png,1,-,-,Yannis Mallat
+498,Uni-Sélect,Distributeur de pièces pour véhicules à moteur,specimen.png,1,-,-,André Courville
+499,Urgel Bourgie/Athos,Services funéraires et cimetières,specimen.png,1,-,-,Michel Boutin 
+500,Usines Giant,"Fabrication de chauffe-eau électriques, au gaz et à l'huile",specimen.png,1,-,-,Claude Lesage
+501,VIVACO (Groupe coopératif ),"Groupe coopératif en agriculture, machinerie, rénovation et énergie",specimen.png,1,-,-,Gervais Laroche
+502,Vagabond (Les Entreprises),Détaillant de vêtements,specimen.png,1,-,-,André Racine
+503,Valacta,"Laboratoire d'analyse du lait, expertise et services-conseils",specimen.png,1,-,-,Daniel Lefebvre
+504,Veg Pro International,Production de laitues et de mesclun,specimen.png,1,-,-,Gerry Van Winden
+505,Velan,Robinetterie industrielle et nucléaire,specimen.png,1,-,-,Yves Leduc
+506,Venmar Ventilation,Système de ventilation résidentielle,specimen.png,1,-,-,David Barrow
+507,Veolia ES Canada,"Services industriels, gestion des ressources",specimen.png,1,-,-,William Dicroce
+508,Vergers Leahy (Les),Production de purées de pommes et fruits mélangés,specimen.png,1,-,-,Michael Leahy
+509,Via Rail Canada,Transport ferroviaire et de voyageurs,specimen.png,1,-,-,Yves Desjardins-Siciliano
+510,Victoriaville & Co.,"Cercueils, urnes et produits funéraires",specimen.png,1,-,-,Alain Dumont
+511,Victrix,Services-conseils en technologie de l'information,specimen.png,1,-,-,Stephan Gariepy
+512,Vision New Look (Groupe),Produits et services d'optométrie,specimen.png,1,-,-,Antoine Amiel
+513,Vision7 International,Services de communications,specimen.png,1,-,-,Mélanie Dunn
+514,Voxdata,Centre d'appels en impartition,specimen.png,1,-,-,France Couture
+515,Vêtements Peerless,Confection de vêtements pour hommes,specimen.png,1,-,-,Alvin Segal
+516,Vêtements de Sport Gildan (Les),"Fabrication de t-shirts, polos, vêtements de sport",specimen.png,1,-,-,Glenn J. Chamandy
+517,WSP Global (Groupe),"Ingénierie, environnement et gestion de projets",specimen.png,1,-,-,Alexandre L'Heureux
+518,Walmart Canada,Magasins à grande surface,specimen.png,1,-,-,Doug McMillon
+519,Waterville TG,Bandes d'étanchéité en caoutchouc et en plastique,specimen.png,1,-,-,Benoit Tétreault
+520,Webiciel®,Application Web de gestion,webiciel.png,1,514-528-5185,https://webiciel.ca,-
+521,WestRock,Produits d'emballage en papier et carton,specimen.png,1,-,-,Steven C. Voorhees
+522,Westcliff,Propriétaires et gestionnaires immobiliers,specimen.png,1,-,-,Alan Marcovitz
+523,Willis Towers Watson,Services professionnels en matière de risque d’entreprise et courtage,specimen.png,1,-,-,John Haley
+524,Winpak,Emballage flexible pour l'industrie alimentaire et pharmaceutique,specimen.png,1,-,-,Olivier Y. Muggli
+525,Zinc électrolytique du Canada,Transformation primaire de zinc,specimen.png,1,-,-,Eva Carissimi
+526,exp,"Ingénierie, consultation et ingénierie-construction",specimen.png,1,-,-,Ivan Dvorak
+527,iA Groupe financier [anc. Industrielle Alliance],Assurances et services financiers,specimen.png,1,-,-,Denis Ricard
+528,Électricité Grimard,Entrepreneur en électricité,specimen.png,1,-,-,Jacques Grimard
+529,Énergir,Distribution de gaz naturel et d'électricité,specimen.png,1,-,-,Sophie Brochu
