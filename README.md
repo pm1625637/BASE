@@ -22,7 +22,7 @@ $ data [2] [0] [1] = 'column1';
 $ data [2] [0] [2] = 'column2';
 
 Concrete example of a data file in php ...
-$ data [0] [0] [1] = 'people';
+$ data [0] [0] [1] = 'persons';
 $ data [1] [0] [1] = 'name';
 $ data [1] [0] [2] = 'firstname';
 $ data [1] [1] [1] = 'trump';
