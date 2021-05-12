@@ -10,7 +10,7 @@
 <meta name="description" content="<?php echo (isset($desc))? $desc:"$desc"; ?>">
 <meta name="author" content="<?php echo (isset($author))? $author:"$author"; ?>">
 <meta name="keywords" content="<?php echo (isset($keywords))? $keywords:"$keywords"; ?>">
-<link rel="icon" type="image/png" href="<?php echo WEBROOT; ?>favicon.png">
+<link rel="icon" type="image/ico" href="<?php echo WEBROOT; ?>favicon.ico">
 <?php
 if(!empty($data)) extract($data);
 $path =(isset($path))? $path.'/' : '';
