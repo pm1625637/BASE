@@ -401,54 +401,6 @@ class Get extends Model
 		}
 	}
 	
-	public function load_csv_old($strTable)
-	{
-		include_once(CLASSDIRECTORY."bigfile.php");
-		$largefile = new BigFile(DATADIRECTORY.$strTable.'.csv');
-		
-		$iterator = $largefile->iterate("Text"); // Text or Binary based on your file type
-		$t = $this->get_id_table($strTable);
-		//$i=0;
-		foreach ($iterator as $i=>$line)
-		{		
-		   $line = trim($line);
-		   $rec = explode(',',$line);
-		   $c = 1;
-		   foreach($rec as $field)
-		   {
-				//$field = str_replace(',','.', $field);
-				//$field = preg_replace('/[^A-Za-z0-9\-]/', '', $field);	
-				$field = strval($field);
-				//$field= htmlspecialchars ($field);
-				if($i==0)
-				{
-					if($field || $field == 0 || $field == "0")
-					{
-						$this->data[$t][0][$c] = $field;
-					}
-					else
-					{
-						$this->data[$t][0][$c] = '';
-					}
-				}
-				else
-				{
-					if($field || $field == 0 || $field == "0")
-					{
-						$this->data[$t][$i][$c] = $field;
-					}
-					else
-					{
-						$this->data[$t][$i][$c] = '';
-					}
-				}				
-				$c++;
-		   }
-	   }
-	  // It seems that iterator has 1 more empty row.  
-	  unset($this->data[$t][$i]);
-	  $this->save();
-	}
 	public function load_csv($strTable)
 	{
 		$t = $this->get_id_table($strTable);
