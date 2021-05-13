@@ -1,9 +1,2 @@
 <?php
-$data[0][0][1]='notes';
-$data[0][0][2]='users';
-$data[1][0][1]='id_note';
-$data[1][0][2]='note';
-$data[1][0][3]='user_id';
-$data[2][0][1]='id_user';
-$data[2][0][2]='user';
 ?>

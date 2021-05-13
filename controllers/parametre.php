@@ -26,7 +26,7 @@ class Parametre extends Controller
 	{
 		parent::index();
 	}
-	function add_table()
+	/*function add_table()
 	{
 		$this->denied('add a table ');
 	}	
@@ -37,7 +37,7 @@ class Parametre extends Controller
 	function delete_table($url)
 	{		
 		$this->denied('delete table');
-	}
+	}*/
 	function add_field($url)
 	{
 		$this->denied('add a field');
