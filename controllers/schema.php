@@ -86,7 +86,7 @@ class Schema extends Controller
 				//var_dump($table); exit;
 				try
 				{
-					$id_table = $this->Get->get_id_table($tab);
+					$id_table = $this->Get->get_id_table($tab); 
 					if($this->Get->count_lines($id_table) > 0)
 					{
 						//$export_results .= $id_table.'<br>';

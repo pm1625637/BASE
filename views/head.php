@@ -15,7 +15,7 @@
 if(!empty($data)) extract($data);
 $path =(isset($path))? $path.'/' : '';
 ?>
-<link rel="stylesheet" href="<?=ASSETDIRECTORY?><?=$path?>css/bootstrap.min.css" media="screen">
+<link rel="stylesheet" href="<?=ASSETDIRECTORY?><?=$path?>css/bootstrap.css" media="screen">
 <link rel="stylesheet" href="<?=ASSETDIRECTORY?><?=$path?>css/note.css" media="screen">
 <link rel="stylesheet" href="<?=ASSETDIRECTORY?><?=$path?>css/nav.css" media="screen">
 <script type="text/javascript" src="<?=ASSETDIRECTORY?><?=$path?>js/jquery.min.js"></script>
