@@ -25,6 +25,8 @@ define('VERSION','1.2');
 
 require(ROOT.'core/model.php');
 require(ROOT.'core/controller.php');
+/*require('../core/model.php');
+require('../core/controller.php');*/
 
 if (isset($_GET['jumbo'])) {$_SESSION['jumbo'] = $_GET['jumbo'];}
 		
