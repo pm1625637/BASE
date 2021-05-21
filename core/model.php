@@ -1302,7 +1302,7 @@ class Model
 
 	function sub($strTable,$strColumnToSub,$strColumn,$intKey)
 	{
-		$sum = NULL;
+		$sub = NULL;
 		$intTable = $this->get_id_table($strTable);
 		$columnToSub = $this->get_id_column($intTable,$strColumnToSub);
 		$column = $this->get_id_column($intTable,$strColumn);
@@ -1310,11 +1310,17 @@ class Model
 		{
 			if($record[$column] == $intKey)
 			{
-				$sum -= $record[$columnToSub];  				
+				$sub -= $record[$columnToSub];  				
 			}
 		}
-		return $sum;
+		return $sub;
 	}
+
+	function is_equal($a,$b,$dec)
+	{
+		return ( number_format($a,$dec) == number_format($b,$dec) ) ? TRUE : FALSE;
+	}
+	
 	function import_php_data_mysql($file,$records)
 	{
 		include(ROOT.'data/'.$file.'.php');
