@@ -1688,9 +1688,9 @@ class Model
 		$newDate = ($time)? $date->format('Y-m-d H:i:s'):$date->format('Y-m-d');
 		return $newDate;
 	}
-	//*************************************************//
+	//*********************************************************//
 	//********  SETTING ONE TABLE FOR USAGE   *********//
-	//*************************************************//
+	//********************************************************//
 	function set_table(array $a)
 	{
 		$this->table = strtolower($a['table']);
@@ -1716,7 +1716,9 @@ class Model
 		}
 		return $recordset;
 	}
-	
+	//*********************************************************//
+	//********  END SETTING ONE TABLE FOR USAGE  ****//
+	//*********************************************************//
 	public function find_replace($strTable,$strColumn,$find=' ',$replace=' ')
 	{
 		//$bodytag = str_ireplace("%body%", "black", "<body text=%BODY%
@@ -1748,15 +1750,6 @@ class Model
 		$this->save();
 	}
 	
-	/*public function fill_data($table,$data)
-	{
-		echo '<pre>';
-		var_dump($data);
-		echo '</pre>';
-		exit;
-		$this->data[$table] = $data;
-		$this->save(TRUE);
-	}*/
 	public function copy_column($strTable,$strColumnFrom,$strColumnTo)
 	{
 		if(empty($strTable) || empty($strColumnFrom) || empty($strColumnTo))
