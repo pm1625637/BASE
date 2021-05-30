@@ -300,11 +300,10 @@ class Controller
 							$tbody .= '<td>';
 							if($rec)
 							{
-								foreach($rec as $r=>$value)
+								foreach($rec as $r=>$val)
 								{
 									if(($r <=> 2) !== 0) continue;
-									$value = '<a href="'.WEBROOT.strtolower(get_class($this)).'/show/'.$strForeignTable.'/id_'.$col.'/'.$rec[1].'">'.$rec[2].'</a>';
-									$tbody .= $value;
+									$tbody .=  '<a href="'.WEBROOT.strtolower(get_class($this)).'/show/'.$strForeignTable.'/id_'.$col.'/'.$rec[1].'">'.$rec[2].'</a>';
 								}
 							}
 							$tbody .= '</td>';

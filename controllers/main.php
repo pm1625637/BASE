@@ -15,12 +15,14 @@ class Main extends Controller
 
 		/*$this->data['title'] =' Main';
 		$this->data['head'] = $this->Template->load('head',$this->data,TRUE);*/
-		
-		if(!isset($_SESSION['loggedin']))
-		{
-			header('Location:'.WEBROOT.'login');
-			exit();
-		}
+
+        if (!empty($_SESSION)) {
+            if(!isset($_SESSION['loggedin']))
+            {
+                header('Location:'.WEBROOT.'login');
+                exit();
+            }
+        }
 	}
 	function index()
 	{
