@@ -18,4 +18,12 @@ $data[1][7][1]='You have logged out!';
 $data[1][7][2]='2021-05-30 13:23:09';
 $data[1][8][1]='Username not found!';
 $data[1][8][2]='2021-05-30 13:23:09';
+$data[1][9][1]='You have initialized BASE';
+$data[1][9][2]='2021-05-30 13:28:03';
+$data[1][10][1]='Username not found!';
+$data[1][10][2]='2021-05-30 13:28:18';
+$data[1][11][1]='Username not found!';
+$data[1][11][2]='2021-05-30 13:28:37';
+$data[1][12][1]='You are logged in!';
+$data[1][12][2]='2021-05-30 13:28:46';
 ?>

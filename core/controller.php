@@ -12,8 +12,14 @@ class Controller
 {
 	public static $version = '8.3';
 	protected $data = array();
-	
-	function __construct($file,$ext,$path=NULL)
+	protected $Sys;
+    protected $Msg;
+    protected $Get;
+    protected $Struct;
+    protected $Param;
+    protected $Template;
+
+    function __construct($file,$ext,$path=NULL)
 	{
 		$this->path = $path;		
 		$this->load_model('Sys');
@@ -49,7 +55,7 @@ class Controller
 		$key=$this->Sys->get_id_column($table,'key'); 
 		$value=$this->Sys->get_id_column($table,'value'); 
 		// $rec[2] == key $rec[3]== value
-		foreach($configs as $i=>$rec)
+		foreach($configs as $rec)
 		{
 			$this->data[$rec[$key]] = $rec[$value];
 		}
@@ -325,7 +331,7 @@ class Controller
 								if($records)
 								{
 									$a = '<span>'.$value.' </span>';
-									foreach($records as $r=>$rule)
+									foreach($records as $rule)
 									{
 										$a .= '<a href="'.WEBROOT.strtolower(get_class($this)).'/show/'.$rule[3].'/'.$arr[1].'_'.$arr[0].'/'.$value.'" title="Slave: '.$rule[3].'">['.$rule[3].']</a>';
 									}
@@ -502,14 +508,13 @@ class Controller
 					if(isset($url[VALUE]))
 					{
 						header('Location:'.WEBROOT.$url[CONTROLLER].'/show_fields/'.$url[TABLE]);
-						exit;
-					}
+                    }
 					else
 					{
 						header('Location:'.WEBROOT.$url[CONTROLLER].'/show_table/'.$url[TABLE]);
-						exit;
-					}
-				}
+                    }
+                    exit;
+                }
 			}
 			catch (Throwable $t)
 			{
@@ -683,11 +688,10 @@ class Controller
 						$tbody .= '<td>';
 						if($rec)
 						{
-							foreach($rec as $r=>$value)
+							foreach($rec as $r=>$val)
 							{
 								if(($r <=> 2) !== 0) continue;
-								$value = '<a href="'.WEBROOT.strtolower(get_class($this)).'/show/'.$strForeignTable.'/id_'.$col.'/'.$rec[1].'">'.$rec[2].'</a>';
-								$tbody .= $value;
+                                $tbody .= '<a href="'.WEBROOT.strtolower(get_class($this)).'/show/'.$strForeignTable.'/id_'.$col.'/'.$rec[1].'">'.$rec[2].'</a>';
 							}
 						}
 						$tbody .= '</td>';
@@ -845,7 +849,7 @@ class Controller
 				{
 					$selected = 'selected="selected"';
 				}
-				$html .= '<option value="'.$row[$colkeys[0]].'"' .$selected. '>'.$str.'</option>';
+				$html .= '<option value="'.$row[$colkeys[0]].'" ' .$selected. '>'.$str.'</option>';
 				$str ='';
 				$selected='';
 			}
@@ -877,7 +881,7 @@ class Controller
 				{
 					$selected = 'selected="selected"';
 				}
-				$html .= '<option value="'.$row[$colkeys[0]].'"' .$selected. '>'.$str.'</option>';
+				$html .= '<option value="'.$row[$colkeys[0]].'" ' .$selected. '>'.$str.'</option>';
 				$str ='';
 				$selected='';
 			}
@@ -1139,7 +1143,6 @@ class Controller
 	
 	function import_odbc($strTable)
 	{
-		$return = FALSE;
 		$server = $this->Sys->get_record('server',1); 
 		
 		$link = odbc_connect($server['odbc'],"",""); 
@@ -1405,7 +1408,7 @@ class Controller
 		{
 			$this->Msg->set_msg($t->getMessage());
 		}
-		$this->Get->save(); 
+		return $this->Get->save();
 	}
 	
 	function check_rwords($str)
