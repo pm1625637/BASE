@@ -4,7 +4,8 @@ session_start();
 set_time_limit(180); //seconds
 date_default_timezone_set('America/New_York'); 
 define('WEBROOT',str_replace('index.php','',$_SERVER['SCRIPT_NAME']));
-define('ROOT',str_replace('index.php','',$_SERVER['SCRIPT_FILENAME']));
+//define('ROOT',str_replace('index.php','',$_SERVER['SCRIPT_FILENAME']));
+define('ROOT',__DIR__.'/');
 define('DEFAULTCONTROLLER','main');
 define('DEFAULTDATABASE','data');
 define('CLASSDIRECTORY',ROOT.'classes/');

@@ -43,6 +43,15 @@ class Login extends Controller
 					$_SESSION = $post;
 					$this->Get->save(TRUE);
 					$this->Msg->set_msg('You are logged in!');
+					
+					//Something to write to txt log
+					$log  = "User: ".$_SERVER['REMOTE_ADDR'].' - '.date("F j, Y, g:i a").PHP_EOL.
+					"Attempt: ".($post['loggedin'] ==TRUE ?'Success':'Failed').PHP_EOL.
+					"User: ".$user[$colUser].PHP_EOL.
+					"-------------------------".PHP_EOL;
+					//Save string to log, use FILE_APPEND to append.
+					file_put_contents(DATADIRECTORY.'log_'.date("j.n.Y").'.log', $log, FILE_APPEND);
+
 					header('Location:'.WEBROOT.DEFAULTCONTROLLER);
 					exit;
 				}
