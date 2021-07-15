@@ -337,13 +337,13 @@ class Model
 			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
 			throw new Exception($msg);
 		}
-		elseif(strstr($strColumn, '_') && !$this->valid_foreign_key($strColumn))
+		/*elseif(strstr($strColumn, '_') && !$this->valid_foreign_key($strColumn))
 		{
 			$msg = 'If you try to create a foreigh key it must be terminated by "_id" ';
 			$msg .= 'and must referencing an existing master in the rules table.';
 			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
 			throw new Exception($msg);
-		}
+		}*/
 
 		$n_columns = $this->count_columns($table);
 		$this->data[$table][0][$n_columns+1] = $strColumn;

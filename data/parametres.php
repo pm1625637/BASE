@@ -3,4 +3,13 @@ $data[0][0][1]='tables';
 $data[1][0][1]='id_table';
 $data[1][0][2]='strtable';
 $data[1][0][3]='skippy';
+$data[1][1][1]='1';
+$data[1][1][2]='coeurs';
+$data[1][1][3]='';
+$data[1][2][1]='2';
+$data[1][2][2]='notes';
+$data[1][2][3]='';
+$data[1][3][1]='3';
+$data[1][3][2]='users';
+$data[1][3][3]='';
 ?>

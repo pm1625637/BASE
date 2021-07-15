@@ -1,2 +1,15 @@
 <?php
+$data[0][0][1]='coeurs';
+$data[0][0][2]='notes';
+$data[0][0][3]='users';
+$data[1][0][1]='id_coeur';
+$data[1][0][2]='date';
+$data[1][0][3]='heure';
+$data[1][0][4]='mesure1';
+$data[1][0][5]='mesure2';
+$data[2][0][1]='id_note';
+$data[2][0][2]='note';
+$data[2][0][3]='user_id';
+$data[3][0][1]='id_user';
+$data[3][0][2]='user';
 ?>
