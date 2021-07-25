@@ -7,8 +7,8 @@
   </div>
 	<div class="panel-body">	
 		<ul>
-		<li>PHP Version : <?=PHP_VERSION?> </li>
-		<li><?=__DIR__?></li>
+		<li>Import Schema</li>
+		<li>Set parameters</li>
 		<li>Import tables with main</li>
 		<li>Transfert main tables to shemas.php</li>
 		<li>Export Schema</li>

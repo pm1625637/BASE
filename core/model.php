@@ -1,17 +1,16 @@
 <?php 
 /**
 * @class: Model
-* @version: 7.5.0
+* @version: 7.4.3
 * @author: pierre.martin@live.ca
 * @php: 7.4
-* @revision: 2021-06-01
-* @note : quelques foreach remplacer par des while et aussi élimination de warning donner par phpstorm
-* @note : aussi ajout des retours de fonction
+* @revision: 2021-07-23
+* @note : get_last_number correction : vérification du champ si numerique pour éviter la ligne des noms de colonnes 
 * @licence MIT
 */
 class Model
 {
-	public static $version = '7.5.0';
+	public static $version = '7.4.3';
 	public $data = array();
 	public $datapath = NULL;
 	public $filename = NULL;
@@ -19,7 +18,7 @@ class Model
 	public $n_tables = 0;
 	public $max_lines = 0;
 	public $max_columns = 0;
-
+	
 	public function connect($path,$file,$ext='php')
 	{
 		$this->datapath = $path;
@@ -56,28 +55,28 @@ class Model
 			$this->save();
 		}
 	}
-	public function get_version(): string
+	public function get_version()
 	{
 		return self::$version;
 	}	
-	public function get_data(): array
-    {
+	public function get_data()
+	{
 		return $this->data;
 	}
 	public function set_data($array)
 	{
 		$this->data = $array;
 	}
-	public function count_tables(): int
-    {
+	public function count_tables()
+	{
 		if(!empty($this->data[0][0]))
 		{
 			$this->n_tables = count($this->data[0][0]);
 		}
 		return $this->n_tables;
 	}
-	public function count_columns($table): int
-    {
+	public function count_columns($table)
+	{	
 		$n_columns = 0;
 		if(isset($this->data[$table][0]))
 		{
@@ -85,8 +84,8 @@ class Model
 		}
 		return $n_columns;
 	}
-	public function count_max_columns(): int
-    {
+	public function count_max_columns()
+	{
 		$i = 1;
 		while($i <= $this->n_tables)
 		{
@@ -99,8 +98,8 @@ class Model
 		}
 		return $this->max_columns;
 	}
-	public function count_lines($table): int
-    {
+	public function count_lines($table)
+	{
 		$lines = 0;
 		if(isset($this->data[$table]))
 		{
@@ -108,8 +107,8 @@ class Model
 		}
 		return $lines;
 	}
-	public function count_max_lines(): int
-    {
+	public function count_max_lines()
+	{
 		$i = 1;
 		while($i <= $this->n_tables)
 		{
@@ -125,20 +124,17 @@ class Model
 	//*************************************************//
 	//******************** TABLES *********************//
 	//*************************************************//
-    /**
-     * @throws Exception
-     */
-    public function add_from_odbc($strTable): bool
+	public function add_from_odbc($strTable)
 	{
 		if($this->table_exists($strTable))
 		{
 		 	$msg = 'The table ['.$strTable.'] already exists.';
 			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
 			throw new Exception($msg);
+			exit;
 		}
 		$x=1;
-		
-        while($this->data)
+		foreach($this->data as $i=>$tab)
 		{
 			if(isset($this->data[$x]))
 			{
@@ -150,14 +146,14 @@ class Model
 				break;
 			}
 		}
+		//$new = $this->n_tables + 1;
 		$this->data[0][0][$new] = $strTable;
-		return $this->save();
+		//$primary = strtolower($strTable);
+		//$this->data[$new][0][1] = 'id_'.$primary;
+		//$this->n_tables = $new;
+		$this->save();
 	}
-
-    /**
-     * @throws Exception
-     */
-    public function add_table($strTable): bool
+	public function add_table($strTable)
 	{
 		$strTable = $this->remove_accents($strTable);
 		if($this->table_exists($strTable))
@@ -165,15 +161,18 @@ class Model
 		 	$msg = 'The table ['.$strTable.'] already exists.';
 			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
 			throw new Exception($msg);
+			exit;
 		}
-		elseif(!$this->verif_alpha($strTable) || empty($strTable) ||  strlen($strTable) < 4 || !($this->right($strTable,1)=='s'))
+		//elseif(!$this->verif_alpha($strTable) || empty($strTable) ||  strlen($strTable) < 4 || !($this->right($strTable,1)=='s'))
+		elseif(empty($strTable) ||  strlen($strTable) < 4)
 		{
 			$msg = 'The table name must be lowercase, plural, contain only alphabetic characters and have a minimum of 4 caracters.';
 			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
 			throw new Exception($msg);
+			exit;
 		}
 		$x=1;
-		while($this->data)
+		foreach($this->data as $i=>$tab)
 		{
 			if(isset($this->data[$x]))
 			{
@@ -185,30 +184,29 @@ class Model
 				break;
 			}
 		}
+		//$new = $this->n_tables + 1;
+		//$this->data[0][0][$new] = strtolower($strTable);
 		$this->data[0][0][$new] = $strTable;
 		$substr = substr($this->data[0][0][$new], 0, -1);
-		// It add a primary key automatically
+		// Ajouter automatiquement une colonne primaire lors de l'ajout d'une table'
 		$this->data[$new][0][1] = 'id_'.$substr;
 		$this->n_tables = $new;
 		return $this->save();
 	}
-
-    /**
-     * @throws Exception
-     */
-    public function add_table_only($strTable): bool
+	public function add_table_only($strTable)
 	{
 		if($this->table_exists($strTable))
 		{
 		 	$msg = 'The table ['.$strTable.'] already exists.';
 			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
 			throw new Exception($msg);
+			exit;
 		}
 		$x=1;
-		$new=0;
+		//var_dump($this->data); exit;
 		if(!empty($this->data))
 		{
-			while($this->data)
+			foreach($this->data as $i=>$tab)
 			{
 				if(isset($this->data[$x]))
 				{
@@ -226,19 +224,17 @@ class Model
 			$new = 1;
 		}
 		$this->data[0][0][$new] = $strTable;
+		//$substr = substr($this->data[0][0][$new], 0, -1);
+		// Ajouter automatiquement une colonne primaire lors de l'ajout d'une table'
+		//$this->data[$new][0][1] = 'id_'.$substr;
 		$this->n_tables = $new;
 		return $this->save();
 	}
-
-    /**
-     * @throws Exception
-     */
-    public function copy_table($strTable): array
+	public function copy_table($strTable)
 	{		
 		$table = $this->get_id_table($strTable);
 		$x=1;
-		$new=0;
-		while($this->data)
+		foreach($this->data as $i=>$tab)
 		{
 			if(isset($this->data[$x]))
 			{
@@ -250,20 +246,19 @@ class Model
 				break;
 			}
 		}
+		//$new = $this->n_tables + 1;
 		$this->data[0][0][$new] = strtolower('copy'.$strTable);
 		$this->data[$new] = $this->data[$table];
 		$this->add_primary_key($this->data[0][0][$new]);
+		//$this->data[$new][0][1] = 'id_'.$this->data[0][0][$new];
+		//$this->n_tables = $new;
 		$this->save();
 		return $this->data[0][0][$new];
 	}
-
-    /**
-     * @throws Exception
-     */
-    public function add_primary_key($strTable): bool
+	public function add_primary_key($strTable)
 	{
 		$table = $this->get_id_table($strTable);
-		// Forced lower case
+		// Forcer le nom de table en minuscule
 		$strTable = strtolower($strTable);
 		if($this->right($strTable,1)=='s')
 		{
@@ -273,78 +268,106 @@ class Model
 		{
 			$strKey = $strTable;
 		}
-        // It add a primary key automatically withe a prefix 'id_'
+		// Ajouter automatiquement une colonne primaire lors de l'ajout d'une table'
 		$this->data[0][0][$table] = $strTable;
 		$this->data[$table][0][1] = 'id_'.$strKey;
-		return $this->save();
+		$this->save();
 	}
 	
-	public function edit_table($table,$strTable): bool
-    {
+	public function edit_table($table,$strTable)
+	{
 		if($this->valid_rule($table,1))
 		{
 			$msg = 'A foreigh key constraint in the rules table does not allow the edition of this table.';
 			throw new Exception($msg);
 		}
-		elseif(!$this->verif_alpha($strTable) || empty($strTable) ||  strlen($strTable) < 4 || !($this->right($strTable,1)=='s'))
+		/*elseif(!$this->verif_alpha($strTable) || empty($strTable) ||  strlen($strTable) < 4 || !($this->right($strTable,1)=='s'))
 		{
 			$msg = 'The table name must be plural and contain only alphabetic characters and have a minimum of 4 caracters.';
 			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
 			throw new Exception($msg);
-
-		}
-		$this->data[0][0][$table] = $strTable;
-		return $this->save();
-	}
-
-    /**
-     * @throws Exception
-     */
-    public function delete_table($table): bool
-    {
-		if($this->valid_rule($table,1))
+			exit;
+		}*/
+		/*elseif(!$this->verif_alpha($strTable) || empty($strTable))
 		{
-			$msg = 'A foreign key constraint in the rules table does not allow the deletion of this table.';
+			$msg = 'The table name must be lowercase, plural, contain only alphabetic characters and have a minimum of 4 caracters.';
 			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
 			throw new Exception($msg);
+			exit;
+		}*/
+		elseif(!$this->verif_alpha($strTable) || empty($strTable))
+		{
+			$msg = 'The table name must be lowercase, plural, contain only alphabetic characters and have a minimum of 4 caracters.';
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);
+			exit;
 		}
+		//$this->data[0][0][$table] = strtolower($strTable);\
+		$this->data[0][0][$table] = $strTable;
+		$this->save();
+		return TRUE;
+	}
+	public function delete_table($table)
+	{
+		/*if($this->valid_rule($table,1))
+		{
+			$msg = 'A foreigh key constraint in the rules table does not allow the deletion of this table.';
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);
+		}*/
+		
+		/*$next = $table + 1;
+		while($next <= $this->count_tables())
+		{
+			$this->data[$table] = $this->data[$next];
+			$this->data[0][0][$table] = $this->data[0][0][$next];
+			$table++;
+			$next++;
+		}*/
 		unset($this->data[$table]);
 		unset($this->data[0][0][$table]);
 		ksort($this->data);
-		return $this->save();
+		$this->save();
 	}	
 	
-	function empty_table($table): bool
+	function empty_table($table)
 	{
 		//$this->save(TRUE);
 		$save_columns = $this->data[$table][0];
 		unset($this->data[$table]);
 		$this->data[$table][0]=$save_columns;
 		ksort($this->data);
-		return $this->save();
+		$this->save();
 	}
 	//*************************************************//
 	//******************* COLUMNS *********************//
 	//*************************************************//
-    /**
-     * @throws Exception
-     */
-    public function add_column($table, $strColumn): bool
-    {
+	public function add_column($table,$strColumn)
+	{
 		if(!$this->verif_alpha_underscore($strColumn) || empty($table) || empty($strColumn))
 		{
-			$msg = 'The field name must contain only alphanumeric characters and "id_" for unique.';
+			$msg = 'The fieldname must contain only alphanumeric characters and "id_" for unique.';
 			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
 			throw new Exception($msg);
+			exit;
 		}
-		/*elseif(strstr($strColumn, '_') && !$this->valid_foreign_key($strColumn))
+		//elseif(strstr($strColumn, '_') && !$this->valid_foreign_key($strColumn))
+		/*if(strstr($strColumn, '_') && !$this->valid_foreign_key($strColumn))
 		{
 			$msg = 'If you try to create a foreigh key it must be terminated by "_id" ';
 			$msg .= 'and must referencing an existing master in the rules table.';
 			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
 			throw new Exception($msg);
+			exit;
 		}*/
-
+		/*if($this->column_exists($table,$strColumn))
+		//if(empty($table) || empty($strColumn))
+		{
+			$msg = 'Column exists.';
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);
+			exit;
+		}*/
 		$n_columns = $this->count_columns($table);
 		$this->data[$table][0][$n_columns+1] = $strColumn;
 		$i = 1;
@@ -353,36 +376,38 @@ class Model
 		{
 			$this->data[$table][$i++][$n_columns+1]='-';	
 		}
-		return $this->save();
+		$this->save();
+		return TRUE;
 	}
-
-    /**
-     * @throws Exception
-     */
-    public function edit_column($table, $column, $strColumn): bool
-    {
+	
+	public function edit_column($table,$column,$strColumn)
+	{
 		if($this->valid_rule($table,$column))
 		{
-			$msg = 'A foreign key constraint in the rules table does not allow the edition of this key.';
+			$msg = 'A foreigh key constraint in the rules table does not allow the edition of this key.';
 			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
 			throw new Exception($msg);
+			exit;
 		}
 		elseif(!$this->verif_alpha_underscore($strColumn) || empty($table) || empty($strColumn))
 		{
-			$msg = 'The field name must contain only alphanumeric characters and id_ for unique. Note that foreign key must be terminated by _id';
+			$msg = 'The fieldname must contain only alphanumeric characters and id_ for unique. Note that foreign key must be terminated by _id';
 			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
 			throw new Exception($msg);
+			//exit;
 		}
-
+		/*if( empty($table) || empty($column) || empty($strColumn) )
+		{
+			$msg = 'The fieldname must contain only alphanumeric characters';
+			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
+			throw new Exception($msg);
+			//exit;
+		}*/
 		$this->set_cell($table,0,$column,$strColumn);
 		return TRUE;
 		//$this->save();
-	}
-
-    /**
-     * @throws Exception
-     */
-    public function delete_column($table, $column): bool
+	} 
+	public function delete_column($table,$column)
 	{
 		if($this->valid_rule($table,$column))
 		{
@@ -411,7 +436,7 @@ class Model
 		{
 			$this->delete_table($table);
 		}
-		return $this->save();
+		$this->save();
 	}
 
 	public function get_column_name($table,$column)
@@ -432,12 +457,8 @@ class Model
 		}
 		return $return;
 	}
-
-    /**
-     * @throws Exception
-     */
-    public function column_exists($table, $strColumn): bool
-    {
+	public function column_exists($table,$strColumn)
+	{
 		$return = FALSE;
 		if($this->get_id_column($table,$strColumn) != 0)
 		{
@@ -445,16 +466,12 @@ class Model
 		}
 		return $return;
 	}
-	public function filter_columns(array $columns,array $filter): array
-    {
+	public function filter_columns(array $columns,array $filter)
+	{
 		return array_intersect($columns,$filter);
 	}
-
-    /**
-     * @throws Exception
-     */
-    public function get_id_column($table, $strColumn): int
-    {
+	public function get_id_column($table,$strColumn)
+	{
 		if(!is_numeric($table))
 		{
 			$table = $this->get_id_table($table);
@@ -470,11 +487,7 @@ class Model
 		}
 		return $id;
 	}
-
-    /**
-     * @throws Exception
-     */
-    public function concat_columns($strTable, $filter, $strToColumn, $delim=null)
+	public function concat_columns($strTable,$filter,$strToColumn,$delim=null)
 	{
 		$table = $this->get_id_table($strTable);
 		if(empty($strTable) || empty($filter) || empty($strToColumn))
@@ -482,17 +495,19 @@ class Model
 			$msg ='Concat two or more columns';
 			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
 			throw new Exception($msg);
+			exit;
 		}
 		elseif(!$this->column_exists($table,$strToColumn))
 		{
 			$msg ='Field '.$strToColumn.' from '.$this->colorize($strTable,'red').' does not exists!';
 			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
 			throw new Exception($msg);
+			exit;
 		}
 		$filter = explode(',',$filter);
-		foreach($filter as $field)
+		foreach($filter as $c=>$field)
 		{
-			$order[] = $this->get_id_column($table, $field);
+			$order[] = $this->get_id_column($table,$filter[$c]);
 		}
 		$columns = $this->get_columns_of($strTable);
 		//$columns = $this->filter_columns($columns,$filter);
@@ -502,7 +517,7 @@ class Model
 		{
 			if($i == 0) continue;
 			$string='';
-			foreach($order as $c)
+			foreach($order as $o=>$c)
 			{
 				$string .= $rec[$c].$delim.' ';
 			}
@@ -516,11 +531,8 @@ class Model
 	//*************************************************//
 	//******************* END COLUMNS *****************//
 	//*************************************************//
-    /**
-     * @throws Exception
-     */
-    public function get_id_table($strTable): int
-    {
+	public function get_id_table($strTable)
+	{
 		$id = 0;
 		$tables = $this->data[0][0];
 		if(empty($tables))
@@ -566,11 +578,7 @@ class Model
 			return FALSE;
 		}
 	}
-
-    /**
-     * @throws Exception
-     */
-    public function table($string, $col=FALSE)
+	public function table($string,$col=FALSE)
 	{
 		$return = FALSE;
 		if($this->table_exists($string))
@@ -584,8 +592,8 @@ class Model
 		}
 		return $return;
 	}
-	public function table_exists($string): bool
-    {
+	public function table_exists($string)
+	{
 		$return = FALSE;
 		if(!empty($this->data[0][0]))
 		{
@@ -610,27 +618,15 @@ class Model
 	}
 	public function get_tables()
 	{
-	    if(!empty($this->data))
+		if(!empty($this->data))
 		{
 			return $this->data[0][0];
 		}
-	    else
-		{
-		    return 0;
-		}
 	}
-
-    /**
-     * @param $x
-     * @param $y
-     * @param $z
-     * @param null $value
-     * @return bool
-     */
-    public function set_cell($x, $y, $z, $value=NULL) : bool
+	public function set_cell($x,$y,$z,$value=NULL)
 	{
 		$this->data[$x][$y][$z] = $value;
-		return $this->save();
+		$this->save();
 	}
 	public function get_cell($x,$y,$z)
 	{
@@ -647,7 +643,8 @@ class Model
 		if(isset($this->data[$x][$y][$z]))
 		{
 			unset($this->data[$x][$y][$z]);
-			$return = $this->save();
+			$this->save();
+			$return = TRUE;
 		}
 		return $return;
 	}
@@ -661,17 +658,14 @@ class Model
 		}		
 		return $return;
 	}
-
-    /**
-     * @throws Exception
-     */
-    public function set_line($post)
+	public function set_line($post)
 	{
 		if(empty($post['table']) || empty($post['line']))
 		{
 			$msg = 'function model::set_line() Real ID of the table or Line is not set.';
 			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
 			throw new Exception($msg);
+			exit;
 		}
 		$table = $post['table'];
 		$line = $post['line'];
@@ -707,11 +701,7 @@ class Model
 		$this->save();
 		return $line;
 	}
-
-    /**
-     * @throws Exception
-     */
-    public function add_line($post, $mandatory='')
+	public function add_line($post,$mandatory='')
 	{
 		if(empty($post['table']) || empty($mandatory))
 		{
@@ -730,11 +720,7 @@ class Model
 		}
 		return $this->set_line($post);
 	}
-
-    /**
-     * @throws Exception
-     */
-    public function del_line($table, $line)
+	public function del_line($table,$line)
 	{		
 		if(isset($this->data[$table][$line]))
 		{
@@ -748,11 +734,7 @@ class Model
 			throw new Exception($msg);
 		}
 	}
-
-    /**
-     * @throws Exception
-     */
-    public function del_lines_where($strTable, $strColumn, $op='==', $multiple='', $strKeyCol)
+	public function del_lines_where($strTable,$strColumn,$op='==',$multiple='',$strKeyCol)
 	{
 		//if(!$this->table_exists($strTable) || empty($strColumn) ||  empty($op) ||  empty($multiple) || empty($strKeyCol))
 		if(!$this->table_exists($strTable) || empty($strColumn) ||  empty($op) || empty($strKeyCol))
@@ -764,11 +746,11 @@ class Model
 			
 			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
 			throw new Exception($msg);
+			exit;
 		}
 		$table = $this->get_id_table($strTable);
 		$records =  $this->get_where_multiple($strTable,$strColumn,$op,$multiple);
 		$column = $this->get_id_column($table,$strKeyCol);
-		$keys = [];
 		foreach($records as $i=>$record)
 		{
 			//Eliminate row of columns
@@ -783,11 +765,7 @@ class Model
 		}
 		$this->repair_table($table);
 	}
-
-    /**
-     * @throws Exception
-     */
-    public function get_last($strTable)
+	public function get_last($strTable)
 	{
 		$return = 0;
 		if(!$this->table_exists($strTable))
@@ -795,6 +773,7 @@ class Model
 			$msg = 'The table does not exist!';
 			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
 			throw new Exception($msg);
+			exit;
 		}
 		$tab = $this->get_id_table($strTable);
 		$i = count($this->data[$tab])-1;
@@ -809,12 +788,9 @@ class Model
 		}
 		return $return;
 	}
-
-    /**
-     * @throws Exception
-     */
-    public function get_last_number($strTable, $strColumn): int
-    {
+	
+	public function get_last_number($strTable,$strColumn)
+	{
 		$last = 0;
 				
 		if(!$this->table_exists($strTable))
@@ -822,32 +798,32 @@ class Model
 			$msg = 'The table does not exist!';
 			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
 			throw new Exception($msg);
+			exit;
 		}
+		
 		$tab = $this->get_id_table($strTable);
 		$col = $this->get_id_column($tab,$strColumn);
 
 		foreach($this->data[$tab] as $rec)
 		{
-			if($rec[$col] > $last)
+			if(is_numeric($rec[$col]) && $rec[$col] > $last)
 			{	
 				$last = $rec[$col];
 			}
 		}
 		return (int)$last;
 	}
-
-    /**
-     * @throws Exception
-     */
-    public function get_real_id($table, $strColumn, $unique)
+	
+	public function get_real_id($table,$strColumn,$unique)
 	{
 		$return = FALSE;
 		$column = $this->get_id_column($table,$strColumn);
 		if($column == 0)
 		{
-			$msg = "This realId doesn't exists.";
+			$msg = 'This realId doesn\'t exists.';
 			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
 			throw new Exception($msg);
+			exit;
 		}
 		foreach( $this->data[$table] as $index=>$record )
 		{	
@@ -860,20 +836,12 @@ class Model
 		}
 		return $return;
 	}
-
-    /**
-     * @throws Exception
-     */
-    public function get_last_real_id($strTable): int
-    {
+	public function get_last_real_id($strTable)
+	{
 		$this->repair_table($this->get_id_table($strTable));
 		return $this->count_lines($this->get_id_table($strTable));
 	}
-
-    /**
-     * @throws Exception
-     */
-    public function get($strTable, $line, $strCol)
+	public function get($strTable,$line,$strCol)
 	{
 		$result = FALSE;
 		$tab = $this->get_id_table($strTable);
@@ -890,11 +858,7 @@ class Model
 		}
 		return $result;
 	}
-
-    /**
-     * @throws Exception
-     */
-    public function combine(array $column, array $line)
+	public function combine(array $column,array $line)
 	{
 		if(count($column) == count($line))
 		{
@@ -905,13 +869,10 @@ class Model
 			$msg = 'Error combining columns and data!';
 			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
 			throw new Exception($msg);
+			exit;
 		}
 	}
-
-    /**
-     * @throws Exception
-     */
-    public function get_where_unique($strTable, $strColumn, $unique)
+	public function get_where_unique($strTable,$strColumn,$unique)
 	{
 		$return = NULL;
 		$table = $this->get_id_table($strTable);
@@ -934,11 +895,8 @@ class Model
 		}
 		return $return;
 	}
-
-    /**
-     * @throws Exception
-     */
-    public function is_unique($strTable, $strColumn, $unique):bool
+	
+	public function is_unique($strTable,$strColumn,$unique)
 	{
 		$return = TRUE;
 		$counter = 0;
@@ -981,12 +939,9 @@ class Model
 	*/	
 	// $this->get_where_multiple($strTable,$strColumn,$multiple,$op='==');
 	// The values passed in parameters are sensitive to the case.
-    /**
-     * @throws Exception
-     */
-    public function get_where_multiple($strTable, $strColumn, $op='==', $multiple=''): array
-    {
-		$return = [];
+	public function get_where_multiple($strTable,$strColumn,$op='==',$multiple='')
+	{
+		$return = NULL;
 		$table = $this->get_id_table($strTable);
 		$column = $this->get_id_column($table,$strColumn);
 		if($column !== 0)
@@ -1078,28 +1033,16 @@ class Model
 		}*/
 		return $return;
 	}
-
-    /**
-     * @throws Exception
-     */
-    public function get_where($strTable, $strColumn, $op='==', $value): array
-    {
+	public function get_where($strTable,$strColumn,$op='==',$value)
+	{
 		return $this->get_where_multiple($strTable,$strColumn,$op,$value);
 	}
-
-    /**
-     * @throws Exception
-     */
-    public function get_columns_of($strTable)
+	public function get_columns_of($strTable)
 	{
 		$idTable = $this->get_id_table($strTable);
 		return $this->get_columns($idTable);
-	}
-
-    /**
-     * @throws Exception
-     */
-    public function get_field_value_where_unique($strTable, $strColumn, $unique, $strField)
+	}	
+	public function get_field_value_where_unique($strTable,$strColumn,$unique,$strField)
 	{
 		$return = NULL;
 		$idTable = $this->get_id_table($strTable);
@@ -1111,8 +1054,8 @@ class Model
 		}
 		return $return;
 	}
-	public function save($backup = FALSE): bool
-    {
+	public function save($backup = FALSE)
+	{
 		$puts = '<?php';
 		if(isset($this->data))
 		{
@@ -1140,17 +1083,16 @@ class Model
 		return TRUE;
 	}
 	
-	public function xsave($t): array
-    {
-		$cdata = [];
-        foreach($t as $line=>$l)
+	public function xsave($t)
+	{
+		foreach($t as $line=>$l)
 		{
 			foreach($l as $column=>$value)
 			{
-				$cdata[$line][$column] = $value;
+				$xdata[$line][$column] = $value;
 			}
 		}
-		return $cdata;
+		return $xdata;
 	}
 	
 	public function save_script($name,$array)
@@ -1343,17 +1285,13 @@ class Model
 		}
 		return $select[$id];
 	}
-
-    /**
-     * @throws Exception
-     */
-    function sum($strTable, $strColumnToSum, $strColumn, $intKey)
+	function sum($strTable,$strColumnToSum,$strColumn,$intKey)
 	{
 		$sum = NULL;
 		$intTable = $this->get_id_table($strTable);
 		$columnToSum = $this->get_id_column($intTable,$strColumnToSum);
 		$column = $this->get_id_column($intTable,$strColumn);
-		foreach( $this->data[$intTable] as $record )
+		foreach( $this->data[$intTable] as $realID=>$record )
 		{
 			if($record[$column] == $intKey)
 			{
@@ -1363,30 +1301,21 @@ class Model
 		return $sum;
 	}
 
-    /**
-     * @throws Exception
-     */
-    function sub($strTable, $strColumnToSub, $strColumn, $intKey)
+	function sub($strTable,$strColumnToSub,$strColumn,$intKey)
 	{
-		$sub = NULL;
+		$sum = NULL;
 		$intTable = $this->get_id_table($strTable);
 		$columnToSub = $this->get_id_column($intTable,$strColumnToSub);
 		$column = $this->get_id_column($intTable,$strColumn);
-		foreach( $this->data[$intTable] as $record )
+		foreach( $this->data[$intTable] as $realID=>$record )
 		{
 			if($record[$column] == $intKey)
 			{
-				$sub -= $record[$columnToSub];  				
+				$sum -= $record[$columnToSub];  				
 			}
 		}
-		return $sub;
+		return $sum;
 	}
-
-	function is_equal($a,$b,$dec): bool
-    {
-		return number_format($a,$dec) == number_format($b,$dec);
-	}
-	
 	function import_php_data_mysql($file,$records)
 	{
 		include(ROOT.'data/'.$file.'.php');
@@ -1404,7 +1333,7 @@ class Model
 		foreach($$records as $i=>$rec)
 		{
 			$colonne = 1;
-			foreach($rec as $value)
+			foreach($rec as $col=>$value)
 			{
 				$this->data[$ntab][$i+1][$colonne] = $value;
 				$colonne++;
@@ -1415,8 +1344,8 @@ class Model
 	/*****************************************/
 	// Check foreign keys
 	//****************************************/
-	function valid_foreign_key($strColumn): bool
-    {
+	function valid_foreign_key($strColumn)
+	{
 		$return = FALSE;
 		$arr = explode('_',$strColumn);
 		$strTable = $arr[0].'s';
@@ -1451,8 +1380,8 @@ class Model
 			throw new Exception($msg);
 		}
 	}*/
-	function valid_rule($table,$column): bool
-    {
+	function valid_rule($table,$column)
+	{
 		$return = FALSE;		
 		//$strTable=$this->get_table_name($table);	
 		$strColumn=$this->get_column_name($table,$column);
@@ -1486,8 +1415,8 @@ class Model
 		}
 		return $return;
 	}
-	function valid_master_table($strTable): bool
-    {
+	function valid_master_table($strTable)
+	{
 		$return = FALSE;
 		$records = $this->get_where('rules','master','==',$strTable);
 		if($records)
@@ -1496,8 +1425,8 @@ class Model
 		}
 		return $return;
 	}
-	function valid_slave_table($strTable): bool
-    {
+	function valid_slave_table($strTable)
+	{
 		$return = FALSE;
 		$records = $this->get_where('rules','slave','==',$strTable);
 		if($records)
@@ -1547,17 +1476,15 @@ class Model
 		}
 		//$this->save();
 	}
-
-    /**
-     * @throws Exception
-     */
-    public function time_corrector($strTable, $strColumn, $format)
+	
+	public function time_corrector($strTable,$strColumn,$format)
 	{
 		if(empty($strTable) || empty($strColumn))
 		{
 			$msg = 'To fix a column choose a time column and identify the format. It will transform as HH:MM:SS'; 
 			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
 			throw new Exception($msg);
+			exit;
 		}
 		$table = $this->get_id_table($strTable);
 		$column = $this->get_id_column($table,$strColumn);		
@@ -1587,17 +1514,15 @@ class Model
 		}
 		return $return;
 	}
-
-    /**
-     * @throws Exception
-     */
-    public function date_corrector($strTable, $strColumn, $format)
+	
+	public function date_corrector($strTable,$strColumn,$format)
 	{
 		if(empty($strTable) || empty($strColumn) || empty($format))
 		{
 			$msg = 'To fix a column choose a column and identify the format. It will transform as YYYY-MM-DD'; 
 			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
 			throw new Exception($msg);
+			exit;
 		}
 		$table = $this->get_id_table($strTable);
 		$column = $this->get_id_column($table,$strColumn);		
@@ -1612,15 +1537,15 @@ class Model
 		}
 		$this->save();
 	}
-	function valid_date($string,$format,$time=FALSE): string
-    {
+	function valid_date($string,$format,$time=FALSE)
+	{
 		$gyear = 39;
 		$date = new DateTime();
-		if(strpos($format,'-') > 0)
+		if($del = strpos($format,'-') > 0)
 		{
 			$del ='-';
 		}
-		elseif(strpos($format,'/') > 0)
+		elseif($del = strpos($format,'/') > 0)
 		{
 			$del = '/';
 		}
@@ -1628,7 +1553,7 @@ class Model
 		{
 			$del ='';
 		}
-		//echo empty($del); 
+		//echo empty($del); exit;
 		if($del != '')
 		{
 			switch($format)
@@ -1747,19 +1672,20 @@ class Model
 					$year = date("Y");
 					$month = $string;
 					$day = 15;
-					/*$a_date = $year.'-'.$month.'-'.$day;
-					$darr = date("Y-m-t", strtotime($a_date));
-                    return $darr;*/
+					$a_date = $year.'-'.$month.'-'.$day;
+					$darr = date("Y-m-t", strtotime($a_date));					
+					return $darr;
 					//$date->setDate((int)$year,(int)$month,(int)$day);
 				break;
 			}
 		}
 		$date->setDate((int)$year,(int)$month,(int)$day);
-		return ($time)? $date->format('Y-m-d H:i:s'):$date->format('Y-m-d');
+		$newDate = ($time)? $date->format('Y-m-d H:i:s'):$date->format('Y-m-d');
+		return $newDate;
 	}
-	//*********************************************************//
+	//*************************************************//
 	//********  SETTING ONE TABLE FOR USAGE   *********//
-	//********************************************************//
+	//*************************************************//
 	function set_table(array $a)
 	{
 		$this->table = strtolower($a['table']);
@@ -1785,13 +1711,8 @@ class Model
 		}
 		return $recordset;
 	}
-	//*********************************************************//
-	//********  END SETTING ONE TABLE FOR USAGE  ****//
-	//*********************************************************//
-    /**
-     * @throws Exception
-     */
-    public function find_replace($strTable, $strColumn, $find=' ', $replace=' ')
+	
+	public function find_replace($strTable,$strColumn,$find=' ',$replace=' ')
 	{
 		//$bodytag = str_ireplace("%body%", "black", "<body text=%BODY%
 		//if(empty($strTable) || empty($strColumn) || empty($find) || empty($replace))
@@ -1800,6 +1721,7 @@ class Model
 			$msg = 'Search a column, find and replace.'; 
 			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
 			throw new Exception($msg);
+			exit;
 		}	
 		$table = $this->get_id_table($strTable);
 		$rows = $this->get_table($table);
@@ -1820,17 +1742,24 @@ class Model
 		}
 		$this->save();
 	}
-
-    /**
-     * @throws Exception
-     */
-    public function copy_column($strTable, $strColumnFrom, $strColumnTo)
+	
+	/*public function fill_data($table,$data)
+	{
+		echo '<pre>';
+		var_dump($data);
+		echo '</pre>';
+		exit;
+		$this->data[$table] = $data;
+		$this->save(TRUE);
+	}*/
+	public function copy_column($strTable,$strColumnFrom,$strColumnTo)
 	{
 		if(empty($strTable) || empty($strColumnFrom) || empty($strColumnTo))
 		{
 			$msg = 'To duplicate a column you need to identify the column that you want to duplicate, named the new column. '; 
 			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
 			throw new Exception($msg);
+			exit;
 		}
 		$table = $this->get_id_table($strTable);
 		$from = $this->get_id_column($table,$strColumnFrom);
@@ -1845,11 +1774,7 @@ class Model
 		}
 		$this->save();
 	}
-
-    /**
-     * @throws Exception
-     */
-    public function split_column($strTable, $strColumnFrom, $strColumnTo, $left=null, $right=null)
+	public function split_column($strTable,$strColumnFrom,$strColumnTo,$left=null,$right=null)
 	{
 		if( empty($strTable) || empty($strColumnFrom) || empty($strColumnTo))
 		{
@@ -1857,7 +1782,7 @@ class Model
 			$msg .= 'You will need to set how much left and right caracters you want to keep.'; 
 			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
 			throw new Exception($msg);
-			
+			exit;
 		}
 		$table = $this->get_id_table($strTable);
 		$from = $this->get_id_column($table,$strColumnFrom);
@@ -1926,7 +1851,7 @@ class Model
 			$msg = 'To split a column you need to identify the column that you want to work with, named the new column. '; 
 			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
 			throw new Exception($msg);
-			
+			exit;
 		}
 		$table = $this->get_id_table($strTable);
 		$from = $this->get_id_column($table,$strColumnFrom);
@@ -1988,11 +1913,7 @@ class Model
 		}
 		$this->save();
 	}
-
-    /**
-     * @throws Exception
-     */
-    public function move_column($strTable, $strColumn, $strToTable)
+	public function move_column($strTable,$strColumn,$strToTable)
 	{
 		if(empty($strTable) || empty($strColumn) || empty($strToTable) || !$this->table_exists($strToTable))
 		{
@@ -2004,7 +1925,7 @@ class Model
 			}
 			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
 			throw new Exception($msg);
-			
+			exit;
 		}
 		$table = $this->get_id_table($strTable);
 		$totable = $this->get_id_table($strToTable);
@@ -2028,11 +1949,8 @@ class Model
 		$this->save();
 		$this->delete_column($table,$from);
 	}
-
-    /**
-     * @throws Exception
-     */
-    public function copy_column_keys($strTable, $strColumn, $strToTable, $strToField, $string, $op='==', $value=null)
+	
+	public function copy_column_keys($strTable,$strColumn,$strToTable,$strToField,$string,$op='==',$value=null)
 	{
 		if(empty($strTable) || empty($strColumn)  || empty($strToTable) || empty($strToField)  || empty($string) || empty($op))
 		{
@@ -2044,7 +1962,7 @@ class Model
 			}
 			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
 			throw new Exception($msg);
-			
+			exit;
 		}
 		//FROM TABLE
 		$table = $this->get_id_table($strTable);
@@ -2062,7 +1980,7 @@ class Model
 			$msg = 'The column '.$strColumn.' or '.$strToField.' or '.$string.' does not exists or are misspell.'; 
 			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
 			throw new Exception($msg);
-			
+			exit;
 		}
 		
 		$tab = $this->data[$table];
@@ -2157,11 +2075,8 @@ class Model
 		}
 		$this->save();
 	}
-
-    /**
-     * @throws Exception
-     */
-    public function copy_data_keys($strTable, $strColumn, $strToTable, $strToField, $left, $right, $string, $op='==', $value='')
+	
+	public function copy_data_keys($strTable,$strColumn,$strToTable,$strToField,$left,$right,$string,$op='==',$value='')
 	{
 		if(empty($strTable) || empty($strColumn)  || empty($strToTable) || empty($strToField)  || empty($left) || empty($right) || empty($string) || empty($op))
 		{
@@ -2172,7 +2087,7 @@ class Model
 			}
 			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
 			throw new Exception($msg);
-			
+			exit;
 		}
 		//FROM TABLE
 		$table = $this->get_id_table($strTable);
@@ -2180,7 +2095,7 @@ class Model
 		if($this->column_exists($table,$strColumn) && $this->column_exists($table,$string))
 		{
 			$column = $this->get_id_column($table,$strColumn);
-			$keyleft = $this->get_id_column($table,$left);
+			$keyleft = $this->get_id_column($table,$left);	
 			
 			$totable = $this->get_id_table($strToTable);
 			$tofield = $this->get_id_column($totable,$strToField);
@@ -2194,6 +2109,7 @@ class Model
 			$msg = 'The column '.$strColumn.' or '.$strToField.' or '.$string.' does not exists or are misspell.'; 
 			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
 			throw new Exception($msg);
+			exit;
 		}
 		
 		$tab = $this->data[$table];
@@ -2283,13 +2199,11 @@ class Model
 				}					
 			}				
 		}
+		//$this->preprint($this->data[$totable]);
 		$this->save();
 	}
-
-    /**
-     * @throws Exception
-     */
-    public function move_one_to_many($strTable, $strColumn, $strToTable, $strToTableKey, $strTableKey)
+	
+	public function move_one_to_many($strTable,$strColumn,$strToTable,$strToTableKey,$strTableKey)
 	{
 		if(empty($strTable) || empty($strColumn) || empty($strToTable) || empty($strTableKey) || empty($strToTableKey) || !$this->table_exists($strToTable))
 		{
@@ -2301,6 +2215,7 @@ class Model
 			}
 			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
 			throw new Exception($msg);
+			exit;
 		}
 		//FROM TABLE
 		$table = $this->get_id_table($strTable);
@@ -2331,15 +2246,11 @@ class Model
 		$this->delete_column($table,$from);
 	}
 	
-	public function colorize($string,$color): string
-    {
+	public function colorize($string,$color)
+	{
 		return '<span style="color:'.$color.';"> '.$string.' </span>';
 	}
-
-    /**
-     * @throws Exception
-     */
-    public function order_by($strTable, $strColumn, $sort=SORT_ASC): bool
+	public function order_by($strTable,$strColumn,$sort=SORT_ASC)
 	{
 		$records = array();
 		$tab = $this->get_id_table($strTable);
@@ -2348,7 +2259,7 @@ class Model
 		
 		$datas = $this->data[$tab];
 		$columns = $this->data[$tab][0];
-		$dat=[];
+		
 		foreach($datas as $key=>$row)
 		{
 			if($key==0) continue;
@@ -2364,24 +2275,21 @@ class Model
 				$this->data[$tab][$i+1][$j++]=$value;
 			}
 		}
-		return $this->save();
+		$this->save();
 	}
-
-    /**
-     * @throws Exception
-     */
-    public function merge_rows($strTable, $strColKey, $strColOrder, $strColResult)
+	
+	public function merge_rows($strTable,$strColKey,$strColOrder,$strColResult)
 	{
 		if(empty($strTable) || empty($strColKey)  || empty($strColOrder) || empty($strColResult))
 		{
 			$msg = 'Merge rows from table '.$this->colorize($strTable,'red').' to a column in the first row by matching keys.'; 
 			if(!$this->table_exists($strTable))
 			{
-				$msg = 'Table '.$strTable.' has not been imported yet.';
+				$msg = 'Table '.$strToTable.' has not been imported yet.'; 
 			}
 			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
 			throw new Exception($msg);
-			
+			exit;
 		}
 		$table = $this->get_id_table($strTable);
 		$colkey = $this->get_id_column($table,$strColKey);
@@ -2391,7 +2299,7 @@ class Model
 		$nbr = $this->count_lines($table);
 		for($i=1;$i<=$nbr;$i++)
 		{
-			$key = $this->data[$table][$i][$colkey];
+			$key = $this->data[$table][$i][$colkey]; 
 			if(!array_key_exists($key,$hkey))
 			{
 				$rows = $this->get_where($strTable,$strColKey,'==',$key);
@@ -2461,11 +2369,8 @@ class Model
 		}
 		$this->repair_table($table);
 	}
-
-    /**
-     * @throws Exception
-     */
-    public function check_system()
+	
+	public function check_system()
 	{
 		$i=1;
 		foreach($this->data as $t)
@@ -2474,49 +2379,47 @@ class Model
 			{
 				$msg = 'ERROR[1] Something break the system between [0][0][1] (table name) and [1][0][1] (table usage). <a href="'.WEBROOT.'main/ini">Initialize</a>'; 
 				throw new Exception($msg);
+				exit;
 			}
 			++$i;
 		}
 	}
-
-
-    /**
-     * @throws Exception
-     */
-    public function renumber($strTable, $strColumn, $start=1)
+	
+	
+	public function renumber($strTable,$strColumn,$start=1)
 	{
 		if(empty($strTable) || empty($strColumn) || empty($start))
 		{
 			$msg = 'It is not a must but the best practice would be to duplicate a column before.'; 
 			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
 			throw new Exception($msg);
+			exit;
 		}
+		//$this->save(TRUE);
 		$table = $this->get_id_table($strTable);
 		$column = $this->get_id_column($table,$strColumn);
 		//select(array $columns,$strTable);
 		$arr_columns = array($column=>$strColumn);
+		//var_dump($arr_columns); exit;
 		$records = $this->select($arr_columns,$strTable);
 		foreach($records as $i=>$rec)
 		{
-            // Parceque on veut pas la premiere ligne 0 (noms de colonnes);
-		    if($i==0) continue;
+			if($i==0) continue;
+			//++int parceque on veut pas la premiere ligne 0;
 			$this->data[$table][$i][$column] = $start;
 			$start++;
 		}
 		$this->save();
 	}
-
-    /**
-     * @throws Exception
-     */
-    public function matches($strMaster, $strMasterOldColumn, $strSlave, $strSlaveOldColumn, $strMasterNewNumbersColumn)
+	
+	public function matches($strMaster,$strMasterOldColumn,$strSlave,$strSlaveOldColumn,$strMasterNewNumbersColumn)
 	{
 		if(empty($strMaster) || empty($strMasterOldColumn) || empty($strSlave) || empty($strSlaveOldColumn) || empty($strMasterNewNumbersColumn))
 		{
 			$msg = "Reassign key values of a column in a slave table against new values in the master table. First you will need to duplicate a column in $strMaster and renumber it.";
 			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
 			throw new Exception($msg);
-			
+			exit;
 		}
 		$id_master = $this->get_id_table($strMaster);
 		$mrecords = $this->get_table($id_master);
@@ -2543,22 +2446,19 @@ class Model
 		//$this->preprint($this->data[$id_slave]); 
 		$this->save();
 	}
-
-    /**
-     * @throws Exception
-     */
-    public function copy_text_where($strTable, $strColumn, $text, $string, $op='==', $value=null)
+	
+	public function copy_text_where($strTable,$strColumn,$text,$string,$op='==',$value=null)
 	{
 		if(empty($strTable) || empty($strColumn) || empty($text) || empty($string) || empty($op))
 		{
 			$msg = 'Copy text "Self" into this field when PatientNumber=Family; copy text "Other" into this field when PatientNumber<>Family'; 
 			if(!$this->table_exists($strTable) && !empty($strColumn))
 			{
-				$msg = 'Table '.$strTable.' has not been imported yet.';
+				$msg = 'Table '.$strToTable.' has not been imported yet.'; 
 			}
 			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
 			throw new Exception($msg);
-			
+			exit;
 		}
 		//FROM TABLE
 		$table = $this->get_id_table($strTable);
@@ -2572,6 +2472,7 @@ class Model
 			$msg = 'The column '.$strColumn.' or '.$string.' does not exists or are misspell.'; 
 			$msg = htmlentities($msg,ENT_COMPAT,"UTF-8");
 			throw new Exception($msg);
+			exit;
 		}
 		if(empty($value))
 		{
@@ -2786,10 +2687,12 @@ class Model
 		chr(197).chr(190) => 'z', chr(197).chr(191) => 's'
 		);
 
-        return strtr($string, $chars);
+		$string = strtr($string, $chars);
+
+		return $string;
 	}
-	/*public function create_demo(): bool
-    {
+	public function create_demo()
+	{
 		unset($this->data);
 		$this->data[0][0][1]='rules';
 		$this->data[0][0][2]='users';
@@ -2825,7 +2728,7 @@ class Model
 		$this->data[3][4][1]=4;
 		$this->data[3][4][2]='comment from user 3 for example';
 		$this->data[3][4][3]=3;
-		return $this->save();
-	}*/
+		$this->save();
+	}
 }
 ?>
